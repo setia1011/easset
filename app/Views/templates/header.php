@@ -10,7 +10,7 @@
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="<?= base_url('assets/images/logos/favicon.png'); ?>">
     <!-- Page Title  -->
-    <title>e-asset | Home</title>
+    <title>e-asset | <?= $pagename = isset($pagename) ? $pagename : 'undefined'; ?></title>
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="<?= base_url('assets/css/dashlite.css?ver=3.0.0'); ?>">
     <link id="skin-default" rel="stylesheet" href="<?= base_url('assets/css/theme.css?ver=3.0.0'); ?>">

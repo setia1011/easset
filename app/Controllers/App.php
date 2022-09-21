@@ -5,6 +5,7 @@ namespace App\Controllers;
 class App extends BaseController {
     public function index() {
         $data['pagefile'] = 'home';
+        $data['pagename'] = 'Home';
         return view('pages/home', $data);
     }
 
