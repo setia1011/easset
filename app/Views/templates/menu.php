@@ -52,6 +52,11 @@
                         </ul><!-- .nk-menu-sub -->
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
+                        <a href="<?= base_url('/user'); ?>" class="nk-menu-link">
+                            <span class="nk-menu-text">User</span>
+                        </a>
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
                         <a href="<?= base_url('/laporan'); ?>" class="nk-menu-link">
                             <span class="nk-menu-text">Laporan</span>
                         </a>
