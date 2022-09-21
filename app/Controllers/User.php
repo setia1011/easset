@@ -4,7 +4,8 @@ namespace App\Controllers;
 
 class User extends BaseController {
     public function index() {
-        $session = \Config\Services::session();
+        $data['pagefile'] = 'user';
+        return view('pages/user', $data);
     }
 
     // profile

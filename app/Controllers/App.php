@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 class App extends BaseController {
     public function index() {
-        $session = \Config\Services::session();
         $data['pagefile'] = 'home';
         return view('pages/home', $data);
     }
