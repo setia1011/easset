@@ -35,24 +35,24 @@
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="html/index.html" class="nk-menu-link">
+                                <a href="<?= base_url('/pemasukan'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pemasukan</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
-                                <a href="html/index-sales.html" class="nk-menu-link">
+                                <a href="<?= base_url('/alokasi'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Alokasi</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
-                                <a href="html/index-sales.html" class="nk-menu-link">
+                                <a href="<?= base_url('/pengeluaran'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengeluaran</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                         </ul><!-- .nk-menu-sub -->
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="#" class="nk-menu-link">
+                        <a href="<?= base_url('/laporan'); ?>" class="nk-menu-link">
                             <span class="nk-menu-text">Laporan</span>
                         </a>
                     </li><!-- .nk-menu-item -->
@@ -67,8 +67,8 @@
                                     <em class="icon ni ni-user-alt"></em>
                                 </div>
                                 <div class="user-info d-none d-xl-block">
-                                    <div class="user-status">Administrator</div>
-                                    <div class="user-name dropdown-indicator">Setiadi</div>
+                                    <div class="user-status"><?= $_SESSION['level']; ?></div>
+                                    <div class="user-name dropdown-indicator"><?= $_SESSION['nama']; ?></div>
                                 </div>
                             </div>
                         </a>
@@ -76,8 +76,8 @@
                             <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
                                 <div class="user-card">
                                     <div class="user-info">
-                                        <span class="lead-text">Setiadi</span>
-                                        <span class="sub-text">admin@techack.id</span>
+                                        <span class="lead-text"><?= $_SESSION['nama']; ?></span>
+                                        <span class="sub-text"><?= $_SESSION['email']; ?></span>
                                     </div>
                                 </div>
                             </div>
