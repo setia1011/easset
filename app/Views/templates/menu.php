@@ -83,8 +83,8 @@
                             </div>
                             <div class="dropdown-inner">
                                 <ul class="link-list">
-                                    <li><a href="html/user-profile-regular.html"><em class="icon ni ni-user-alt"></em><span>Profile</span></a></li>
-                                    <li><a href="html/user-profile-setting.html"><em class="icon ni ni-setting-alt"></em><span>Password</span></a></li>
+                                    <li><a href="<?= base_url('/user/profile'); ?>"><em class="icon ni ni-user-alt"></em><span>Profile</span></a></li>
+                                    <li><a href="<?= base_url('/user/password'); ?>"><em class="icon ni ni-setting-alt"></em><span>Password</span></a></li>
                                 </ul>
                             </div>
                             <div class="dropdown-inner">
