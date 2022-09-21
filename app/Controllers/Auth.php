@@ -50,4 +50,10 @@ class Auth extends BaseController {
             echo json_encode(['error' => "Username dan/atau password tidak valid!"]);
         }
     }
+
+    public function logout() {
+        $session = \Config\Services::session();
+        $session->destroy();
+        return redirect()->to('/');
+    }
 }
