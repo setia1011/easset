@@ -7,16 +7,16 @@
             </div>
             <div class="nk-header-brand">
                 <a href="<?= base_url('/'); ?>" class="logo-link">
-                    <img class="logo-light logo-img" src="<?= base_url('images/logos/logo.png'); ?>" srcset="<?= base_url('images/logo2x.png'); ?>" alt="logo">
-                    <img class="logo-dark logo-img" src="<?= base_url('images/logo-dark.png'); ?>" srcset="<?= base_url('images/logo-dark2x.png'); ?>" alt="logo-dark">
+                    <img class="logo-light logo-img" src="<?= base_url('images/logo-log-2-white.png'); ?>" srcset="<?= base_url('images/logo-log-2-white.png'); ?>" alt="logo">
+                    <img class="logo-dark logo-img" src="<?= base_url('images/logo-log-2-white.png'); ?>" srcset="<?= base_url('images/logo-log-2-white.png'); ?>" alt="logo-dark">
                 </a>
             </div><!-- .nk-header-brand -->
             <div class="nk-header-menu" data-content="headerNav">
                 <div class="nk-header-mobile">
                     <div class="nk-header-brand">
                         <a href="<?= base_url('/'); ?>" class="logo-link">
-                            <img class="logo-light logo-img" src="<?= base_url('images/logo.png'); ?>" srcset="<?= base_url('images/logo2x.png'); ?>" alt="logo">
-                            <img class="logo-dark logo-img" src="<?= base_url('images/logo-dark.png'); ?>" srcset="<?= base_url('images/logo-dark2x.png'); ?>" alt="logo-dark">
+                            <img class="logo-light logo-img" src="<?= base_url('images/logo-log-2-white.png'); ?>" srcset="<?= base_url('images/logo-log-2-white.png'); ?>" alt="logo">
+                            <img class="logo-dark logo-img" src="<?= base_url('images/logo-log-2-white.png'); ?>" srcset="<?= base_url('images/logo-log-2-white.png'); ?>" alt="logo-dark">
                         </a>
                     </div>
                     <div class="nk-menu-trigger me-n2">

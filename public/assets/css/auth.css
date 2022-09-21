@@ -1,0 +1,9 @@
+.loading-info, .login-info {
+    margin-top: 15px;
+    font-size: 1.2em;
+}
+
+.loading-info > img {
+    width: 1.2em;
+    margin-top: -1px;
+}
