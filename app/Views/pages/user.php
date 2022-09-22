@@ -68,10 +68,7 @@
                         <div class="card-tools">
                             <div class="form-inline flex-nowrap gx-3">
                                 <div class="form-wrap w-100px">
-                                    Test
-                                </div>
-                                <div class="btn-wrap">
-                                    Test 2
+                                    <em class="icon ni ni-dashlite"></em>
                                 </div>
                             </div><!-- .form-inline -->
                         </div><!-- .card-tools -->
@@ -131,20 +128,8 @@
                             <div class="nk-tb-col">
                                 <span class="tb-status" v-bind:class="{'text-success': item.status == 'aktif', 'text-danger': item.status == 'tidak aktif'}">{{ item.status}}</span>
                             </div>
-                            <div class="nk-tb-col nk-tb-col-tools">
-                                <ul class="nk-tb-actions gx-2">
-                                    <li>
-                                        <div class="drodown">
-                                            <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-bs-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <ul class="link-list-opt no-bdr">
-                                                    <li><a href="#"><em class="icon ni ni-eye"></em><span>View Details</span></a></li>
-                                                    <li><a href="#"><em class="icon ni ni-repeat"></em><span>Orders</span></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                            <div class="nk-tb-col tb-col-md">
+                                <button type="button" class="btn btn-icon btn-secondary"><em class="icon ni ni-pen2"></em></button>
                             </div>
                         </div><!-- .nk-tb-item -->
                     </div><!-- .nk-tb-list -->
@@ -167,17 +152,6 @@
                         :page-link-class="'page-link'">
                     </paginate>
                 </span>
-                <!-- <div class="card-inner">
-                    <ul class="pagination justify-content-center justify-content-md-start">
-                        <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><span class="page-link"><em class="icon ni ni-more-h"></em></span></li>
-                        <li class="page-item"><a class="page-link" href="#">6</a></li>
-                        <li class="page-item"><a class="page-link" href="#">7</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </div> -->
             </div><!-- .card-inner-group -->
         </div><!-- .card -->
     </div><!-- .nk-block -->
@@ -213,12 +187,6 @@
                             </div>
                         </div>
                         <div class="form-group mt-2">
-                            <label class="form-label">Level</label>
-                            <div class="form-control-wrap">
-                                <v-select @input="selectedLevel" :options="level_options"></v-select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="form-label">Nama</label>
                             <div class="form-control-wrap">
                                 <input v-model="nama" type="text" class="form-control">
@@ -248,13 +216,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mt-2">
-                            <label class="form-label">Status</label>
-                            <div class="form-control-wrap">
-                                <v-select @input="selectedStatus" :options="status_options"></v-select>
+                        <div class="row mt-2">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-label">Level</label>
+                                    <div class="form-control-wrap">
+                                        <v-select @input="selectedLevel" :options="level_options"></v-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="form-label">Status</label>
+                                    <div class="form-control-wrap">
+                                        <v-select @input="selectedStatus" :options="status_options"></v-select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-4">
                             <button type="submit" v-on:click="createUser" class="btn btn-lg btn-primary">Submit</button>
                         </div>
                         <div class="loading-info" v-show="loading">
