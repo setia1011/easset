@@ -36,10 +36,10 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'App::index');
-$routes->get('/pemasukan', 'App::pemasukan');
-$routes->get('/alokasi', 'App::alokasi');
-$routes->get('/pengeluaran', 'App::pengeluaran');
-$routes->get('/laporan', 'App::laporan');
+$routes->get('/app/pemasukan', 'App::pemasukan');
+$routes->get('/app/alokasi', 'App::alokasi');
+$routes->get('/app/pengeluaran', 'App::pengeluaran');
+$routes->get('/app/laporan', 'App::laporan');
 
 // Auth
 $routes->get('/auth/login', 'Auth::index');
@@ -48,6 +48,8 @@ $routes->get('/auth/logout', 'Auth::logout');
 
 // User
 $routes->get('/user', 'User::index');
+$routes->post('/user/all-users', 'User::allUsers');
+$routes->post('/user/create-user', 'User::createUser');
 $routes->get('/user/profile', 'User::profile');
 $routes->get('/user/password', 'User::password');
 

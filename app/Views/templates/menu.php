@@ -35,17 +35,17 @@
                         </a>
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
-                                <a href="<?= base_url('/pemasukan'); ?>" class="nk-menu-link">
+                                <a href="<?= base_url('/app/pemasukan'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pemasukan</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
-                                <a href="<?= base_url('/alokasi'); ?>" class="nk-menu-link">
+                                <a href="<?= base_url('/app/alokasi'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Alokasi</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
-                                <a href="<?= base_url('/pengeluaran'); ?>" class="nk-menu-link">
+                                <a href="<?= base_url('/app/pengeluaran'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengeluaran</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
@@ -57,7 +57,7 @@
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="<?= base_url('/laporan'); ?>" class="nk-menu-link">
+                        <a href="<?= base_url('/app/laporan'); ?>" class="nk-menu-link">
                             <span class="nk-menu-text">Laporan</span>
                         </a>
                     </li><!-- .nk-menu-item -->
