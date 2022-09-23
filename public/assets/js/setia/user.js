@@ -13,6 +13,8 @@ var application = new Vue({
         search: "",
         items: null,
         action: null,
+        totalUser: null,
+        totalRows: null,
         totalPage: null,
         currentPage: 1,
         perPage: 8,
@@ -44,7 +46,12 @@ var application = new Vue({
     watch: {
         level: function() {
             // console.log(this.level);
-        }
+        },
+        search: _.debounce(
+            function() {
+               this.fetchData();
+            }, 500
+        ),
     },
     computed: {
         getPageCount: function() {
@@ -79,6 +86,8 @@ var application = new Vue({
                 }
             })).then(res => {
                 // console.log(res.data);
+                this.totalUser = res.data['totalUser'];
+                this.totalRows = res.data['totalRows'];
                 this.items = res.data['items'];
                 this.totalPage = res.data['totalPage'];
                 this.index = this.currentPage * this.perPage;

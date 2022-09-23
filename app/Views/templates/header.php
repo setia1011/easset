@@ -14,6 +14,7 @@
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="<?= base_url('assets/css/dashlite.css?ver=3.0.0'); ?>">
     <link id="skin-default" rel="stylesheet" href="<?= base_url('assets/css/theme.css?ver=3.0.0'); ?>">
+    <link id="skin-default" rel="stylesheet" href="<?= base_url('assets/css/setia.css'); ?>">
 </head>
 
 <body class="nk-body npc-invest bg-lighter ">

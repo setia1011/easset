@@ -38,7 +38,7 @@
             <div class="nk-block-head-content">
                 <h3 class="nk-block-title page-title">Users Lists</h3>
                 <div class="nk-block-des text-soft">
-                    <p>You have total 2,595 users.</p>
+                    <p>You have <b>{{ totalRows }}</b> of total <b>{{ totalUser }}</b> users.</p>
                 </div>
             </div><!-- .nk-block-head-content -->
             <div class="nk-block-head-content">
@@ -49,8 +49,8 @@
                             <li><a href="#" class="btn btn-white btn-outline-light"><em class="icon ni ni-download-cloud"></em><span>Export</span></a></li>
                             <li class="nk-block-tools-opt">
                                 <div class="drodown">
-                                    <button type="button" class="btn btn-icon btn-primary" v-on:click="createMode" data-bs-toggle="modal" data-bs-target="#modalAddUser">
-                                        <em class="icon ni ni-plus"></em>
+                                    <button type="button" class="btn btn-icon btn-success" v-on:click="createMode" data-bs-toggle="modal" data-bs-target="#modalAddUser">
+                                        <em class="icon ni ni-user-add"></em>
                                     </button>
                                 </div>
                             </li>
@@ -68,7 +68,7 @@
                         <div class="card-tools">
                             <div class="form-inline flex-nowrap gx-3">
                                 <div class="form-wrap w-100px">
-                                    <em class="icon ni ni-dashlite"></em>
+                                    <em class="icon ni ni-user-list"></em>
                                 </div>
                             </div><!-- .form-inline -->
                         </div><!-- .card-tools -->
@@ -84,7 +84,7 @@
                         <div class="card-body">
                             <div class="search-content">
                                 <a href="#" class="search-back btn btn-icon toggle-search" data-target="search"><em class="icon ni ni-arrow-left"></em></a>
-                                <input type="text" class="form-control border-transparent form-focus-none" placeholder="Search by user or email">
+                                <input type="text" class="form-control border-transparent form-focus-none" v-model="search" placeholder="Search by nama">
                                 <button class="search-submit btn btn-icon"><em class="icon ni ni-search"></em></button>
                             </div>
                         </div>
@@ -126,16 +126,19 @@
                                 <span>{{ item.created_at }}</span>
                             </div>
                             <div class="nk-tb-col">
-                                <span class="tb-status" v-bind:class="{'text-success': item.status == 'aktif', 'text-danger': item.status == 'tidak aktif'}">{{ item.status}}</span>
+                                <span 
+                                    class="tb-status" 
+                                    v-bind:class="{'text-success': item.status == 'aktif', 'text-danger': item.status == 'tidak aktif'}">{{ item.status}}</span>
                             </div>
                             <div class="nk-tb-col tb-col-md">
                                 <button 
                                     type="button" 
                                     v-on:click="editUser(item.id)" 
-                                    class="btn btn-icon btn-secondary" 
+                                    class="btn btn-icon btn-secondary btn-table-sm" 
                                     data-bs-toggle="modal" 
                                     data-bs-target="#modalAddUser">
-                                        <em class="icon ni ni-pen2"></em>
+                                        <!-- <em class="icon ni ni-pen2"></em> -->
+                                        <em class="icon ni ni-account-setting"></em>
                                 </button>
                             </div>
                         </div><!-- .nk-tb-item -->
@@ -171,8 +174,8 @@
                     <em class="icon ni ni-cross"></em>
                 </a>
                 <div class="modal-header">
-                    <h5 class="modal-title" v-if="mode === 'create'">Create user</h5>
-                    <h5 class="modal-title" v-if="mode === 'update'">Update user</h5>
+                    <h5 class="modal-title" v-if="mode === 'create'">Create user (<em class="icon ni ni-user-add"></em>)</h5>
+                    <h5 class="modal-title" v-if="mode === 'update'">Update user (<em class="icon ni ni-account-setting"></em>)</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-validate is-alter">
@@ -254,8 +257,8 @@
                             </div>
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" v-if="mode === 'create'" v-on:click="createUser" class="btn btn-lg btn-primary">Create</button>
-                            <button type="submit" v-if="mode === 'update'" v-on:click="createUser" class="btn btn-lg btn-primary">Update</button>
+                            <button type="submit" v-if="mode === 'create'" v-on:click="createUser" class="btn btn-lg btn-success">Create</button>
+                            <button type="submit" v-if="mode === 'update'" v-on:click="createUser" class="btn btn-lg btn-warning">Update</button>
                         </div>
                         <div class="loading-info" v-show="loading">
                             <span v-if="mode === 'create'"><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> creating..</span>

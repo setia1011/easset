@@ -87,16 +87,16 @@
                                             <a class="nav-link" href="#">Terms & Condition</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Privacy Policy</a>
+                                            <a class="nav-link" href="#">Help</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Help</a>
+                                            <a href="https://techack.id" class="nav-link"><em class="icon ni ni-terminal"></em><span class="ms-1">TecHack</span></a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="nk-block-content text-center text-lg-left">
-                                        <p class="text-soft">&copy; 2022 e-asset. All Rights Reserved.</p>
+                                        <p class="text-soft">&copy; 2022 e-asset. | <a href="https://global.ac.id">Global Institute</a></p>
                                     </div>
                                 </div>
                             </div>

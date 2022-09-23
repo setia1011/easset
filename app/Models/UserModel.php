@@ -38,7 +38,8 @@ class UserModel extends Model {
         $q1 = $this->db->query($sql2)->getResultArray();
         $qx = $this->db->query($sql2)->getNumRows();
 
-        $data['total_rows'] = $qx;
+        $data['totalUser'] = $result;
+        $data['totalRows'] = $qx;
         $data['items'] = $q1;
         $data['totalPage'] = $total_pages;
         

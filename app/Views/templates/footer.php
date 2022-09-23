@@ -2,12 +2,12 @@
             <div class="nk-footer nk-footer-fluid bg-lighter">
                 <div class="container-xl">
                     <div class="nk-footer-wrap">
-                        <div class="nk-footer-copyright"> &copy; 2022 e-asset. Made by <a href="https://techack.id">TecHack</a>
+                        <div class="nk-footer-copyright"> &copy; 2022 e-asset | <a href="https://global.ac.id">Global Institute</a>
                         </div>
                         <div class="nk-footer-links">
                             <ul class="nav nav-sm">
                                 <li class="nav-item">
-                                    <a href="" data-bs-toggle="modal" data-bs-target="#region" class="nav-link"><em class="icon ni ni-globe"></em><span class="ms-1">Global Institute</span></a>
+                                    <a href="https://techack.id" class="nav-link"><em class="icon ni ni-terminal"></em><span class="ms-1">TecHack</span></a>
                                 </li>
                             </ul>
                         </div>
