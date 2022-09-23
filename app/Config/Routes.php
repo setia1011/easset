@@ -44,6 +44,9 @@ $routes->get('/app/laporan', 'App::laporan');
 // Auth
 $routes->get('/auth/login', 'Auth::index');
 $routes->post('/auth/authenticate', 'Auth::authenticate');
+$routes->post('/auth/validate-pass', 'Auth::validatePass');
+$routes->post('/auth/confirm-pass', 'Auth::confirmPass');
+$routes->post('/auth/update-pass', 'Auth::updatePass');
 $routes->get('/auth/logout', 'Auth::logout');
 
 // User

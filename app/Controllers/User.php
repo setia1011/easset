@@ -79,6 +79,8 @@ class User extends BaseController {
 
     // password
     public function password() {
-
+        $data['pagefile'] = 'user_password';
+        $data['pagename'] = 'Password';
+        return view('pages/user_password', $data);
     }
 }

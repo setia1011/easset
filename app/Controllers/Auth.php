@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AuthModel;
+use App\Libraries\Utils;
 use Respect\Validation\Validator as v;
 
 class Auth extends BaseController {
@@ -11,6 +12,7 @@ class Auth extends BaseController {
         return view('login');
     }
 
+    // Register, not used yet
     public function register() {
         $d = json_decode(file_get_contents("php://input"), TRUE);
         $username = $d['username'];
@@ -19,6 +21,50 @@ class Auth extends BaseController {
         if ($n_password === $c_password) {
             $password = password_hash($n_password, PASSWORD_DEFAULT);
         }
+    }
+
+    public function validatePass() {
+        $session = \Config\Services::session();
+        $utils = new Utils();
+        $model = new AuthModel();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        
+        if (v::alnum($utils->passCharExs())->validate($d['password'])) {
+            if ($d['ref'] == 'o') {
+                $userInfo = $model->userInfo($session->username);
+                if (!password_verify($d['password'], $userInfo[0]['password'])) {
+                    echo json_encode('not valid');
+                } else {
+                    echo json_encode('valid');
+                }
+            } else {
+                echo json_encode('valid');
+            }
+        } else {
+            echo json_encode('not valid');
+        }
+    }
+
+    // confirm password but not used
+    public function confirmPass() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        if ($d['n_password'] == $d['c_password']) {
+            echo json_encode('valid');
+        } else { echo json_encode('not valid'); }
+    }
+
+    public function updatePass() {
+        $session = \Config\Services::session();
+        $model = new AuthModel();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $d['uid'] = $session->id;
+        $d['password'] = password_hash($d['n_password'], PASSWORD_DEFAULT);
+
+        if ($d['n_password'] == $d['c_password']) {
+            if ($model->updatePass($d) > 0) {
+                echo json_encode('Berhasil update password');
+            } else { echo json_encode('Gagal update password!'); }
+        } else { echo json_encode('Password tidak sama'); }
     }
 
     public function authenticate() {
