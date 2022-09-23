@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use App\Libraries\Utils;
 use Respect\Validation\Validator as v;
 
 class User extends BaseController {
@@ -33,6 +34,7 @@ class User extends BaseController {
     public function createUser() {
         $d = json_decode(file_get_contents("php://input"), true);
         $model = new UserModel();
+        $utils = new Utils();
 
         // actor (user) id from session
         $session = \Config\Services::session();
@@ -47,7 +49,7 @@ class User extends BaseController {
                 ->key('nomor_id', v::alnum())
                 ->key('status', v::alnum(' '))
                 ->validate($d);
-        $v2 = v::alnum('@', '#', '&', '!')->validate($d['password']);
+        $v2 = v::alnum($utils->passCharExs())->validate($d['password']);
         $v3 = v::number()->validate($d['uid']);
 
         // hash password
@@ -74,7 +76,34 @@ class User extends BaseController {
 
     // profile
     public function profile() {
+        $data['pagefile'] = 'user_profile';
+        $data['pagename'] = 'Profile';
+        return view('pages/user_profile', $data);
+    }
 
+    public function updateUser() {
+        $d = json_decode(file_get_contents("php://input"), true);
+        $model = new UserModel();
+
+        // actor (user) id from session
+        $session = \Config\Services::session();
+        $d['actor'] = $session->id;
+        $d['mode'] = 'update-profile';
+
+        $v1 = v::key('nama', v::alnum(' ', ',', '.'))
+                ->key('email', v::email())
+                ->key('jenis_id', v::alnum())
+                ->key('nomor_id', v::alnum())
+                ->validate($d);
+        $v3 = v::number()->validate($d['uid']);
+
+        // Update
+        if ($v1 && $v3) {
+            if ($model->updateUser($d) < 1) { echo json_encode(['message' => 'Tidak ada perubahan data..']);
+            } else { echo json_encode(['message' => 'Profile berhasil diupdate..']); }
+        } else {
+            echo json_encode(['message' => 'Data tidak valid!']);
+        }
     }
 
     // password

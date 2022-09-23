@@ -138,7 +138,29 @@ class UserModel extends Model {
                     return $db->affectedRows();
                 }
             }
-            
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    // create user
+    public function updateUser($d) {
+        try {
+            $uid = $d['uid'];
+            $actor = $d['actor'];
+            $nama = $d['nama'];
+            $email = $d['email'];
+            $jenis_id = $d['jenis_id'];
+            $nomor_id = $d['nomor_id'];
+
+            $db = \Config\Database::connect();
+            $db->query("UPDATE user SET
+                nama = '$nama', 
+                email = '$email', 
+                jenis_id = '$jenis_id', 
+                nomor_id = '$nomor_id', 
+                updated_by = '$actor' WHERE id = '$uid'");
+            return $db->affectedRows();
         } catch (\Exception $e) {
             return $e->getMessage();
         }

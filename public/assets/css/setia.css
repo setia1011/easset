@@ -4,3 +4,7 @@
     width: auto;
     padding: 15px 0 15px 0;
 }
+
+.text-not-italic {
+    font-style: normal;
+}

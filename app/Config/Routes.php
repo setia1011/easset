@@ -54,6 +54,7 @@ $routes->get('/user', 'User::index');
 $routes->post('/user/all-users', 'User::allUsers');
 $routes->post('/user/a-user', 'User::userById');
 $routes->post('/user/create-user', 'User::createUser');
+$routes->post('/user/update-user', 'User::updateUser');
 $routes->get('/user/profile', 'User::profile');
 $routes->get('/user/password', 'User::password');
 
