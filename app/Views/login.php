@@ -96,7 +96,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="nk-block-content text-center text-lg-left">
-                                        <p class="text-soft">&copy; 2022 e-asset. | <a href="https://global.ac.id">Global Institute</a></p>
+                                        <p class="text-soft">&copy; 2022 e-asset | <a href="https://global.ac.id">Global Institute</a></p>
                                     </div>
                                 </div>
                             </div>
