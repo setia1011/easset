@@ -12,6 +12,7 @@ class UserModel extends Model {
         $perPage = $d['data']['perPage'];
         $offset = ($currentPage - 1) * $perPage;
 
+        $sql0 = "SELECT id FROM user";
         $sql1 = "SELECT id FROM user";
         $sql2 = "SELECT 
             id, 
@@ -38,7 +39,7 @@ class UserModel extends Model {
         $q1 = $this->db->query($sql2)->getResultArray();
         $qx = $this->db->query($sql2)->getNumRows();
 
-        $data['totalUser'] = $result;
+        $data['totalUser'] = $db->query($sql0)->getNumRows();
         $data['totalRows'] = $qx;
         $data['items'] = $q1;
         $data['totalPage'] = $total_pages;
