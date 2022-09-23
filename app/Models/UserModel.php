@@ -45,10 +45,34 @@ class UserModel extends Model {
         return $data;
     }
 
+    // single user by id
+    public function userById($d) {
+        try {
+            $uid = $d['uid'];
+            $db = \Config\Database::connect();
+            $sql = $db->query("SELECT 
+                id, 
+                username, 
+                level, 
+                nama, 
+                email, 
+                jenis_id, 
+                nomor_id, 
+                DATE_FORMAT(created_at, '%d/%m/%Y %H:%i:%s') created_at, 
+                status 
+            FROM user WHERE id = '$uid'")->getResultArray();
+            return $sql;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
     // create user
     public function createUser($d) {
         try {
-            $db = \Config\Database::connect();
+            $mode = $d['mode'];
+            $uid = $d['uid'];
+            $actor = $d['actor'];
             $username = $d['username'];
             $password = $d['password'];
             $level = $d['level'];
@@ -57,25 +81,63 @@ class UserModel extends Model {
             $jenis_id = $d['jenis_id'];
             $nomor_id = $d['nomor_id'];
             $status = $d['status'];
-            $sql = $db->query("INSERT INTO user (
-                username, 
-                password, 
-                level, 
-                nama,
-                email, 
-                jenis_id, 
-                nomor_id,
-                status) 
-            VALUES (
-                '$username',
-                '$password',
-                '$level',
-                '$nama',
-                '$email',
-                '$jenis_id',
-                '$nomor_id',
-                '$status')");
-            return $db->affectedRows();
+
+            // Create
+            if ($mode == 'create') {
+                $db = \Config\Database::connect();
+                $sql = $db->query("INSERT INTO user (
+                    username, 
+                    password, 
+                    level, 
+                    nama,
+                    email, 
+                    jenis_id, 
+                    nomor_id,
+                    created_by,
+                    status) 
+                VALUES (
+                    '$username',
+                    '$password',
+                    '$level',
+                    '$nama',
+                    '$email',
+                    '$jenis_id',
+                    '$nomor_id',
+                    '$actor',
+                    '$status')");
+                return $db->affectedRows();
+            }
+
+            // Update
+            if ($mode == 'update') {
+                if (!empty($password)) {
+                    $db = \Config\Database::connect();
+                    $db->query("UPDATE user SET 
+                        username = '$username', 
+                        password = '$password', 
+                        level = '$level', 
+                        nama = '$nama', 
+                        email = '$email', 
+                        jenis_id = '$jenis_id', 
+                        nomor_id = '$nomor_id', 
+                        updated_by = '$actor',
+                        status = '$status' WHERE id = '$uid'");
+                    return $db->affectedRows();
+                } else {
+                    $db = \Config\Database::connect();
+                    $db->query("UPDATE user SET 
+                        username = '$username',
+                        level = '$level', 
+                        nama = '$nama', 
+                        email = '$email', 
+                        jenis_id = '$jenis_id', 
+                        nomor_id = '$nomor_id', 
+                        updated_by = '$actor',
+                        status = '$status' WHERE id = '$uid'");
+                    return $db->affectedRows();
+                }
+            }
+            
         } catch (\Exception $e) {
             return $e->getMessage();
         }

@@ -6,6 +6,7 @@ var application = new Vue({
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     },
     data: {
+        mode: 'create',
         loading: false,
         linfo: false,
         ainfo: null,
@@ -30,6 +31,7 @@ var application = new Vue({
             {label: 'Aktif', code: 'aktif'}, 
             {label: 'Tidak Aktif', code: 'tidak aktif'},
         ],
+        uid: null,
         username: null,
         password: null,
         level: null,
@@ -41,7 +43,7 @@ var application = new Vue({
     },
     watch: {
         level: function() {
-            console.log(this.level);
+            // console.log(this.level);
         }
     },
     computed: {
@@ -53,6 +55,17 @@ var application = new Vue({
         this.fetchData();
     },
     methods: {
+        clearUserInfo: function() {
+            this.uid = null;
+            this.username = null;
+            this.password = null;
+            this.level = null;
+            this.nama = null;
+            this.email = null;
+            this.jenis_id = null;
+            this.nomor_id = null;
+            this.status = null;
+        },
         clickCallback: function(pageNum) {
             this.currentPage = Number(pageNum);
             this.fetchData();
@@ -67,29 +80,21 @@ var application = new Vue({
             })).then(res => {
                 // console.log(res.data);
                 this.items = res.data['items'];
-                res.data['items'].forEach(e => {
-                    if (e.kode_bc_eselon3) {
-                        this.checkedWilayah.push(e.id_wilayah);
-                    }
-                });
                 this.totalPage = res.data['totalPage'];
                 this.index = this.currentPage * this.perPage;
             }).catch(err => {
                 console.log(err);
             });
         },
-        selectedLevel: function(v) {
-            this.level = v.code;
+        createMode: function() {
+            this.mode = 'create';
+            this.clearUserInfo();
         },
-        selectedJenisId: function(v) {
-            this.jenis_id = v.code;
-        },
-        selectedStatus: function(v) {
-            this.status = v.code;
-        },
-        createUser: function() {
+        createUser: function(ref) {
             this.loading = true;
             axios.post('../user/create-user', JSON.stringify({
+                mode: this.mode,
+                uid: this.uid,
                 username: this.username,
                 password: this.password,
                 level: this.level,
@@ -99,13 +104,12 @@ var application = new Vue({
                 nomor_id: this.nomor_id,
                 status: this.status
             })).then(res => {
-                if (res.data.message === 'User berhasil dibuat..') {
+                if (res.data.message === 'User berhasil dibuat..' || res.data.message === 'User berhasil diupdate..') {
                     this.ainfo = res.data.message;
                     setTimeout(() => {
                         this.loading = true;
                         setTimeout(() => {
                             this.loading = false;
-                            this.loading
                             this.linfo = true;
                             setTimeout(() => {
                                 this.linfo = false;
@@ -123,13 +127,12 @@ var application = new Vue({
                         this.loading = true;
                         setTimeout(() => {
                             this.loading = false;
-                            this.loading
                             this.linfo = true;
                             setTimeout(() => {
                                 this.linfo = false;
                                 // this.modalCreateUser = false;
-                                const elem = this.$refs.baka;
-                                elem.click();
+                                // const elem = this.$refs.baka;
+                                // elem.click();
                             }, 1500);
                         }, 1000);
                     }, 1000);
@@ -138,5 +141,22 @@ var application = new Vue({
                 console.log(err);
             });
         },
+        editUser: function(uid) {
+            this.uid = uid;
+            this.mode = 'update';
+            axios.post('../user/a-user', JSON.stringify({
+                uid: uid
+            })).then(res => {
+                this.username = res.data.userInfo[0].username;
+                this.nama = res.data.userInfo[0].nama;
+                this.nomor_id = res.data.userInfo[0].nomor_id;
+                this.email = res.data.userInfo[0].email;
+                this.level = res.data.userInfo[0].level;
+                this.jenis_id = res.data.userInfo[0].jenis_id;
+                this.status = res.data.userInfo[0].status;
+            }).catch(err => {
+                console.log(err);
+            });
+        }
     }
 });

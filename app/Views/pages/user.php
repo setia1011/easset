@@ -49,7 +49,7 @@
                             <li><a href="#" class="btn btn-white btn-outline-light"><em class="icon ni ni-download-cloud"></em><span>Export</span></a></li>
                             <li class="nk-block-tools-opt">
                                 <div class="drodown">
-                                    <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal" data-bs-target="#modalAddUser">
+                                    <button type="button" class="btn btn-icon btn-primary" v-on:click="createMode" data-bs-toggle="modal" data-bs-target="#modalAddUser">
                                         <em class="icon ni ni-plus"></em>
                                     </button>
                                 </div>
@@ -129,7 +129,14 @@
                                 <span class="tb-status" v-bind:class="{'text-success': item.status == 'aktif', 'text-danger': item.status == 'tidak aktif'}">{{ item.status}}</span>
                             </div>
                             <div class="nk-tb-col tb-col-md">
-                                <button type="button" class="btn btn-icon btn-secondary"><em class="icon ni ni-pen2"></em></button>
+                                <button 
+                                    type="button" 
+                                    v-on:click="editUser(item.id)" 
+                                    class="btn btn-icon btn-secondary" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modalAddUser">
+                                        <em class="icon ni ni-pen2"></em>
+                                </button>
                             </div>
                         </div><!-- .nk-tb-item -->
                     </div><!-- .nk-tb-list -->
@@ -160,11 +167,12 @@
     <div class="modal fade" tabindex="-1" id="modalAddUser">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <a href="#" class="close" ref="baka" data-bs-dismiss="modal" aria-label="Close">
+                <a href="#" class="close" ref="baka" v-on:click="createMode" data-bs-dismiss="modal" aria-label="Close">
                     <em class="icon ni ni-cross"></em>
                 </a>
                 <div class="modal-header">
-                    <h5 class="modal-title">Create user</h5>
+                    <h5 class="modal-title" v-if="mode === 'create'">Create user</h5>
+                    <h5 class="modal-title" v-if="mode === 'update'">Update user</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-validate is-alter">
@@ -203,7 +211,11 @@
                                 <div class="form-group">
                                     <label class="form-label">Jenis ID</label>
                                     <div class="form-control-wrap">
-                                        <v-select @input="selectedJenisId" :options="jenis_id_options"></v-select>
+                                        <v-select 
+                                            v-model="jenis_id"
+                                            :reduce="label => label.code" 
+                                            :options="jenis_id_options">
+                                        </v-select>
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +233,11 @@
                                 <div class="form-group">
                                     <label class="form-label">Level</label>
                                     <div class="form-control-wrap">
-                                        <v-select @input="selectedLevel" :options="level_options"></v-select>
+                                        <v-select 
+                                            v-model="level" 
+                                            :reduce="label => label.code" 
+                                            :options="level_options">
+                                        </v-select>
                                     </div>
                                 </div>
                             </div>
@@ -229,19 +245,27 @@
                                 <div class="form-group">
                                     <label class="form-label">Status</label>
                                     <div class="form-control-wrap">
-                                        <v-select @input="selectedStatus" :options="status_options"></v-select>
+                                        <v-select 
+                                            v-model="status" 
+                                            :reduce="label => label.code" 
+                                            :options="status_options"></v-select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" v-on:click="createUser" class="btn btn-lg btn-primary">Submit</button>
+                            <button type="submit" v-if="mode === 'create'" v-on:click="createUser" class="btn btn-lg btn-primary">Create</button>
+                            <button type="submit" v-if="mode === 'update'" v-on:click="createUser" class="btn btn-lg btn-primary">Update</button>
                         </div>
                         <div class="loading-info" v-show="loading">
-                            <img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> submitting..
+                            <span v-if="mode === 'create'"><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> creating..</span>
+                            <span v-if="mode === 'update'"><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> updating..</span>
                         </div>
                         <div class="login-info" v-show="linfo">
-                            <div v-if="ainfo == 'User berhasil dibuat..'" class="alert alert-success alert-icon">
+                            <div v-if="ainfo == 'User berhasil dibuat..' || ainfo == 'User berhasil diupdate..'" class="alert alert-success alert-icon">
+                                <em class="icon ni ni-check-circle"></em> <strong>{{ ainfo }}</strong>
+                            </div>
+                            <div v-else-if="ainfo == 'Tidak ada perubahan data..'" class="alert alert-warning alert-icon">
                                 <em class="icon ni ni-check-circle"></em> <strong>{{ ainfo }}</strong>
                             </div>
                             <div v-else class="alert alert-danger alert-icon">
