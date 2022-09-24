@@ -11,21 +11,29 @@ class App extends BaseController {
 
     // pemasukan
     public function pemasukan() {
-
+        $data['pagefile'] = 'pemasukan';
+        $data['pagename'] = 'Pemasukan';
+        return view('pages/pemasukan', $data);
     }
 
     // alokasi
     public function alokasi() {
-
+        $data['pagefile'] = 'alokasi';
+        $data['pagename'] = 'Alokasi';
+        return view('pages/alokasi', $data);
     }
 
     // pengeluaran
     public function pengeluaran() {
-
+        $data['pagefile'] = 'pengeluaran';
+        $data['pagename'] = 'Pengeluaran';
+        return view('pages/pengeluaran', $data);
     }
 
     // laporan
     public function laporan() {
-
+        $data['pagefile'] = 'laporan';
+        $data['pagename'] = 'Laporan';
+        return view('pages/laporan', $data);
     }
 }

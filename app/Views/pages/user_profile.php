@@ -36,9 +36,9 @@
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between">
             <div class="nk-block-head-content">
-                <h3 class="nk-block-title page-title">Personal Information</h3>
+                <h3 class="nk-block-title page-title">Profile</h3>
                 <div class="nk-block-des text-soft">
-                    <p>Basic info, like your name and address, that you use on e-asset.</p>
+                    <p>Personal information, like your name and ID, that you use on e-asset.</p>
                 </div>
             </div>
         </div><!-- .nk-block-between -->

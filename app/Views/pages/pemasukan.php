@@ -2,6 +2,21 @@
 
 <?php $this->section('contents') ?>
 
-This is contents.. 
+<div id="v-pemasukan">
+    <div class="nk-block-head nk-block-head-sm">
+        <div class="nk-block-between">
+            <div class="nk-block-head-content">
+                <h3 class="nk-block-title page-title">Pemasukan</h3>
+                <div class="nk-block-des text-soft">
+                    <p>Manajemen pemasukan aset</p>
+                </div>
+            </div>
+        </div><!-- .nk-block-between -->
+    </div><!-- .nk-block-head -->
+    <div class="nk-block">
+        Test
+    </div><!-- .nk-block -->
+</div>
+
 
 <?php $this->endSection() ?>
