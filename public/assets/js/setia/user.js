@@ -27,7 +27,7 @@ var application = new Vue({
         ],
         level_options: [
             {label: 'Admin', code: 'admin'}, 
-            {label: 'Client', code: 'client'},
+            {label: 'User', code: 'user'},
         ],
         status_options: [
             {label: 'Aktif', code: 'aktif'}, 
