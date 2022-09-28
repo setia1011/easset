@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `aset_header` (
   `jenis` int(11) DEFAULT NULL,
   `nama` varchar(500) DEFAULT NULL,
   `uraian` text,
+  `kondisi` varchar(50) DEFAULT NULL,
   `jumlah` float DEFAULT NULL,
   `satuan` int(11) DEFAULT NULL,
   `status` enum('ready','reserved','taken') DEFAULT NULL,
