@@ -37,7 +37,10 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'App::index');
 $routes->get('/app/pemasukan', 'App::pemasukan');
+$routes->get('/app/permintaan', 'App::permintaan');
 $routes->get('/app/alokasi', 'App::alokasi');
+$routes->get('/app/pemakaian', 'App::pemakaian');
+$routes->get('/app/pengembalian', 'App::pengembalian');
 $routes->get('/app/pengeluaran', 'App::pengeluaran');
 $routes->get('/app/laporan', 'App::laporan');
 
@@ -57,6 +60,11 @@ $routes->post('/user/create-user', 'User::createUser');
 $routes->post('/user/update-user', 'User::updateUser');
 $routes->get('/user/profile', 'User::profile');
 $routes->get('/user/password', 'User::password');
+
+// Ref
+$routes->get('/', 'Ref::index');
+$routes->get('/ref/set-jenis', 'Ref::setJenis');
+$routes->get('/ref/set-satuan', 'Ref::setSatuan');
 
 /*
  * --------------------------------------------------------------------

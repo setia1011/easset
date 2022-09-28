@@ -16,8 +16,29 @@ class App extends BaseController {
         return view('pages/pemasukan', $data);
     }
 
+    // permintaan
+    public function permintaan() {
+        $data['pagefile'] = 'pemasukan';
+        $data['pagename'] = 'Pemasukan';
+        return view('pages/pemasukan', $data);
+    }
+
     // alokasi
     public function alokasi() {
+        $data['pagefile'] = 'alokasi';
+        $data['pagename'] = 'Alokasi';
+        return view('pages/alokasi', $data);
+    }
+
+    // pemakaian
+    public function pemakaian() {
+        $data['pagefile'] = 'alokasi';
+        $data['pagename'] = 'Alokasi';
+        return view('pages/alokasi', $data);
+    }
+
+    // pengembalian
+    public function pengembalian() {
         $data['pagefile'] = 'alokasi';
         $data['pagename'] = 'Alokasi';
         return view('pages/alokasi', $data);

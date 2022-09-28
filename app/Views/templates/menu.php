@@ -40,13 +40,45 @@
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
+                                <a href="<?= base_url('/app/permintaan'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">Permintaan</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                            <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/alokasi'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Alokasi</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
+                                <a href="<?= base_url('/app/pemakaian'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">Pemakaian (Kondisi)</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                            <li class="nk-menu-item">
+                                <a href="<?= base_url('/app/pengembalian'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">Pengembalian</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                            <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pengeluaran'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengeluaran</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                        </ul><!-- .nk-menu-sub -->
+                    </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item has-sub">
+                        <a href="#" class="nk-menu-link nk-menu-toggle">
+                            <span class="nk-menu-text">Referensi</span>
+                        </a>
+                        <ul class="nk-menu-sub">
+                            <li class="nk-menu-item">
+                                <a href="<?= base_url('/ref/set-jenis'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">Jenis</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                            <li class="nk-menu-item">
+                                <a href="<?= base_url('/ref/set-satuan'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">Satuan</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                         </ul><!-- .nk-menu-sub -->
