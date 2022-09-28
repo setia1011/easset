@@ -42,7 +42,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div id="auth-form">
+                                <div id="auth-form" v-on:keyup.enter="auth">
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="default-01">Username</label>

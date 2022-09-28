@@ -15,6 +15,9 @@ var application = new Vue({
     mounted() {
     },
     methods: {
+        showMessage: function() {
+            console.log(34);
+        },
         auth: function() {
             this.loading = true;
             axios.post('../auth/authenticate', JSON.stringify({
