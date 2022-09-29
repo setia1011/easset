@@ -127,6 +127,15 @@ var application = new Vue({
             this.jenis = null,
             this.uraian = null;
             this.status = 'aktif';
+        },
+        delJenis: function(jid) {
+            axios.post('../ref/delete-jenis', JSON.stringify({
+                jid: jid
+            })).then(res => {
+                this.fetchJenis();
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
 });

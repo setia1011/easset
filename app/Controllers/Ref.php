@@ -58,6 +58,21 @@ class Ref extends BaseController {
         }
     }
 
+    public function delJenis() {
+        $model = new RefModel();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $v = v::key('jid', v::number())->validate($d);
+        if ($v) {
+            if ($model->delJenis($d) > 0) {
+                echo json_encode('Berhasil menghapus data jenis');
+            } else {
+                echo json_encode('Gagal menghapus data jenis');
+            }
+        } else {
+            echo json_encode('Gagal menghapus data jenis');
+        }
+    }
+
     // satuan
     public function setSatuan() {
         $data['pagefile'] = 'satuan';
@@ -100,6 +115,21 @@ class Ref extends BaseController {
             echo json_encode(['message' => 'Jenis aset info founded', 'satuanInfo' => $model->satuanById($d)]);
         } else {
             echo json_encode(['message' => 'Data tidak valid!']);
+        }
+    }
+
+    public function delSatuan() {
+        $model = new RefModel();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $v = v::key('sid', v::number())->validate($d);
+        if ($v) {
+            if ($model->delSatuan($d) > 0) {
+                echo json_encode('Berhasil menghapus data satuan');
+            } else {
+                echo json_encode('Gagal menghapus data satuan');
+            }
+        } else {
+            echo json_encode('Gagal menghapus data satuan');
         }
     }
 }

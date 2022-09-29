@@ -152,7 +152,7 @@
                                             </button>
                                             <button 
                                                 type="button" 
-                                                v-on:click="" 
+                                                v-on:click="delSatuan(item.id)" 
                                                 class="btn btn-sm btn-icon btn-danger btn-table-sm">
                                                     <em class="icon ni ni-trash"></em>
                                             </button>

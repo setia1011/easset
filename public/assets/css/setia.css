@@ -8,3 +8,14 @@
 .text-not-italic {
     font-style: normal;
 }
+
+.alert-sm {
+    margin-left: 10px;
+    padding: .4rem 1.25rem;
+    padding-left: 2.5rem !important;
+}
+
+.alert-sm .icon {
+    top: auto !important;
+    left: .6rem !important;
+}

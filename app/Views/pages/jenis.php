@@ -116,6 +116,9 @@
                         <div class="nk-fmg-search">
                             <em class="icon ni ni-search"></em>
                             <input type="text" v-model="search" class="form-control border-transparent form-focus-none w-40" placeholder="Cari jenis aset">
+                            <!-- <div class="alert alert-sm alert-success alert-icon">
+                                <em class="icon ni ni-check-circle"></em> <strong>Test..</strong>
+                            </div> -->
                         </div>
                         <div class="border-bottom mb-4 w-40"></div>
                         <div>
@@ -152,7 +155,7 @@
                                             </button>
                                             <button 
                                                 type="button" 
-                                                v-on:click="" 
+                                                v-on:click="delJenis(item.id)" 
                                                 class="btn btn-sm btn-icon btn-danger btn-table-sm">
                                                     <em class="icon ni ni-trash"></em>
                                             </button>

@@ -90,6 +90,17 @@ class RefModel extends Model {
         }
     }
 
+    public function delJenis($d) {
+        try {
+            $jid = $d['jid'];
+            $db = \Config\Database::connect();
+            $db->query("DELETE FROM aset_jenis WHERE id = '$jid'");
+            return $db->affectedRows();
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
     // Satuan
     public function allSatuan($d) {
         try {
@@ -171,6 +182,17 @@ class RefModel extends Model {
                 $db->query("UPDATE aset_satuan SET satuan = '$satuan', uraian = '$uraian', `status` = '$status' WHERE id = '$sid'");
                 return $db->affectedRows();
             }
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    public function delSatuan($d) {
+        try {
+            $sid = $d['sid'];
+            $db = \Config\Database::connect();
+            $db->query("DELETE FROM aset_satuan WHERE id = '$sid'");
+            return $db->affectedRows();
         } catch (\Exception $e) {
             return 0;
         }

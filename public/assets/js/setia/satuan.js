@@ -127,6 +127,15 @@ var application = new Vue({
             this.satuan = null,
             this.uraian = null;
             this.status = 'aktif';
+        },
+        delSatuan: function(sid) {
+            axios.post('../ref/delete-satuan', JSON.stringify({
+                sid: sid
+            })).then(res => {
+                this.fetchSatuan();
+            }).catch(err => {
+                console.log(err);
+            });
         }
     }
 });
