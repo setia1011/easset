@@ -64,6 +64,9 @@ $routes->get('/user/password', 'User::password');
 // Ref
 $routes->get('/', 'Ref::index');
 $routes->get('/ref/set-jenis', 'Ref::setJenis');
+$routes->post('/ref/save-jenis-aset', 'Ref::saveJenis');
+$routes->post('/ref/all-jenis-aset', 'Ref::allJenis');
+$routes->post('/ref/a-jenis', 'Ref::jenisById');
 $routes->get('/ref/set-satuan', 'Ref::setSatuan');
 
 /*

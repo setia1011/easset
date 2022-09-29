@@ -21,7 +21,7 @@
                 </div> -->
                 <div id="form-pemasukan">
                     <div class="row g-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label class="form-label" for="email-address-1">Nama</label>
                                 <div class="form-control-wrap">
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group">
                                 <label class="form-label" for="phone-no-1">Uraian</label>
                                 <div class="form-control-wrap">
@@ -87,7 +87,7 @@
                         
                         <div class="col-12">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-lg btn-primary">Save Informations</button>
+                                <button type="submit" class="btn btn-lg btn-primary">Save</button>
                             </div>
                         </div>
                     </div>
