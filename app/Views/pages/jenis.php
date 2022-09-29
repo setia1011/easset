@@ -113,6 +113,11 @@
                         <!-- <div class="card-head">
                             <h5 class="card-title">Table</h5>
                         </div> -->
+                        <div class="nk-fmg-search">
+                            <em class="icon ni ni-search"></em>
+                            <input type="text" v-model="search" class="form-control border-transparent form-focus-none w-40" placeholder="Cari jenis aset">
+                        </div>
+                        <div class="border-bottom mb-4 w-40"></div>
                         <div>
                             <div class="card-inner p-0">
                                 <div class="nk-tb-list nk-tb-ulist is-compact">
@@ -142,8 +147,14 @@
                                             <button 
                                                 type="button" 
                                                 v-on:click="editJenis(item.id)" 
-                                                class="btn btn-icon btn-outline-warning btn-table-sm">
+                                                class="btn btn-sm btn-icon btn-warning btn-table-sm">
                                                     <em class="icon ni ni-edit"></em>
+                                            </button>
+                                            <button 
+                                                type="button" 
+                                                v-on:click="" 
+                                                class="btn btn-sm btn-icon btn-danger btn-table-sm">
+                                                    <em class="icon ni ni-trash"></em>
                                             </button>
                                         </div>
                                     </div><!-- .nk-tb-item -->

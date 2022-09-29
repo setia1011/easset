@@ -32,7 +32,12 @@ var application = new Vue({
             if (this.mode === 'create') {
                 this.resetForm();
             }
-        }
+        },
+        search: _.debounce(
+            function() {
+               this.fetchJenis();
+            }, 500
+        ),
     },
     computed: {
         getPageCount: function() {
