@@ -132,4 +132,64 @@ class Ref extends BaseController {
             echo json_encode('Gagal menghapus data satuan');
         }
     }
+
+    // kondisi
+    public function setKondisi() {
+        $data['pagefile'] = 'kondisi';
+        $data['pagename'] = 'Kondisi';
+        return view('pages/kondisi', $data);
+    }
+
+    public function saveKondisi() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $session = \Config\Services::session();
+        $d['uid'] = $session->id;
+        $v = v::key('kondisi', v::alnum(' '))->key('uraian', v::alnum(' ', ',', '.'))->validate($d);
+        if ($v) {
+            $model = new RefModel();
+            if ($model->saveKondisi($d) > 0) {
+                echo json_encode('Berhasil menyimpan data kondisi');
+            } else {
+                if ($d['mode'] == 'create') {
+                    echo json_encode('Gagal menyimpan data kondisi');
+                } else {
+                    echo json_encode('Tidak ada perubahan data kondisi');
+                }
+            }
+        } else {
+            echo json_encode('Data tidak valid!');
+        }
+    }
+
+    public function allKondisi() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new RefModel();
+        echo json_encode($model->allKondisi($d));
+    }
+
+    public function kondisiById() {
+        $d = json_decode(file_get_contents("php://input"), true);
+        $v = v::number()->validate($d['kid']);
+        if ($v) {
+            $model = new RefModel();
+            echo json_encode(['message' => 'Jenis aset info founded', 'kondisiInfo' => $model->kondisiById($d)]);
+        } else {
+            echo json_encode(['message' => 'Data tidak valid!']);
+        }
+    }
+
+    public function delKondisi() {
+        $model = new RefModel();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $v = v::key('kid', v::number())->validate($d);
+        if ($v) {
+            if ($model->delKondisi($d) > 0) {
+                echo json_encode('Berhasil menghapus data kondisi');
+            } else {
+                echo json_encode('Gagal menghapus data kondisi');
+            }
+        } else {
+            echo json_encode('Gagal menghapus data kondisi');
+        }
+    }
 }

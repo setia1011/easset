@@ -1,7 +1,7 @@
 Vue.component('paginate', VuejsPaginate);
 Vue.component('v-select', VueSelect.VueSelect);
 var application = new Vue({
-    el: '#v-satuan',
+    el: '#v-kondisi',
     created() {
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     },
@@ -18,14 +18,14 @@ var application = new Vue({
         perPage: 8,
         page: null,
         ainfo: null,
-        satuan: null,
+        kondisi: null,
         uraian: null,
         status_options: [
             {label: 'Aktif', code: 'aktif'}, 
             {label: 'Tidak Aktif', code: 'tidak aktif'},
         ],
         status: null,
-        sid: null
+        kid: null
     },
     watch: {
         mode: function() {
@@ -35,7 +35,7 @@ var application = new Vue({
         },
         search: _.debounce(
             function() {
-               this.fetchSatuan();
+               this.fetchKondisi();
             }, 500
         ),
     },
@@ -45,16 +45,16 @@ var application = new Vue({
         }
     },
     mounted() {
-        this.fetchSatuan();
+        this.fetchKondisi();
         this.status = 'aktif';
     },
     methods: {
         clickCallback: function(pageNum) {
             this.currentPage = Number(pageNum);
-            this.fetchSatuan();
+            this.fetchKondisi();
         },
-        fetchSatuan: function() {
-            axios.post('../ref/all-satuan-aset', JSON.stringify({
+        fetchKondisi: function() {
+            axios.post('../ref/all-kondisi-aset', JSON.stringify({
                 data: {
                     search: this.search,
                     perPage: this.perPage,
@@ -71,24 +71,24 @@ var application = new Vue({
                 console.log(err);
             });
         },
-        saveSatuan: function() {
-            if (this.satuan && this.uraian && this.status) {
+        saveKondisi: function() {
+            if (this.kondisi && this.uraian && this.status) {
                 this.loading = true;
-                axios.post('../ref/save-satuan-aset', JSON.stringify({
+                axios.post('../ref/save-kondisi-aset', JSON.stringify({
                     mode: this.mode,
-                    sid: this.sid,
-                    satuan: this.satuan,
+                    kid: this.kid,
+                    kondisi: this.kondisi,
                     uraian: this.uraian,
                     status: this.status
                 })).then(res => {
-                    if (res.data === 'Berhasil menyimpan data satuan') {
+                    if (res.data === 'Berhasil menyimpan data kondisi') {
                         this.ainfo = res.data;
                         setTimeout(() => {
                             this.loading = false;
                             this.linfo = true;
                             setTimeout(() => {
                                 this.linfo = false;
-                                this.fetchSatuan();
+                                this.fetchKondisi();
                             }, 1500);
                         }, 1000);
                     } else {
@@ -108,32 +108,32 @@ var application = new Vue({
                 console.log('null');
             }
         },
-        editSatuan: function(sid) {
+        editKondisi: function(kid) {
             this.mode = 'edit';
-            this.sid = sid;
-            axios.post('../ref/a-satuan', JSON.stringify({
-                sid: sid
+            this.kid = kid;
+            axios.post('../ref/a-kondisi', JSON.stringify({
+                kid: kid
             })).then(res => {
-                this.satuan = res.data.satuanInfo[0].satuan;
-                this.uraian = res.data.satuanInfo[0].uraian;
-                this.status = res.data.satuanInfo[0].status;
+                this.kondisi = res.data.kondisiInfo[0].kondisi;
+                this.uraian = res.data.kondisiInfo[0].uraian;
+                this.status = res.data.kondisiInfo[0].status;
             }).catch(err => {
                 console.log(err);
             });
         },
         resetForm: function() {
             this.mode = 'create';
-            this.sid = null;
-            this.satuan = null,
+            this.kid = null;
+            this.kondisi = null,
             this.uraian = null;
             this.status = 'aktif';
         },
-        delSatuan: function(sid) {
-            axios.post('../ref/delete-satuan', JSON.stringify({
-                sid: sid
+        delKondisi: function(kid) {
+            axios.post('../ref/delete-kondisi', JSON.stringify({
+                kid: kid
             })).then(res => {
                 this.resetForm();
-                this.fetchSatuan();
+                this.fetchKondisi();
             }).catch(err => {
                 console.log(err);
             });

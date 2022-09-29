@@ -81,6 +81,11 @@
                                     <span class="nk-menu-text">Satuan</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
+                            <li class="nk-menu-item">
+                                <a href="<?= base_url('/ref/set-kondisi'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">Kondisi</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
                         </ul><!-- .nk-menu-sub -->
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">

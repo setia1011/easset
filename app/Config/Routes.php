@@ -73,6 +73,11 @@ $routes->post('/ref/save-satuan-aset', 'Ref::saveSatuan');
 $routes->post('/ref/all-satuan-aset', 'Ref::allSatuan');
 $routes->post('/ref/a-satuan', 'Ref::satuanById');
 $routes->post('/ref/delete-satuan', 'Ref::delSatuan');
+$routes->get('/ref/set-kondisi', 'Ref::setKondisi');
+$routes->post('/ref/save-kondisi-aset', 'Ref::saveKondisi');
+$routes->post('/ref/all-kondisi-aset', 'Ref::allKondisi');
+$routes->post('/ref/a-kondisi', 'Ref::kondisiById');
+$routes->post('/ref/delete-kondisi', 'Ref::delKondisi');
 
 /*
  * --------------------------------------------------------------------

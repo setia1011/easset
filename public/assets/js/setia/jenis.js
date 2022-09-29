@@ -132,6 +132,7 @@ var application = new Vue({
             axios.post('../ref/delete-jenis', JSON.stringify({
                 jid: jid
             })).then(res => {
+                this.resetForm();
                 this.fetchJenis();
             }).catch(err => {
                 console.log(err);

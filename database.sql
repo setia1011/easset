@@ -25,10 +25,11 @@ CREATE TABLE IF NOT EXISTS `aset` (
   `jenis` int(11) DEFAULT NULL,
   `nama` varchar(500) DEFAULT NULL,
   `uraian` text,
-  `kondisi` varchar(50) DEFAULT NULL,
+  `kondisi` enum('new','used','broken') DEFAULT NULL,
+  `foto` varchar(100) DEFAULT NULL,
   `jumlah` float DEFAULT NULL,
   `satuan` int(11) DEFAULT NULL,
-  `status` enum('ready','reserved','taken') DEFAULT NULL,
+  `status` enum('available','not available') DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -49,24 +50,36 @@ CREATE TABLE IF NOT EXISTS `aset_jenis` (
   UNIQUE KEY `jenis` (`jenis`)
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_jenis: ~15 rows (approximately)
+-- Dumping data for table db_easset.aset_jenis: ~3 rows (approximately)
 DELETE FROM `aset_jenis`;
 INSERT INTO `aset_jenis` (`id`, `jenis`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
 	(1, 'atk', 'atk', 1, '2022-09-29 03:15:59', 1, '2022-09-29 05:11:18', 'tidak aktif'),
 	(2, 'furniture', 'furniture', 1, '2022-09-29 03:16:00', 1, '2022-09-29 05:11:42', 'tidak aktif'),
-	(3, 'motor', 'kendaraan roda dua', 1, '2022-09-29 03:16:00', 1, '2022-09-29 03:16:48', 'aktif'),
-	(4, 'mobil', 'kendaraan roda empat', 1, '2022-09-29 03:16:01', 1, '2022-09-29 03:16:53', 'aktif'),
-	(5, 'tes', 'Tes uraian', 1, '2022-09-29 03:16:02', 1, '2022-09-29 03:16:51', 'aktif'),
-	(6, 'botol', 'botol', 1, '2022-09-29 03:16:03', 1, '2022-09-29 05:11:35', 'tidak aktif'),
-	(7, 'tes2', 'Tes 2323', 1, '2022-09-29 03:16:03', 1, '2022-09-29 03:16:56', 'aktif'),
-	(8, 'tes3', 'sdsd', 1, '2022-09-29 03:16:04', 1, '2022-09-29 03:16:59', 'aktif'),
-	(15, 'tes4', 'weqwe', 1, '2022-09-29 03:16:04', 1, '2022-09-29 03:16:57', 'aktif'),
-	(16, 'tes5', 'Test 5555555', 1, '2022-09-29 03:27:06', 1, '2022-09-29 03:28:16', 'aktif'),
-	(17, 'tes6', 'Tes 7567', 1, '2022-09-29 03:27:42', 1, '2022-09-29 03:28:17', 'aktif'),
-	(18, 'tes7', '1212', 1, '2022-09-29 03:31:15', NULL, NULL, 'aktif'),
-	(19, 'tes8', '112eqwe', 1, '2022-09-29 03:38:20', NULL, NULL, 'aktif'),
-	(20, 'tes9', '112eqwe', 1, '2022-09-29 03:38:40', NULL, NULL, 'tidak aktif'),
-	(21, 'tes10', 'adshvhjbhjbkj', 1, '2022-09-29 05:10:57', NULL, NULL, 'tidak aktif');
+	(4, 'mobil', 'kendaraan roda empat', 1, '2022-09-29 03:16:01', 1, '2022-09-29 03:16:53', 'aktif');
+
+-- Dumping structure for table db_easset.aset_kondisi
+CREATE TABLE IF NOT EXISTS `aset_kondisi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kondisi` varchar(50) DEFAULT NULL,
+  `uraian` text,
+  `creator` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `editor` int(11) DEFAULT NULL,
+  `edited_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status` enum('aktif','tidak aktif') DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `kondisi` (`kondisi`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table db_easset.aset_kondisi: ~0 rows (approximately)
+DELETE FROM `aset_kondisi`;
+INSERT INTO `aset_kondisi` (`id`, `kondisi`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
+	(1, 'new', 'new', 1, '2022-09-29 07:51:39', 1, '2022-09-29 07:54:12', 'tidak aktif'),
+	(3, 'used like new', 'used like new', 1, '2022-09-29 07:54:32', NULL, NULL, 'aktif'),
+	(4, 'used very good', 'used very good', 1, '2022-09-29 07:55:33', NULL, NULL, 'aktif'),
+	(5, 'used good', 'used good', 1, '2022-09-29 07:55:42', NULL, NULL, 'aktif'),
+	(6, 'used acceptable', 'used acceptable', 1, '2022-09-29 07:55:54', NULL, NULL, 'aktif'),
+	(7, 'renewed', 'renewed', 1, '2022-09-29 07:56:28', NULL, NULL, 'aktif');
 
 -- Dumping structure for table db_easset.aset_satuan
 CREATE TABLE IF NOT EXISTS `aset_satuan` (
@@ -74,9 +87,9 @@ CREATE TABLE IF NOT EXISTS `aset_satuan` (
   `satuan` varchar(50) DEFAULT NULL,
   `uraian` text,
   `creator` int(11) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `editor` int(11) DEFAULT NULL,
-  `edited_at` timestamp NULL DEFAULT NULL,
+  `edited_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('aktif','tidak aktif') DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `satuan` (`satuan`)
@@ -85,10 +98,9 @@ CREATE TABLE IF NOT EXISTS `aset_satuan` (
 -- Dumping data for table db_easset.aset_satuan: ~4 rows (approximately)
 DELETE FROM `aset_satuan`;
 INSERT INTO `aset_satuan` (`id`, `satuan`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
-	(1, 'pce', 'piece', NULL, NULL, NULL, NULL, 'aktif'),
-	(2, 'unit', 'unit', NULL, NULL, NULL, NULL, 'tidak aktif'),
-	(3, 'tes', 'asas', 1, NULL, NULL, NULL, 'aktif'),
-	(4, 'tess', 'sssasasasa', 1, NULL, NULL, NULL, 'aktif');
+	(1, 'pce', 'piece', 1, NULL, 1, '2022-09-29 07:18:33', 'tidak aktif'),
+	(2, 'unit', 'unit', 1, NULL, 1, '2022-09-29 07:18:33', 'aktif'),
+	(3, 'tes', 'asas', 1, NULL, 1, '2022-09-29 07:18:02', 'aktif');
 
 -- Dumping structure for table db_easset.user
 CREATE TABLE IF NOT EXISTS `user` (
