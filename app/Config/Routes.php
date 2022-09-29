@@ -68,6 +68,9 @@ $routes->post('/ref/save-jenis-aset', 'Ref::saveJenis');
 $routes->post('/ref/all-jenis-aset', 'Ref::allJenis');
 $routes->post('/ref/a-jenis', 'Ref::jenisById');
 $routes->get('/ref/set-satuan', 'Ref::setSatuan');
+$routes->post('/ref/save-satuan-aset', 'Ref::saveSatuan');
+$routes->post('/ref/all-satuan-aset', 'Ref::allSatuan');
+$routes->post('/ref/a-satuan', 'Ref::satuanById');
 
 /*
  * --------------------------------------------------------------------

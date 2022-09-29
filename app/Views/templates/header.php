@@ -14,8 +14,6 @@
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="<?= base_url('assets/css/dashlite.css?ver=3.0.0'); ?>">
     <link id="skin-default" rel="stylesheet" href="<?= base_url('assets/css/theme.css?ver=3.0.0'); ?>">
-     <!-- FontAwesome Icons --> 
-    <!-- <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/libs/fontawesome-icons.css'); ?>">  -->
     <link id="skin-default" rel="stylesheet" href="<?= base_url('assets/css/setia.css'); ?>">
 </head>
 

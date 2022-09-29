@@ -115,7 +115,7 @@ var application = new Vue({
                 jid: jid
             })).then(res => {
                 this.jenis = res.data.jenisInfo[0].jenis;
-                this.uraian = res.data.jenisInfo[0].jenis;
+                this.uraian = res.data.jenisInfo[0].uraian;
                 this.status = res.data.jenisInfo[0].status;
             }).catch(err => {
                 console.log(err);

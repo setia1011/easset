@@ -64,4 +64,42 @@ class Ref extends BaseController {
         $data['pagename'] = 'Satuan';
         return view('pages/satuan', $data);
     }
+
+    public function saveSatuan() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $session = \Config\Services::session();
+        $d['uid'] = $session->id;
+        $v = v::key('satuan', v::alnum(' '))->key('uraian', v::alnum(' ', ',', '.'))->validate($d);
+        if ($v) {
+            $model = new RefModel();
+            if ($model->saveSatuan($d) > 0) {
+                echo json_encode('Berhasil menyimpan data satuan');
+            } else {
+                if ($d['mode'] == 'create') {
+                    echo json_encode('Gagal menyimpan data satuan');
+                } else {
+                    echo json_encode('Tidak ada perubahan data satuan');
+                }
+            }
+        } else {
+            echo json_encode('Data tidak valid!');
+        }
+    }
+
+    public function allSatuan() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new RefModel();
+        echo json_encode($model->allSatuan($d));
+    }
+
+    public function satuanById() {
+        $d = json_decode(file_get_contents("php://input"), true);
+        $v = v::number()->validate($d['sid']);
+        if ($v) {
+            $model = new RefModel();
+            echo json_encode(['message' => 'Jenis aset info founded', 'satuanInfo' => $model->satuanById($d)]);
+        } else {
+            echo json_encode(['message' => 'Data tidak valid!']);
+        }
+    }
 }
