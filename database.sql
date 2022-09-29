@@ -19,23 +19,8 @@
 CREATE DATABASE IF NOT EXISTS `db_easset` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `db_easset`;
 
--- Dumping structure for table db_easset.aset_detil
-CREATE TABLE IF NOT EXISTS `aset_detil` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `aset_id` int(11) DEFAULT NULL,
-  `nama` varchar(500) DEFAULT NULL,
-  `uraian` text,
-  `jumlah` float DEFAULT NULL,
-  `kondisi` enum('baru','bekas','baik','rusak') DEFAULT NULL,
-  `satuan` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Dumping data for table db_easset.aset_detil: ~0 rows (approximately)
-DELETE FROM `aset_detil`;
-
--- Dumping structure for table db_easset.aset_header
-CREATE TABLE IF NOT EXISTS `aset_header` (
+-- Dumping structure for table db_easset.aset
+CREATE TABLE IF NOT EXISTS `aset` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `jenis` int(11) DEFAULT NULL,
   `nama` varchar(500) DEFAULT NULL,
@@ -47,38 +32,63 @@ CREATE TABLE IF NOT EXISTS `aset_header` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_header: ~0 rows (approximately)
-DELETE FROM `aset_header`;
+-- Dumping data for table db_easset.aset: ~0 rows (approximately)
+DELETE FROM `aset`;
 
 -- Dumping structure for table db_easset.aset_jenis
 CREATE TABLE IF NOT EXISTS `aset_jenis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `jenis` varchar(50) DEFAULT NULL,
   `uraian` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `creator` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `editor` int(11) DEFAULT NULL,
+  `edited_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `status` enum('aktif','tidak aktif') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `jenis` (`jenis`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_jenis: ~4 rows (approximately)
+-- Dumping data for table db_easset.aset_jenis: ~15 rows (approximately)
 DELETE FROM `aset_jenis`;
-INSERT INTO `aset_jenis` (`id`, `jenis`, `uraian`) VALUES
-	(1, 'atk', 'alat tulis kantor'),
-	(2, 'furniture', 'furniture'),
-	(3, 'motor', 'kendaraan roda dua'),
-	(4, 'mobil', 'kendaraan roda empat');
+INSERT INTO `aset_jenis` (`id`, `jenis`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
+	(1, 'atk', 'atk', 1, '2022-09-29 03:15:59', 1, '2022-09-29 05:11:18', 'tidak aktif'),
+	(2, 'furniture', 'furniture', 1, '2022-09-29 03:16:00', 1, '2022-09-29 05:11:42', 'tidak aktif'),
+	(3, 'motor', 'kendaraan roda dua', 1, '2022-09-29 03:16:00', 1, '2022-09-29 03:16:48', 'aktif'),
+	(4, 'mobil', 'kendaraan roda empat', 1, '2022-09-29 03:16:01', 1, '2022-09-29 03:16:53', 'aktif'),
+	(5, 'tes', 'Tes uraian', 1, '2022-09-29 03:16:02', 1, '2022-09-29 03:16:51', 'aktif'),
+	(6, 'botol', 'botol', 1, '2022-09-29 03:16:03', 1, '2022-09-29 05:11:35', 'tidak aktif'),
+	(7, 'tes2', 'Tes 2323', 1, '2022-09-29 03:16:03', 1, '2022-09-29 03:16:56', 'aktif'),
+	(8, 'tes3', 'sdsd', 1, '2022-09-29 03:16:04', 1, '2022-09-29 03:16:59', 'aktif'),
+	(15, 'tes4', 'weqwe', 1, '2022-09-29 03:16:04', 1, '2022-09-29 03:16:57', 'aktif'),
+	(16, 'tes5', 'Test 5555555', 1, '2022-09-29 03:27:06', 1, '2022-09-29 03:28:16', 'aktif'),
+	(17, 'tes6', 'Tes 7567', 1, '2022-09-29 03:27:42', 1, '2022-09-29 03:28:17', 'aktif'),
+	(18, 'tes7', '1212', 1, '2022-09-29 03:31:15', NULL, NULL, 'aktif'),
+	(19, 'tes8', '112eqwe', 1, '2022-09-29 03:38:20', NULL, NULL, 'aktif'),
+	(20, 'tes9', '112eqwe', 1, '2022-09-29 03:38:40', NULL, NULL, 'tidak aktif'),
+	(21, 'tes10', 'adshvhjbhjbkj', 1, '2022-09-29 05:10:57', NULL, NULL, 'tidak aktif');
 
 -- Dumping structure for table db_easset.aset_satuan
 CREATE TABLE IF NOT EXISTS `aset_satuan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `satuan` varchar(50) DEFAULT NULL,
   `uraian` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  `creator` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `editor` int(11) DEFAULT NULL,
+  `edited_at` timestamp NULL DEFAULT NULL,
+  `status` enum('aktif','tidak aktif') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `satuan` (`satuan`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_satuan: ~2 rows (approximately)
+-- Dumping data for table db_easset.aset_satuan: ~4 rows (approximately)
 DELETE FROM `aset_satuan`;
-INSERT INTO `aset_satuan` (`id`, `satuan`, `uraian`) VALUES
-	(1, 'pce', 'piece'),
-	(2, 'unit', 'unit');
+INSERT INTO `aset_satuan` (`id`, `satuan`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
+	(1, 'pce', 'piece', NULL, NULL, NULL, NULL, 'aktif'),
+	(2, 'unit', 'unit', NULL, NULL, NULL, NULL, 'tidak aktif'),
+	(3, 'tes', 'asas', 1, NULL, NULL, NULL, 'aktif'),
+	(4, 'tess', 'sssasasasa', 1, NULL, NULL, NULL, 'aktif');
 
 -- Dumping structure for table db_easset.user
 CREATE TABLE IF NOT EXISTS `user` (
