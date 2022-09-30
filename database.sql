@@ -23,18 +23,31 @@ USE `db_easset`;
 CREATE TABLE IF NOT EXISTS `aset` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `jenis` int(11) DEFAULT NULL,
+  `merk` varchar(50) DEFAULT NULL,
   `nama` varchar(500) DEFAULT NULL,
   `uraian` text,
-  `kondisi` enum('new','used','broken') DEFAULT NULL,
+  `kondisi` int(11) DEFAULT NULL,
   `foto` varchar(100) DEFAULT NULL,
   `jumlah` float DEFAULT NULL,
   `satuan` int(11) DEFAULT NULL,
+  `creator` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `editor` int(11) DEFAULT NULL,
+  `edited_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `status` enum('available','not available') DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset: ~0 rows (approximately)
+-- Dumping data for table db_easset.aset: ~1 rows (approximately)
 DELETE FROM `aset`;
+INSERT INTO `aset` (`id`, `jenis`, `merk`, `nama`, `uraian`, `kondisi`, `foto`, `jumlah`, `satuan`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
+	(1, 2, 'sms', 'Meja', 'Meja kayu dari Semarang terbuat dari kayu jati', 1, '1664526890_0006adb8158e44bda773.png', 100, 2, 1, '2022-09-30 08:34:50', NULL, NULL, 'available'),
+	(2, 1, 'mac', 'Laptop MACBOOK Pro', 'Laptop macbook pro', 1, '1664527181_098846048175631d837d.png', 10, 2, 1, '2022-09-30 08:39:41', 1, '2022-09-30 08:40:37', 'available'),
+	(3, 2, 'as', 'Tes', 'Asasas', 1, '1664527455_4968287b23db3efc7213.png', 12, 3, 1, '2022-09-30 08:44:15', NULL, NULL, 'available'),
+	(4, 2, 'ewr', 'ewrwe', 'werwer', 6, '1664527569_4ecf45ee41ce80a189aa.png', 12, 3, 1, '2022-09-30 08:46:10', NULL, NULL, 'available'),
+	(5, 2, '12', 'Tess', 'Tsasas', 6, '1664528113_42abc3e9ffe3b95b2af7.png', 12, 3, 1, '2022-09-30 08:55:13', NULL, NULL, 'available'),
+	(6, 2, '12', 'Tess', 'Tsasas', 6, '1664528125_8df2b4f4aac3c90b913c.png', 12, 3, 1, '2022-09-30 08:55:25', NULL, NULL, 'available'),
+	(7, 2, '12', 'Tess', 'Tsasas', 6, '1664528130_74aaf945cd7b84df93c2.png', 12, 3, 1, '2022-09-30 08:55:30', NULL, NULL, 'available');
 
 -- Dumping structure for table db_easset.aset_jenis
 CREATE TABLE IF NOT EXISTS `aset_jenis` (
@@ -48,9 +61,9 @@ CREATE TABLE IF NOT EXISTS `aset_jenis` (
   `status` enum('aktif','tidak aktif') DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `jenis` (`jenis`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_jenis: ~3 rows (approximately)
+-- Dumping data for table db_easset.aset_jenis: ~4 rows (approximately)
 DELETE FROM `aset_jenis`;
 INSERT INTO `aset_jenis` (`id`, `jenis`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
 	(1, 'atk', 'atk', 1, '2022-09-29 03:15:59', 1, '2022-09-29 05:11:18', 'tidak aktif'),
@@ -69,16 +82,16 @@ CREATE TABLE IF NOT EXISTS `aset_kondisi` (
   `status` enum('aktif','tidak aktif') DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `kondisi` (`kondisi`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_kondisi: ~0 rows (approximately)
+-- Dumping data for table db_easset.aset_kondisi: ~7 rows (approximately)
 DELETE FROM `aset_kondisi`;
 INSERT INTO `aset_kondisi` (`id`, `kondisi`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
 	(1, 'new', 'new', 1, '2022-09-29 07:51:39', 1, '2022-09-29 07:54:12', 'tidak aktif'),
 	(3, 'used like new', 'used like new', 1, '2022-09-29 07:54:32', NULL, NULL, 'aktif'),
 	(4, 'used very good', 'used very good', 1, '2022-09-29 07:55:33', NULL, NULL, 'aktif'),
 	(5, 'used good', 'used good', 1, '2022-09-29 07:55:42', NULL, NULL, 'aktif'),
-	(6, 'used acceptable', 'used acceptable', 1, '2022-09-29 07:55:54', NULL, NULL, 'aktif'),
+	(6, 'used acceptable', 'used acceptable', 1, '2022-09-29 07:55:54', 1, '2022-09-30 00:15:52', 'tidak aktif'),
 	(7, 'renewed', 'renewed', 1, '2022-09-29 07:56:28', NULL, NULL, 'aktif');
 
 -- Dumping structure for table db_easset.aset_satuan
@@ -93,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `aset_satuan` (
   `status` enum('aktif','tidak aktif') DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `satuan` (`satuan`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table db_easset.aset_satuan: ~4 rows (approximately)
 DELETE FROM `aset_satuan`;

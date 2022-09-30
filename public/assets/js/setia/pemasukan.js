@@ -6,13 +6,22 @@ var application = new Vue({
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     },
     data: {
+        loading: false,
+        linfo: false,
+        ainfo: null,
         dio: {
             'jenis': false,
             'satuan': false,
             'kondisi': false
         },
+        status: 'available',
+        status_options: [
+            {label: 'Available', code: 'available'}, 
+            {label: 'Not Available', code: 'not available'},
+        ],
         nama: null,
         uraian: null,
+        merk: null,
         jenis: null,
         jenis_text: null,
         jenis_options: [],
@@ -24,14 +33,25 @@ var application = new Vue({
         kondisi_text: null,
         kondisi_options: [],
         fotoUrl: "images/add-image.png",
-        foto: null
+        foto: null,
+        aset_count: null
     },
     watch: {
     },
     mounted() {
         this.fetchOptJenis();
+        this.fetchAset();
     },
     methods: {
+        fetchAset: function() {
+            axios.post('../app/fetch-aset', JSON.stringify({
+            })).then(res => {
+                console.log(res.data);
+                this.aset_count = res.data.length;
+            }).catch(err => {
+                console.log(err);
+            });
+        },
         fetchOptJenis: function(search) {
             axios.post('../ref/fetch-refs', JSON.stringify({
                 ref: 'jenis',
@@ -91,27 +111,43 @@ var application = new Vue({
         },
         uploadFoto: function() {
             this.foto = this.$refs.foto.files[0];
-            // const formData = new FormData();
-            // formData.append('ref', 'foto');
-            // formData.append('foto', this.foto);
-            // const headers = { 'Content-Type': 'multipart/form-data' };
-
             this.fotoUrl = URL.createObjectURL(this.foto);
-
-            // axios.post('../konsul_chat', formData, { headers }).then((res) => {
-            //     res.data.files; // binary representation of the file
-            //     res.status; // HTTP status
-            //     if (res.data.info === 'failed') {
-            //         console.log('failed');
-            //     } else {
-            //         var fi = res.data.info.substring(0, 25);
-            //         if (fi === 'Ukuran file terlalu besar') {
-            //             alert(res.data.info);
-            //         }
-            //         console.log(res.data.info);
-            //     }
-            //     this.fetchChats();
-            // });
+        },
+        rekamAset: function() {
+            this.loading = true;
+            const formData = new FormData();
+            formData.append('foto', this.foto);
+            formData.append('nama', this.nama);
+            formData.append('uraian', this.uraian);
+            formData.append('merk', this.merk);
+            formData.append('jenis', this.jenis);
+            formData.append('jumlah', this.jumlah);
+            formData.append('satuan', this.satuan);
+            formData.append('kondisi', this.kondisi);
+            formData.append('status', this.status);
+            const headers = { 'Content-Type': 'multipart/form-data' };
+            axios.post('../app/rekam-aset', formData, { headers }).then((res) => {
+                if (res.data === 'Berhasil menyimpan data aset') {
+                    this.ainfo = res.data;
+                    setTimeout(() => {
+                        this.loading = false;
+                        this.linfo = true;
+                        setTimeout(() => {
+                            this.linfo = false;
+                            this.fetchAset();
+                        }, 1500);
+                    }, 1000);
+                } else {
+                    this.ainfo = res.data;
+                    setTimeout(() => {
+                        this.loading = false;
+                        this.linfo = true;
+                        setTimeout(() => {
+                            this.linfo = false;
+                        }, 1500);
+                    }, 1000);
+                }
+            });
         }
     }
 });

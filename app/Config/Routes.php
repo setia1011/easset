@@ -44,6 +44,9 @@ $routes->get('/app/pengembalian', 'App::pengembalian');
 $routes->get('/app/pengeluaran', 'App::pengeluaran');
 $routes->get('/app/laporan', 'App::laporan');
 
+$routes->post('/app/fetch-aset', 'App::fetchAset');
+$routes->post('/app/rekam-aset', 'App::rekamAset');
+
 // Auth
 $routes->get('/auth/login', 'Auth::index');
 $routes->post('/auth/authenticate', 'Auth::authenticate');

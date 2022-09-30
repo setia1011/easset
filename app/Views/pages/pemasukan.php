@@ -44,7 +44,7 @@
         </div><!-- .nk-block-between -->
     </div><!-- .nk-block-head -->
     <div class="nk-block">
-        <div class="row">
+        <div class="row gy-4">
             <div class="col-md-8">
                 <div class="card card-bordered">
                     <div class="card-inner">
@@ -66,6 +66,14 @@
                                         <label class="form-label">Uraian</label>
                                         <div class="form-control-wrap">
                                             <textarea v-model="uraian" class="form-control form-control-sm"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Merk</label>
+                                        <div class="form-control-wrap">
+                                            <input v-model="merk" type="text" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -148,9 +156,32 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+                                        <div class="form-control-wrap">
+                                            <v-select 
+                                                v-model="status" 
+                                                :reduce="label => label.code" 
+                                                :options="status_options"></v-select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-lg btn-primary">Save</button>
+                                        <button type="submit" v-on:click="rekamAset" class="btn btn-lg btn-primary">Save</button>
+                                    </div>
+                                </div>
+
+                                <div class="loading-info" v-show="loading">
+                                    <span><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> saving..</span>
+                                </div>
+                                <div class="login-info" v-show="linfo">
+                                    <div v-if="ainfo == 'Berhasil menyimpan data aset'" class="alert alert-success alert-icon">
+                                        <em class="icon ni ni-check-circle"></em> <strong>{{ ainfo }}</strong>
+                                    </div>
+                                    <div v-else class="alert alert-danger alert-icon">
+                                        <em class="icon ni ni-cross-circle"></em> <strong>{{ ainfo }}</strong>
                                     </div>
                                 </div>
                             </div>
@@ -174,6 +205,7 @@
                                                 <span class="sub-text">{{ uraian }}</span>
                                                 <div class="mt-3">
                                                     <span class="lead-text text-capitalize"><span style="width: 20px;"><em class="icon ni ni-check"></em></span> {{ jenis_text }}</span>
+                                                    <span class="lead-text text-capitalize"><span style="width: 20px;"><em class="icon ni ni-check"></em></span> {{ merk }}</span>
                                                     <span class="lead-text text-capitalize"><span style="width: 20px;"><em class="icon ni ni-check"></em></span> {{ jumlah }} {{ satuan_text }}</span>
                                                     <span class="lead-text text-capitalize"><span style="width: 20px;"><em class="icon ni ni-check"></em></span> {{ kondisi_text }}</span>
                                                 </div>
@@ -185,6 +217,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="btn btn-outline-light bg-white d-sm-inline-flex mt-4"><em class="icon ni ni-list-check text-success"></em><span>total = {{ aset_count }}</span></div>
             </div>
         </div>
         
