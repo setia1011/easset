@@ -19,3 +19,7 @@
     top: auto !important;
     left: .6rem !important;
 }
+
+.mfp-image-holder .mfp-content {
+    max-width: calc(100% - 13%);
+}

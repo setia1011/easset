@@ -79,6 +79,8 @@ $routes->post('/ref/all-kondisi-aset', 'Ref::allKondisi');
 $routes->post('/ref/a-kondisi', 'Ref::kondisiById');
 $routes->post('/ref/delete-kondisi', 'Ref::delKondisi');
 
+$routes->post('/ref/fetch-refs', 'Ref::fetchOptRefs');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

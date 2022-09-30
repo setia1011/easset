@@ -293,4 +293,27 @@ class RefModel extends Model {
             return 0;
         }
     }
+
+    // Fetch Refs Options
+    public function fetchOptRefs($d) {
+        $search = "";
+        if (isset($d['search'])) {
+            $search = $d['search'];
+        }
+        $ref = $d['ref'];
+        $dx['ref'] = $ref;
+    
+        if ($ref === 'jenis') {
+            $dx['res'] = $this->db->query("SELECT id, jenis FROM aset_jenis WHERE jenis LIKE '%$search%' ORDER BY jenis ASC")->getResultArray();
+            return $dx;
+        } else if ($ref === 'satuan') {
+            $dx['res'] = $this->db->query("SELECT id, satuan FROM aset_satuan WHERE satuan LIKE '%$search%' ORDER BY satuan ASC")->getResultArray();
+            return $dx;
+        } else if ($ref === 'kondisi') {
+            $dx['res'] = $this->db->query("SELECT id, kondisi FROM aset_kondisi WHERE kondisi LIKE '%$search%' ORDER BY kondisi ASC")->getResultArray();
+            return $dx;
+        } else {
+            return array();
+        }
+    }
 }

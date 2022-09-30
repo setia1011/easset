@@ -192,4 +192,45 @@ class Ref extends BaseController {
             echo json_encode('Gagal menghapus data kondisi');
         }
     }
+
+    public function fetchOptRefs() {
+        $model = new RefModel();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $r = $model->fetchOptRefs($d);
+        $res = array();
+        // jenis
+        if ($r['ref'] === 'jenis') {
+            if (count($r['res']) > 0) {
+                foreach ($r['res'] as $i) {
+                    $res[] = array(
+                        "id" => $i['id'],
+                        "jenis" => $i['jenis']
+                    );
+                }
+            }
+        }
+        // satuan
+        if ($r['ref'] === 'satuan') {
+            if (count($r['res']) > 0) {
+                foreach ($r['res'] as $i) {
+                    $res[] = array(
+                        "id" => $i['id'],
+                        "satuan" => $i['satuan']
+                    );
+                }
+            }
+        }
+        // kondisi
+        if ($r['ref'] === 'kondisi') {
+            if (count($r['res']) > 0) {
+                foreach ($r['res'] as $i) {
+                    $res[] = array(
+                        "id" => $i['id'],
+                        "kondisi" => $i['kondisi']
+                    );
+                }
+            }
+        }
+        echo json_encode($res);
+    }
 }
