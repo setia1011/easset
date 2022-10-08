@@ -46,6 +46,7 @@ $routes->get('/app/pengeluaran', 'App::pengeluaran');
 $routes->get('/app/laporan', 'App::laporan');
 
 $routes->post('/app/fetch-aset', 'App::fetchAset');
+$routes->post('/app/fetch-an-aset', 'App::fetchAnAset');
 $routes->post('/app/count-aset', 'App::countAset');
 $routes->post('/app/rekam-aset', 'App::rekamAset');
 

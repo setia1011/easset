@@ -13,6 +13,7 @@ var application = new Vue({
         totalPage: null,
         currentPage: 1,
         perPage: 5,
+        details: []
     },
     watch: {
         search: _.debounce(
@@ -36,13 +37,25 @@ var application = new Vue({
                 perPage: this.perPage,
                 currentPage: this.currentPage
             })).then(res => {
-                // console.log(res.data.items);
-                // this.items = res.data.items;
                 this.totalUser = res.data['totalData'];
                 this.totalRows = res.data['totalRows'];
                 this.items = res.data['items'];
                 this.totalPage = res.data['totalPage'];
                 this.index = this.currentPage * this.perPage;
+            }).catch(err => {
+                console.log(err);
+            });
+        },
+        fetchDetails: function(e, v) {
+            axios.post('../app/fetch-an-aset', JSON.stringify({
+                aid: v
+            })).then(res => {
+                console.log(res.data);
+                if (res.data) {
+                    this.details = res.data[0];
+                    // this.foto = res.data[0].foto;
+                    // this.nama = res.data[0].nama;
+                }
             }).catch(err => {
                 console.log(err);
             });

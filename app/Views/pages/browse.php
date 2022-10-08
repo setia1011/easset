@@ -61,9 +61,9 @@
         <div class="row g-gs">
             <div class="col-sm-6 col-lg-3" v-for="(item, index) in items">
                 <div class="gallery card card-bordered">
-                    <a class="gallery-image popup-image" :href="item.foto">
+                    <span class="gallery-image popup-image" v-on:click="fetchDetails($event, item.id)" data-bs-toggle="modal" data-bs-target="#modalDetails">
                         <img class="w-100 rounded-top" :src="item.foto" alt="">
-                    </a>
+                    </span>
                     <div class="gallery-body card-inner align-center justify-between flex-wrap g-2">
                         <div class="user-card">
                             <div class="user-info">
@@ -102,6 +102,69 @@
             
         </div>
     </div><!-- .nk-block -->
+    <div class="modal fade" tabindex="-1" id="modalDetails">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <a href="#" class="close" ref="baka" data-bs-dismiss="modal" aria-label="Close">
+                    <em class="icon ni ni-cross"></em>
+                </a>
+                <div class="modal-header">
+                    <h5 class="modal-title">Detail</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-validate is-alter">
+                        <div class="row gy-3 mb-3">
+                            <span class="gallery-image">
+                                <img class="w-100 rounded-top" :src="details.foto" alt="">
+                            </span>
+                        </div>
+                        <div class="row gy-3">
+                            <div class="col-sm-6">
+                                <div class="mt-3">
+                                    <h4 class="product-title text-capitalize">{{ details.nama }}</h4>
+                                    <span class="lead-text text-capitalize">
+                                        <span style="width: 20px;">{{ details.uraian }}</span> 
+                                    </span>
+                                    <br>
+                                    <span class="lead-text text-capitalize">
+                                        <span class="d-sm-inline-block" style="width: 120px;"><em class="icon ni ni-check"></em> Merk</span>: {{ details.merk }}  
+                                    </span> 
+                                    <span class="lead-text text-capitalize">
+                                        <span class="d-sm-inline-block" style="width: 120px;"><em class="icon ni ni-check"></em> Jenis</span>: {{ details.jenis }} 
+                                    </span>
+                                    <span class="lead-text text-capitalize">
+                                        <span class="d-sm-inline-block" style="width: 120px;"><em class="icon ni ni-check"></em> Kondisi</span>: {{ details.kondisi }} 
+                                    </span>
+                                    <span class="lead-text text-capitalize">
+                                        <span class="d-sm-inline-block" style="width: 120px;"><em class="icon ni ni-check"></em> Status/Stock</span>: {{ details.status }} ({{ details.jumlah }} {{ details.satuan }}) 
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <!-- <button type="submit" v-if="mode === 'create'" v-on:click="createUser" class="btn btn-lg btn-success">Create</button>
+                            <button type="submit" v-if="mode === 'update'" v-on:click="createUser" class="btn btn-lg btn-warning">Update</button> -->
+                        </div>
+                        <!-- <div class="loading-info" v-show="loading">
+                            <span v-if="mode === 'create'"><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> creating..</span>
+                            <span v-if="mode === 'update'"><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> updating..</span>
+                        </div> -->
+                        <!-- <div class="login-info" v-show="linfo">
+                            <div v-if="ainfo == 'User berhasil dibuat..' || ainfo == 'User berhasil diupdate..'" class="alert alert-success alert-icon">
+                                <em class="icon ni ni-check-circle"></em> <strong>{{ ainfo }}</strong>
+                            </div>
+                            <div v-else-if="ainfo == 'Tidak ada perubahan data..'" class="alert alert-warning alert-icon">
+                                <em class="icon ni ni-check-circle"></em> <strong>{{ ainfo }}</strong>
+                            </div>
+                            <div v-else class="alert alert-danger alert-icon">
+                                <em class="icon ni ni-cross-circle"></em> <strong>{{ ainfo }}</strong>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

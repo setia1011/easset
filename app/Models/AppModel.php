@@ -4,11 +4,29 @@ namespace App\Models;
 use CodeIgniter\Model;
 
 class AppModel extends Model {
-    // public function $routes->post('/app/fetch-aset', 'App::fetchAset');() {
-    //     $db = \Config\Database::connect();
-    //     $res = $db->query("SELECT * FROM aset")->getResultArray();
-    //     return $res;
-    // }
+    public function fetchAnAsset($aid) {
+        $db = \Config\Database::connect();
+        $res = $db->query("SELECT 
+            id, 
+            jenis_id,
+            jenis, 
+            merk,
+            nama,
+            uraian,
+            kondisi_id,
+            kondisi,
+            CONCAT('/uploads/aset/', foto) foto,
+            jumlah,
+            satuan_id,
+            satuan,
+            creator,
+            DATE_FORMAT(created_at, '%d/%m/%Y %H:%i:%s') created_at, 
+            editor,
+            DATE_FORMAT(edited_at, '%d/%m/%Y %H:%i:%s') edited_at, 
+            status 
+        FROM v_aset WHERE id = '$aid'")->getResultArray();
+        return $res;
+    }
 
     public function countAset() {
         $db = \Config\Database::connect();

@@ -28,6 +28,12 @@ class App extends BaseController {
         echo json_encode($model->fetchAset($d));
     }
 
+    public function fetchAnAset() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new AppModel();
+        echo json_encode($model->fetchAnAsset($d['aid']));
+    }
+
     public function countAset() {
         $model = new AppModel();
         echo json_encode($model->countAset());
