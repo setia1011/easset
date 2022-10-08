@@ -36,6 +36,7 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'App::index');
+$routes->get('/app/browse', 'App::browseAset');
 $routes->get('/app/pemasukan', 'App::pemasukan');
 $routes->get('/app/permintaan', 'App::permintaan');
 $routes->get('/app/alokasi', 'App::alokasi');
@@ -45,6 +46,7 @@ $routes->get('/app/pengeluaran', 'App::pengeluaran');
 $routes->get('/app/laporan', 'App::laporan');
 
 $routes->post('/app/fetch-aset', 'App::fetchAset');
+$routes->post('/app/count-aset', 'App::countAset');
 $routes->post('/app/rekam-aset', 'App::rekamAset');
 
 // Auth

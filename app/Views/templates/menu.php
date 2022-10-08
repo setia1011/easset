@@ -40,6 +40,11 @@
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
+                                <a href="<?= base_url('/app/browse'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">Browse</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                            <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/permintaan'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Permintaan</span>
                                 </a>

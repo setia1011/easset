@@ -44,10 +44,10 @@ var application = new Vue({
     },
     methods: {
         fetchAset: function() {
-            axios.post('../app/fetch-aset', JSON.stringify({
+            axios.post('../app/count-aset', JSON.stringify({
             })).then(res => {
                 console.log(res.data);
-                this.aset_count = res.data.length;
+                this.aset_count = res.data[0].jum;
             }).catch(err => {
                 console.log(err);
             });

@@ -23,8 +23,14 @@ class App extends BaseController {
     }
 
     public function fetchAset() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
         $model = new AppModel();
-        echo json_encode($model->fetchAset());
+        echo json_encode($model->fetchAset($d));
+    }
+
+    public function countAset() {
+        $model = new AppModel();
+        echo json_encode($model->countAset());
     }
 
     public function rekamAset() {
@@ -62,7 +68,7 @@ class App extends BaseController {
                 $fx = \Config\Services::image()
                     ->withFile($f)
                     ->resize(550, 640, true, 'height')
-                    ->save(WRITEPATH . '/uploads/aset/' . $fotox);
+                    ->save(FCPATH . '/uploads/aset/' . $fotox);
                 if ($fx) {
                     // access database
                     $database = \Config\Database::connect();
@@ -70,12 +76,18 @@ class App extends BaseController {
                     if ($db->insert($d)) {  
                         return "Berhasil menyimpan data aset";
                     } else {
-                        unlink(WRITEPATH . '/uploads/aset/' . $fotox);
+                        unlink(FCPATH . '/uploads' . $fotox);
                         return "Gagal menyimpan data aset";
                     }
                 }     
             }
         } else { return "Data tidak valid!"; }
+    }
+
+    public function browseAset() {
+        $data['pagefile'] = 'browse';
+        $data['pagename'] = 'Browse';
+        return view('pages/browse', $data);
     }
 
     // permintaan

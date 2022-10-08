@@ -7,6 +7,8 @@ var application = new Vue({
     },
     watch: {
     },
+    computed: {
+    },
     mounted() {
     },
     methods: {

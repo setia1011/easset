@@ -23,7 +23,8 @@ RUN docker-php-ext-install \
     opcache \
     calendar \
     pdo_mysql \
-    mysqli
+    mysqli \
+    gd
 
 # 2. set up document root for apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
