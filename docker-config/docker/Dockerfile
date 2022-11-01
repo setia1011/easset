@@ -26,6 +26,9 @@ RUN docker-php-ext-install \
     mysqli \
     gd
 
+RUN docker-php-ext-configure \
+        gd --enable-gd --with-freetype --with-jpeg --with-webp \
+
 # 2. set up document root for apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
