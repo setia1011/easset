@@ -44,7 +44,11 @@
                             
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/browse'); ?>" class="nk-menu-link">
-                                    <span class="nk-menu-text">Browse</span>
+                                    <?php if ($_SESSION['level'] == 'admin') { ?>
+                                        <span class="nk-menu-text">Browse & Update</span>
+                                    <?php } else { ?>
+                                        <span class="nk-menu-text">Browse</span>
+                                    <?php } ?>
                                 </a>
                             </li><!-- .nk-menu-item -->
 
