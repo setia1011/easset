@@ -215,6 +215,13 @@ class App extends BaseController {
         return view('pages/alokasi', $data);
     }
 
+    // my aset
+    public function myAset() {
+        $data['pagefile'] = 'alokasi';
+        $data['pagename'] = 'Alokasi';
+        return view('pages/alokasi', $data);
+    }
+
     // pemakaian
     public function pemakaian() {
         $data['pagefile'] = 'alokasi';

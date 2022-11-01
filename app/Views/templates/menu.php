@@ -34,24 +34,37 @@
                             <span class="nk-menu-text">Asset</span>
                         </a>
                         <ul class="nk-menu-sub">
+                            <?php if ($_SESSION['level'] == 'admin') { ?> 
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pemasukan'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Rekam</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
+                            <?php } ?>
+                            
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/browse'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Browse</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
-                            <li class="nk-menu-item">
+
+                            <!-- <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/permintaan'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Permintaan</span>
                                 </a>
-                            </li><!-- .nk-menu-item -->
+                            </li> -->
+
+                            <?php if ($_SESSION['level'] == 'admin') { ?> 
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/alokasi'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Alokasi</span>
+                                </a>
+                            </li><!-- .nk-menu-item -->
+                            <?php } ?>
+                            
+                            <li class="nk-menu-item">
+                                <a href="<?= base_url('/app/my-aset'); ?>" class="nk-menu-link">
+                                    <span class="nk-menu-text">My Aset</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
@@ -64,11 +77,15 @@
                                     <span class="nk-menu-text">Pengembalian</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
+
+                            <?php if ($_SESSION['level'] == 'admin') { ?> 
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pengeluaran'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengeluaran</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
+                            <?php } ?>
+                            
                         </ul><!-- .nk-menu-sub -->
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item has-sub">

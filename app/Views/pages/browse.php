@@ -74,7 +74,7 @@
                         </div>
                         <div>
                             <button class="btn btn-p-0 btn-nofocus text-capitalize">
-                                <span v-bind:class="[(item.jumlah > 0) ? 'text-success' : 'text-danger']">{{ item.jumlah }} {{ item.satuan }}</span>
+                                <span v-bind:class="[(item.jumlah > 0) ? 'text-primary' : 'text-danger']">{{ item.jumlah }} {{ item.satuan }}</span>
                             </button>
                         </div>
                     </div>

@@ -41,6 +41,7 @@ $routes->get('/app/pemasukan', 'App::pemasukan');
 $routes->get('/app/update(:any)', 'App::update/$1');
 $routes->get('/app/permintaan', 'App::permintaan');
 $routes->get('/app/alokasi', 'App::alokasi');
+$routes->get('/app/my-aset', 'App::myAset');
 $routes->get('/app/pemakaian', 'App::pemakaian');
 $routes->get('/app/pengembalian', 'App::pengembalian');
 $routes->get('/app/pengeluaran', 'App::pengeluaran');
