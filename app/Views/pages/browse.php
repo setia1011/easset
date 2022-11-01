@@ -39,7 +39,7 @@
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between">
             <div class="nk-block-head-content">
-                <h3 class="nk-block-title page-title"><?= $pagename; ?></h3>
+                <h3 class="nk-block-title page-title"><?= $pagename;?></h3>
                 <div class="nk-block-des text-soft">
                     <p>Browse aset</p>
                 </div>
@@ -61,7 +61,7 @@
         <div class="row g-gs">
             <div class="col-sm-6 col-lg-3" v-for="(item, index) in items">
                 <div class="gallery card card-bordered">
-                    <a :href="item.edit" class="edit-icon"><em class="icon ni ni-edit"></em></a>
+                    <?php if ($_SESSION['level'] == 'admin') { ?> <a :href="item.edit" class="edit-icon"><em class="icon ni ni-edit"></em></a> <?php } ?>
                     <span class="gallery-image popup-image" v-on:click="fetchDetails($event, item.id)" data-bs-toggle="modal" data-bs-target="#modalDetails">
                         <img class="w-100 rounded-top f-200" :src="item.foto" alt="">
                     </span>
