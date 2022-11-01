@@ -54,6 +54,7 @@ class AppModel extends Model {
                 uraian,
                 kondisi_id,
                 kondisi,
+                CONCAT('/app/update?id=', id) edit,
                 CONCAT('/uploads/aset/', foto) foto,
                 jumlah,
                 satuan_id,

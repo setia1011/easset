@@ -32,13 +32,13 @@
     }
 </style>
 
-<div id="v-pemasukan">
+<div id="v-update">
     <div class="nk-block-head nk-block-head-sm">
         <div class="nk-block-between">
             <div class="nk-block-head-content">
-                <h3 class="nk-block-title page-title">Rekam</h3>
+                <h3 class="nk-block-title page-title">Update</h3>
                 <div class="nk-block-des text-soft">
-                    <p>Form rekam aset</p>
+                    <p>Form update aset</p>
                 </div>
             </div>
         </div><!-- .nk-block-between -->
@@ -53,6 +53,7 @@
                         </div> -->
                         <div id="form-pemasukan">
                             <div class="row g-4">
+                                <input type="hidden" ref="aid" value="<?= $aid; ?>">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-label">Nama</label>
@@ -169,7 +170,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <button type="submit" v-on:click="rekamAset" class="btn btn-lg btn-primary">Save</button>
+                                        <button type="submit" v-on:click="updateAset" class="btn btn-lg btn-primary">Save</button>
                                     </div>
                                 </div>
 
@@ -229,7 +230,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn btn-outline-light bg-white d-sm-inline-flex mt-4"><em class="icon ni ni-list-check text-success"></em><span>total = {{ aset_count }}</span></div>
+                <!-- <div class="btn btn-outline-light bg-white d-sm-inline-flex mt-4"><em class="icon ni ni-list-check text-success"></em><span>total = {{ aset_count }}</span></div> -->
             </div>
         </div>
         

@@ -38,6 +38,7 @@ $routes->set404Override();
 $routes->get('/', 'App::index');
 $routes->get('/app/browse', 'App::browseAset');
 $routes->get('/app/pemasukan', 'App::pemasukan');
+$routes->get('/app/update(:any)', 'App::update/$1');
 $routes->get('/app/permintaan', 'App::permintaan');
 $routes->get('/app/alokasi', 'App::alokasi');
 $routes->get('/app/pemakaian', 'App::pemakaian');
@@ -49,6 +50,7 @@ $routes->post('/app/fetch-aset', 'App::fetchAset');
 $routes->post('/app/fetch-an-aset', 'App::fetchAnAset');
 $routes->post('/app/count-aset', 'App::countAset');
 $routes->post('/app/rekam-aset', 'App::rekamAset');
+$routes->post('/app/update-aset', 'App::updateAset');
 
 // Auth
 $routes->get('/auth/login', 'Auth::index');

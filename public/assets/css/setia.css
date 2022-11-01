@@ -23,3 +23,54 @@
 .mfp-image-holder .mfp-content {
     max-width: calc(100% - 13%);
 }
+
+.edit-icon {
+    display: flex;
+    z-index: 100;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 0px 0px black;
+    color: #9021f5;
+}
+
+.edit-icon:hover {
+    color: rgb(255, 20, 90);
+}
+
+.edit-icon .icon {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.f-200 {
+    padding: 5px;
+}
+
+.f-500 {
+    max-height: 500px !important;
+}
+
+
+/* responsive */
+@media only screen and (min-width: 992px) {
+    .f-200 {
+        min-height: 200px !important;
+        max-height: 200px !important;
+    }
+}
+
+@media only screen and (min-width: 575px) {
+    .f-200 {
+        min-height: 210px !important;
+        max-height: 210px !important;
+    }
+}
+
+@media only screen and (min-width: 300px) {
+    .f-200 {
+        min-height: 290px !important;
+        max-height: 290px !important;
+    }
+}

@@ -61,14 +61,15 @@
         <div class="row g-gs">
             <div class="col-sm-6 col-lg-3" v-for="(item, index) in items">
                 <div class="gallery card card-bordered">
+                    <a :href="item.edit" class="edit-icon"><em class="icon ni ni-edit"></em></a>
                     <span class="gallery-image popup-image" v-on:click="fetchDetails($event, item.id)" data-bs-toggle="modal" data-bs-target="#modalDetails">
-                        <img class="w-100 rounded-top" :src="item.foto" alt="">
+                        <img class="w-100 rounded-top f-200" :src="item.foto" alt="">
                     </span>
                     <div class="gallery-body card-inner align-center justify-between flex-wrap g-2">
                         <div class="user-card">
                             <div class="user-info">
                                 <span class="lead-text">{{ item.nama }}</span>
-                                <span class="sub-text">{{ item.jenis }}</span>
+                                <span class="badge bg-danger">{{ item.jenis }}</span>
                             </div>
                         </div>
                         <div>
@@ -115,7 +116,7 @@
                     <div class="form-validate is-alter">
                         <div class="row gy-3 mb-3">
                             <span class="gallery-image">
-                                <img class="w-100 rounded-top" :src="details.foto" alt="">
+                                <img class="w-100 rounded-top f-500" :src="details.foto" alt="">
                             </span>
                         </div>
                         <div class="row gy-3">

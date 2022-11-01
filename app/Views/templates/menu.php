@@ -36,7 +36,7 @@
                         <ul class="nk-menu-sub">
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pemasukan'); ?>" class="nk-menu-link">
-                                    <span class="nk-menu-text">Pemasukan</span>
+                                    <span class="nk-menu-text">Rekam</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <li class="nk-menu-item">
