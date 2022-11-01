@@ -107,7 +107,7 @@ class App extends BaseController {
 
     public function update() {
         $id = $_GET['id'];
-        if (v::intval()->validate($id)) {
+        if (v::intVal()->validate($id)) {
             $data['aid'] = $id;
             $data['pagefile'] = 'update';
             $data['pagename'] = 'Update';

@@ -88,6 +88,7 @@
                             
                         </ul><!-- .nk-menu-sub -->
                     </li><!-- .nk-menu-item -->
+                    <?php if ($_SESSION['level'] == 'admin') { ?>
                     <li class="nk-menu-item has-sub">
                         <a href="#" class="nk-menu-link nk-menu-toggle">
                             <span class="nk-menu-text">Referensi</span>
@@ -115,6 +116,7 @@
                             <span class="nk-menu-text">User</span>
                         </a>
                     </li><!-- .nk-menu-item -->
+                    <?php } ?>
                     <li class="nk-menu-item">
                         <a href="<?= base_url('/app/laporan'); ?>" class="nk-menu-link">
                             <span class="nk-menu-text">Laporan</span>

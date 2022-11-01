@@ -38,16 +38,16 @@ CREATE TABLE IF NOT EXISTS `aset` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset: ~1 rows (approximately)
+-- Dumping data for table db_easset.aset: ~6 rows (approximately)
 DELETE FROM `aset`;
 INSERT INTO `aset` (`id`, `jenis`, `merk`, `nama`, `uraian`, `kondisi`, `foto`, `jumlah`, `satuan`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
-	(1, 2, 'sms', 'Meja', 'Meja kayu dari Semarang terbuat dari kayu jati', 1, '1664526890_0006adb8158e44bda773.png', 100, 2, 1, '2022-09-30 08:34:50', NULL, NULL, 'available'),
-	(2, 1, 'mac', 'Laptop MACBOOK Pro', 'Laptop macbook pro', 1, '1664527181_098846048175631d837d.png', 10, 2, 1, '2022-09-30 08:39:41', 1, '2022-09-30 08:40:37', 'available'),
-	(3, 2, 'as', 'Tes', 'Asasas', 1, '1664527455_4968287b23db3efc7213.png', 12, 3, 1, '2022-09-30 08:44:15', NULL, NULL, 'available'),
-	(4, 2, 'ewr', 'ewrwe', 'werwer', 6, '1664527569_4ecf45ee41ce80a189aa.png', 12, 3, 1, '2022-09-30 08:46:10', NULL, NULL, 'available'),
-	(5, 2, '12', 'Tess', 'Tsasas', 6, '1664528113_42abc3e9ffe3b95b2af7.png', 12, 3, 1, '2022-09-30 08:55:13', NULL, NULL, 'available'),
-	(6, 2, '12', 'Tess', 'Tsasas', 6, '1664528125_8df2b4f4aac3c90b913c.png', 12, 3, 1, '2022-09-30 08:55:25', NULL, NULL, 'available'),
-	(7, 2, '12', 'Tess', 'Tsasas', 6, '1664528130_74aaf945cd7b84df93c2.png', 12, 3, 1, '2022-09-30 08:55:30', NULL, NULL, 'available');
+	(1, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1667277849_33b29f513d5252d103ff.jpg', 12, 3, 1, '2022-10-07 22:41:27', NULL, '2022-11-01 04:44:10', 'available'),
+	(2, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1665182491_bea6eab29aa0ec28e6ba.jpg', 12, 3, 1, '2022-10-07 22:41:31', NULL, NULL, 'available'),
+	(3, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1667295638_df094fab18f1c60ef08d.jpg', 0, 3, 1, '2022-10-07 22:41:35', NULL, '2022-11-01 09:40:38', 'available'),
+	(4, 2, 'Mejo', 'Meja', 'Meja kayu jati', 1, '1665182903_c593d2f3aaeabe1eb5c2.jpg', 100, 2, 1, '2022-10-07 22:48:24', NULL, NULL, 'available'),
+	(5, 1, 'Pilot', 'Pensil', 'Pensil Hitam', 1, '1665183103_034ce8cb8d409bd6b292.jpg', 100, 1, 1, '2022-10-07 22:51:43', NULL, NULL, 'available'),
+	(6, 1, 'Pilot', 'Bolpoin', 'Bolpin Merah', 1, '1667276565_d23e9c61a111dae1c93d.jpg', 100, 1, 1, '2022-10-07 22:52:15', NULL, '2022-11-01 04:22:45', 'available'),
+	(7, 1, 'Pilot', 'Bolpoin', 'Bolpin warna merah', 1, '1667277801_4d5087f2a6d84a6c9d42.jpg', 100, 1, 1, '2022-10-07 23:10:13', NULL, '2022-11-01 04:43:21', 'not available');
 
 -- Dumping structure for table db_easset.aset_jenis
 CREATE TABLE IF NOT EXISTS `aset_jenis` (
@@ -138,11 +138,11 @@ CREATE TABLE IF NOT EXISTS `user` (
 DELETE FROM `user`;
 INSERT INTO `user` (`id`, `username`, `password`, `level`, `nama`, `email`, `jenis_id`, `nomor_id`, `created_by`, `created_at`, `updated_by`, `updated_at`, `status`) VALUES
 	(1, 'setia', '$2y$10$LC/OwC3H1fy7TMl5EBAfuuVI0BOnaI1sAX0wP8EAoOKVIn4DO7R0m', 'admin', 'Setiadi H.', 'setiadi@techack.id', 'nim', '1119110187', 1, '2022-09-21 22:55:09', 1, '2022-09-23 13:40:51', 'aktif'),
-	(2, 'anon', '123', 'user', 'Anon Name', 'anon@techack.id', 'nik', '1212121212121212', NULL, '2022-09-22 02:24:19', NULL, '2022-09-24 10:37:01', 'tidak aktif'),
-	(4, 'wafi', '123', 'user', 'Wafi D. El Fahmi', 'wafiduha@techack.id', 'nim', '1212121212', NULL, '2022-09-22 02:48:54', NULL, '2022-09-24 10:37:01', 'aktif'),
+	(2, 'anon', '$2y$10$LC/OwC3H1fy7TMl5EBAfuuVI0BOnaI1sAX0wP8EAoOKVIn4DO7R0m', 'user', 'Anon Name', 'anon@techack.id', 'nik', '1212121212121212', NULL, '2022-09-22 02:24:19', NULL, '2022-11-01 09:57:44', 'tidak aktif'),
+	(4, 'wafi', '$2y$10$1/DLHlvYUHgOXO9zLzUrpuNlHJtQ1g9rXBC8Wvuz.67rhZ21vi0GS', 'user', 'Wafi D. El Fahmi', 'wafiduha@techack.id', 'nim', '1212121212', NULL, '2022-09-22 02:48:54', 1, '2022-11-01 09:59:47', 'aktif'),
 	(6, 'gon', '123', 'admin', 'Gon Freecs', 'gonfreecs@gmail.com', 'nik', '12121212', NULL, '2022-09-22 03:28:24', NULL, NULL, 'aktif'),
 	(9, 'selan', '1223', 'admin', 'Selan Lingam', 'selanlingam@gmail.com', 'kta', '1212121', NULL, '2022-09-22 03:32:34', NULL, NULL, 'aktif'),
-	(16, 'alex', '$2y$10$WVCwM95pRkM4gFRzcNCzuuEephA4/lB7SpeaeIyO7QvjC1uaoXBUG', 'user', 'Alexandrea Papandrae', 'alex@gmail.com', 'nip', '121212', NULL, '2022-09-22 03:42:35', NULL, '2022-09-24 10:37:01', 'aktif'),
+	(16, 'alex', '$2y$10$J1jFkAmcl3dbOd3spAO/FOtvHH7Usl5rs/cuVi96cSm1WjeMq0qZC', 'user', 'Alexandrea Papandrae', 'alex@gmail.com', 'nip', '121212', NULL, '2022-09-22 03:42:35', NULL, '2022-11-01 09:58:31', 'aktif'),
 	(17, 'fix', '1233', 'user', 'Fix D. Factor', 'fixfix@gmail.com', 'kta', '12121212', NULL, '2022-09-22 03:51:34', 1, '2022-09-24 10:37:01', 'tidak aktif'),
 	(18, 'john', '123', 'user', 'John D. Door', 'johndoor@gmail.com', 'nip', '121212w', NULL, '2022-09-22 03:57:48', NULL, '2022-09-24 10:37:01', 'tidak aktif'),
 	(21, 'johnx', '123', 'user', 'John D. Door', 'johndoor@gmail.com', 'nip', '121212w', NULL, '2022-09-22 04:02:24', NULL, '2022-09-24 10:37:01', 'tidak aktif'),
@@ -155,6 +155,54 @@ INSERT INTO `user` (`id`, `username`, `password`, `level`, `nama`, `email`, `jen
 	(28, 'green', '$2y$10$vRRsABT6ND.GWIR2jo.jg.cIdknBAj2x4fNuqvM6Ft36pjipTWK.C', 'admin', 'Green D. Arrow', 'greenarrow@gmail.com', 'nim', '12345555', 1, '2022-09-23 03:38:11', 1, '2022-09-23 03:39:00', 'aktif'),
 	(29, 'sanji', '$2y$10$QRSoFDkjHh/BQR8q2LAiXOxaHbGcQtQJ5X17QqnQmDAi1XHQNUI3y', 'user', 'Vinsmoke Sanji', 'sanji@vinsmoke.id', 'nik', '122222', 1, '2022-09-23 03:41:58', 1, '2022-09-24 10:37:01', 'aktif'),
 	(30, 'thousands', '$2y$10$XX.p7tDkNBCl9CnHSWXpOex5Y6RD.T.7OjS/ICk3JZirqXl10gop2', 'user', 'Thousand Sunny', 'thousand@techack.id', 'nim', '12321312332', 1, '2022-09-23 13:39:51', 1, '2022-09-24 10:37:01', 'aktif');
+
+-- Dumping structure for view db_easset.v_aset
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `v_aset` (
+	`id` INT(11) NOT NULL,
+	`jenis_id` INT(11) NULL,
+	`jenis` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`merk` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`nama` VARCHAR(500) NULL COLLATE 'utf8mb4_general_ci',
+	`uraian` TEXT NULL COLLATE 'utf8mb4_general_ci',
+	`kondisi_id` INT(11) NULL,
+	`kondisi` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`foto` VARCHAR(100) NULL COLLATE 'utf8mb4_general_ci',
+	`jumlah` FLOAT NULL,
+	`satuan_id` INT(11) NULL,
+	`satuan` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`creator` INT(11) NOT NULL,
+	`created_at` TIMESTAMP NULL,
+	`editor` INT(11) NULL,
+	`edited_at` TIMESTAMP NULL,
+	`status` ENUM('available','not available') NULL COLLATE 'utf8mb4_general_ci'
+) ENGINE=MyISAM;
+
+-- Dumping structure for view db_easset.v_aset
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `v_aset`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_aset` AS SELECT 
+	a.id,
+	a.jenis jenis_id,
+	b.jenis,
+	a.merk,
+	a.nama,
+	a.uraian,
+	a.kondisi kondisi_id,
+	c.kondisi,
+	a.foto,
+	a.jumlah,
+	a.satuan satuan_id,
+	d.satuan,
+	a.creator,
+	a.created_at,
+	a.editor,
+	a.edited_at,
+	a.`status` 
+FROM aset a 
+INNER JOIN aset_jenis b ON a.jenis = b.id
+INNER JOIN aset_kondisi c ON a.kondisi = c.id
+INNER JOIN aset_satuan d ON a.satuan = d.id ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
