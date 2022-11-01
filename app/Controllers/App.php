@@ -86,7 +86,7 @@ class App extends BaseController {
                 $f = $this->request->getFile('foto');
                 $fotox = $f->getRandomName();
                 $d['foto'] = $fotox;
-                $fx = \Config\Services::image()
+                $fx = \Config\Services::image('gd')
                     ->withFile($f)
                     ->resize(550, 640, false, 'height')
                     ->save(FCPATH . '/uploads/aset/' . $fotox);
@@ -151,7 +151,7 @@ class App extends BaseController {
                 $f = $this->request->getFile('foto');
                 $fotox = $f->getRandomName();
                 $d['foto'] = $fotox;
-                $fx = \Config\Services::image()
+                $fx = \Config\Services::image('gd')
                     ->withFile($f)
                     ->resize(550, 640, true, 'height')
                     ->save(FCPATH . '/uploads/aset/' . $fotox);
