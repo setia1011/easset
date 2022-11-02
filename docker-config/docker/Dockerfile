@@ -23,7 +23,9 @@ RUN apt-get install -y \
     libfreetype6-dev \
     g++
 
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-webp --with-jpeg
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install gd
+
 
 RUN docker-php-ext-install \
     bz2 \
@@ -32,8 +34,7 @@ RUN docker-php-ext-install \
     opcache \
     calendar \
     pdo_mysql \
-    mysqli \
-    gd
+    mysqli
 
 # RUN docker-php-ext-configure \
 #         gd --enable-gd --with-freetype --with-jpeg --with-webp \
