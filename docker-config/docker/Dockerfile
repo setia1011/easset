@@ -2,9 +2,9 @@ FROM php:7.4-apache
 RUN apt-get update
 RUN echo "ServerName e-asset.techack.id" >> /etc/apache2/apache2.conf
 # define timezone
-ENV TZ=Asia/Jakarta
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+# ENV TZ=Asia/Jakarta
+# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# RUN dpkg-reconfigure -f noninteractive tzdata
 RUN apt-get install -y \
     git \
     zip \
@@ -20,7 +20,7 @@ RUN apt-get install -y \
     libreadline-dev \
     libfreetype6-dev \
     g++
-RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
+# RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
 RUN docker-php-ext-install \
     bz2 \
     intl \
