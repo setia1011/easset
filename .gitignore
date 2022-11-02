@@ -46,7 +46,7 @@ $RECYCLE.BIN/
 Vagrantfile
 
 # public
-# public/uploads/aset/*
+public/uploads/aset/*
 
 #-------------------------
 # Temporary Files
