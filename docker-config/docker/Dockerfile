@@ -20,6 +20,7 @@ RUN apt-get install -y \
     libreadline-dev \
     libfreetype6-dev \
     g++
+RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
 RUN docker-php-ext-install \
     bz2 \
     intl \
@@ -27,9 +28,8 @@ RUN docker-php-ext-install \
     opcache \
     calendar \
     pdo_mysql \
-    mysqli
-RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
-    && docker-php-ext-install gd
+    mysqli \ 
+    gd
 
 # 2. set up document root for apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
