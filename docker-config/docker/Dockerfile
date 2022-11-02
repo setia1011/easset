@@ -33,6 +33,14 @@ RUN docker-php-ext-install \
     pdo_mysql \
     mysqli
 
+# install xdebug
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
+# install imagick
+RUN pecl install imagick
+RUN docker-php-ext-enable imagick
+
 # 2. set up document root for apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
