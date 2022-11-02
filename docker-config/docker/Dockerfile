@@ -20,7 +20,9 @@ RUN apt-get install -y \
     libreadline-dev \
     libfreetype6-dev \
     g++
-# RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
+
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
+
 RUN docker-php-ext-install \
     gd \
     bz2 \
