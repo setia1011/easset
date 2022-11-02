@@ -21,7 +21,7 @@ RUN apt-get install -y \
     libfreetype6-dev \
     g++
 
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
 RUN docker-php-ext-install \
     gd \
