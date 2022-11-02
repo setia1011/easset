@@ -1,11 +1,14 @@
 FROM php:7.4-apache
-RUN apt-get update
 RUN echo "ServerName e-asset.techack.id" >> /etc/apache2/apache2.conf
+
 # define timezone
 # ENV TZ=Asia/Jakarta
 # RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # RUN dpkg-reconfigure -f noninteractive tzdata
+
+RUN apt-get update
 RUN apt-get install -y \
+    tzdata \
     git \
     zip \
     curl \
@@ -15,7 +18,6 @@ RUN apt-get install -y \
     libbz2-dev \
     libpng-dev \
     libjpeg-dev \
-    libjpeg62-turbo-dev \
     libmcrypt-dev \
     libreadline-dev \
     libfreetype6-dev \
@@ -34,15 +36,11 @@ RUN docker-php-ext-install \
     mysqli
 
 # install xdebug
-# RUN pecl install xdebug
-# RUN docker-php-ext-enable xdebug
-
-# install imagick
-# RUN pecl install imagick
-# RUN docker-php-ext-enable imagick
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
 
 # 2. set up document root for apache
-COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY docker-config/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # 3. mod_rewrite for URL rewrite and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
 RUN a2enmod rewrite headers

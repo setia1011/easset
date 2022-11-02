@@ -12,7 +12,7 @@ var application = new Vue({
         totalRows: null,
         totalPage: null,
         currentPage: 1,
-        perPage: 5,
+        perPage: 8,
         details: []
     },
     watch: {
