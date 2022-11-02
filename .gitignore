@@ -47,6 +47,7 @@ Vagrantfile
 
 # public
 public/uploads/aset/*
+!public/uploads/aset/index.html
 
 #-------------------------
 # Temporary Files
