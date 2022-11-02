@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 RUN apt-get update
 RUN echo "ServerName e-asset.techack.id" >> /etc/apache2/apache2.conf
 # define timezone
