@@ -1,13 +1,10 @@
 FROM php:7.4-apache
-
+RUN apt-get update
 RUN echo "ServerName e-asset.techack.id" >> /etc/apache2/apache2.conf
-
 # define timezone
 ENV TZ=Asia/Jakarta
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
-
-RUN apt-get update
 RUN apt-get install -y \
     git \
     zip \
@@ -22,11 +19,6 @@ RUN apt-get install -y \
     libreadline-dev \
     libfreetype6-dev \
     g++
-
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install gd
-
-
 RUN docker-php-ext-install \
     bz2 \
     intl \
@@ -35,9 +27,8 @@ RUN docker-php-ext-install \
     calendar \
     pdo_mysql \
     mysqli
-
-# RUN docker-php-ext-configure \
-#         gd --enable-gd --with-freetype --with-jpeg --with-webp \
+RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype \
+    && docker-php-ext-install gd
 
 # 2. set up document root for apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
