@@ -21,10 +21,9 @@ RUN apt-get install -y \
     libfreetype6-dev \
     g++
 
-RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && docker-php-ext-install gd
 
 RUN docker-php-ext-install \
-    gd \
     bz2 \
     intl \
     bcmath \
@@ -34,12 +33,12 @@ RUN docker-php-ext-install \
     mysqli
 
 # install xdebug
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
+# RUN pecl install xdebug
+# RUN docker-php-ext-enable xdebug
 
 # install imagick
-RUN pecl install imagick
-RUN docker-php-ext-enable imagick
+# RUN pecl install imagick
+# RUN docker-php-ext-enable imagick
 
 # 2. set up document root for apache
 COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
