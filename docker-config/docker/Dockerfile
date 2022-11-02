@@ -1,4 +1,4 @@
-FROM php:8.1-apache
+FROM php:7.4-apache
 RUN apt-get update
 RUN echo "ServerName e-asset.techack.id" >> /etc/apache2/apache2.conf
 # define timezone
@@ -21,9 +21,10 @@ RUN apt-get install -y \
     libfreetype6-dev \
     g++
 
-RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ && docker-php-ext-install gd
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
 RUN docker-php-ext-install \
+    gd \
     bz2 \
     intl \
     bcmath \
