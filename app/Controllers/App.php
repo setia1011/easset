@@ -41,12 +41,32 @@ class App extends BaseController {
         $d = json_decode(file_get_contents("php://input"), TRUE);
         $model = new AppModel();
         $asetData = $model->fetchAnAsset($d['aid']);
+        $asetBook = $model->fetchBook($d['aid']);
         foreach ($asetData as $k => $a) {
+            if (count($asetBook) > 0) {
+                $asetData[$k]['book_id'] = $asetBook[0]['id'];
+                $asetData[$k]['book_qty'] = $asetBook[0]['qty'];
+            } else {
+                $asetData[$k]['book_id'] = null;
+                $asetData[$k]['book_qty'] = 0;
+            }
             if (!file_exists(FCPATH . $a['foto'])) {
                 $asetData[$k]['foto'] = "images/add-image.png";
             } 
         }
         echo json_encode($asetData);
+    }
+
+    public function bookAnAset() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new AppModel();
+        $asetData = $model->bookAnAset($d);
+        if ($asetData) {
+            $asetBook = $model->fetchBook($d['aid']);
+            echo json_encode($asetBook);
+        } else {
+            echo json_encode([]);
+        }
     }
 
     public function countAset() {

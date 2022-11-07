@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `aset` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset: ~6 rows (approximately)
+-- Dumping data for table db_easset.aset: ~7 rows (approximately)
 DELETE FROM `aset`;
 INSERT INTO `aset` (`id`, `jenis`, `merk`, `nama`, `uraian`, `kondisi`, `foto`, `jumlah`, `satuan`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
 	(1, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1667277849_33b29f513d5252d103ff.jpg', 12, 3, 1, '2022-10-07 22:41:27', NULL, '2022-11-01 04:44:10', 'available'),
@@ -46,8 +46,28 @@ INSERT INTO `aset` (`id`, `jenis`, `merk`, `nama`, `uraian`, `kondisi`, `foto`, 
 	(3, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1667295638_df094fab18f1c60ef08d.jpg', 0, 3, 1, '2022-10-07 22:41:35', NULL, '2022-11-01 09:40:38', 'available'),
 	(4, 2, 'Mejo', 'Meja', 'Meja kayu jati', 1, '1665182903_c593d2f3aaeabe1eb5c2.jpg', 100, 2, 1, '2022-10-07 22:48:24', NULL, NULL, 'available'),
 	(5, 1, 'Pilot', 'Pensil', 'Pensil Hitam', 1, '1665183103_034ce8cb8d409bd6b292.jpg', 100, 1, 1, '2022-10-07 22:51:43', NULL, NULL, 'available'),
-	(6, 1, 'Pilot', 'Bolpoin', 'Bolpin Merah', 1, '1667276565_d23e9c61a111dae1c93d.jpg', 100, 1, 1, '2022-10-07 22:52:15', NULL, '2022-11-01 04:22:45', 'available'),
-	(7, 1, 'Pilot', 'Bolpoin', 'Bolpin warna merah', 1, '1667277801_4d5087f2a6d84a6c9d42.jpg', 100, 1, 1, '2022-10-07 23:10:13', NULL, '2022-11-01 04:43:21', 'not available');
+	(6, 1, 'Pilot', 'Bolpoin', 'Bolpin Merah', 1, '1667792348_1769e21c3904c7a2d68f.png', 100, 1, 1, '2022-10-07 22:52:15', NULL, '2022-11-07 03:39:08', 'available'),
+	(7, 1, 'Pilot', 'Bolpoin', 'Bolpin warna merah', 1, '1667792468_f528376e24344bc9d284.jpg', 100, 1, 1, '2022-10-07 23:10:13', NULL, '2022-11-07 03:41:08', 'not available');
+
+-- Dumping structure for table db_easset.aset_book
+CREATE TABLE IF NOT EXISTS `aset_book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aset_id` int(11) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `user` int(11) DEFAULT NULL,
+  `status` enum('book','cancel','allocated','returned') DEFAULT NULL,
+  `admin` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table db_easset.aset_book: ~3 rows (approximately)
+DELETE FROM `aset_book`;
+INSERT INTO `aset_book` (`id`, `aset_id`, `qty`, `user`, `status`, `admin`, `created_at`, `updated_at`) VALUES
+	(3, 2, 1, 1, 'book', NULL, '2022-11-07 08:28:57', NULL),
+	(4, 1, 1, 1, 'book', NULL, '2022-11-07 08:29:02', NULL),
+	(6, 6, 1, 1, 'book', NULL, '2022-11-07 08:32:12', NULL);
 
 -- Dumping structure for table db_easset.aset_jenis
 CREATE TABLE IF NOT EXISTS `aset_jenis` (
@@ -63,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `aset_jenis` (
   UNIQUE KEY `jenis` (`jenis`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_jenis: ~4 rows (approximately)
+-- Dumping data for table db_easset.aset_jenis: ~3 rows (approximately)
 DELETE FROM `aset_jenis`;
 INSERT INTO `aset_jenis` (`id`, `jenis`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
 	(1, 'atk', 'atk', 1, '2022-09-29 03:15:59', 1, '2022-09-29 05:11:18', 'tidak aktif'),
@@ -84,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `aset_kondisi` (
   UNIQUE KEY `kondisi` (`kondisi`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_kondisi: ~7 rows (approximately)
+-- Dumping data for table db_easset.aset_kondisi: ~6 rows (approximately)
 DELETE FROM `aset_kondisi`;
 INSERT INTO `aset_kondisi` (`id`, `kondisi`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
 	(1, 'new', 'new', 1, '2022-09-29 07:51:39', 1, '2022-09-29 07:54:12', 'tidak aktif'),
@@ -108,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `aset_satuan` (
   UNIQUE KEY `satuan` (`satuan`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_satuan: ~4 rows (approximately)
+-- Dumping data for table db_easset.aset_satuan: ~3 rows (approximately)
 DELETE FROM `aset_satuan`;
 INSERT INTO `aset_satuan` (`id`, `satuan`, `uraian`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
 	(1, 'pce', 'piece', 1, NULL, 1, '2022-09-29 07:18:33', 'tidak aktif'),
@@ -178,6 +198,31 @@ CREATE TABLE `v_aset` (
 	`status` ENUM('available','not available') NULL COLLATE 'utf8mb4_general_ci'
 ) ENGINE=MyISAM;
 
+-- Dumping structure for view db_easset.v_book
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `v_book` (
+	`id` INT(11) NOT NULL,
+	`jenis_id` INT(11) NULL,
+	`jenis` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`merk` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`nama` VARCHAR(500) NULL COLLATE 'utf8mb4_general_ci',
+	`uraian` TEXT NULL COLLATE 'utf8mb4_general_ci',
+	`kondisi_id` INT(11) NULL,
+	`kondisi` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`foto` VARCHAR(100) NULL COLLATE 'utf8mb4_general_ci',
+	`jumlah` FLOAT NULL,
+	`satuan_id` INT(11) NULL,
+	`satuan` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`creator` INT(11) NOT NULL,
+	`created_at` TIMESTAMP NULL,
+	`editor` INT(11) NULL,
+	`edited_at` TIMESTAMP NULL,
+	`status` ENUM('available','not available') NULL COLLATE 'utf8mb4_general_ci',
+	`book_qty` INT(11) NULL,
+	`user` INT(11) NULL,
+	`book_status` ENUM('book','cancel','allocated','returned') NULL COLLATE 'utf8mb4_general_ci'
+) ENGINE=MyISAM;
+
 -- Dumping structure for view db_easset.v_aset
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `v_aset`;
@@ -203,6 +248,32 @@ FROM aset a
 INNER JOIN aset_jenis b ON a.jenis = b.id
 INNER JOIN aset_kondisi c ON a.kondisi = c.id
 INNER JOIN aset_satuan d ON a.satuan = d.id ;
+
+-- Dumping structure for view db_easset.v_book
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `v_book`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_book` AS SELECT 
+	a.id, 
+	a.jenis_id,
+	a.jenis,
+	a.merk,
+	a.nama,
+	a.uraian,
+	a.kondisi_id,
+	a.kondisi,
+	a.foto,
+	a.jumlah,
+	a.satuan_id,
+	a.satuan,
+	a.creator,
+	a.created_at,
+	a.editor,
+	a.edited_at,
+	a.`status`,
+	b.qty book_qty, 
+	b.user,
+	b.`status` book_status 
+FROM v_aset a INNER JOIN aset_book b ON a.id = b.aset_id ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

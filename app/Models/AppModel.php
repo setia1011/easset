@@ -28,6 +28,34 @@ class AppModel extends Model {
         return $res;
     }
 
+    public function bookAnAset($d) {
+        $db = \Config\Database::connect();
+        $session = \Config\Services::session();
+        $aid = $d['aid'];
+        $user = $session->id;
+        $qty = $d['qty'];
+
+        $cek = $db->query("SELECT * FROM aset_book WHERE aset_id = '$aid' AND user = '$user' AND `status` = 'book'")->getResultArray();
+        if (count($cek) > 0) {
+            if ($qty > 0) {
+                $res = $db->query("UPDATE aset_book SET qty = '$qty' WHERE aset_id = '$aid' AND user = '$user' AND `status` = 'book'");
+            } else {
+                $res = $db->query("DELETE FROM aset_book WHERE aset_id = '$aid' AND user = '$user' AND `status` = 'book'");
+            }
+        } else {
+            $res = $db->query("INSERT INTO aset_book (aset_id, user, qty, `status`) VALUES ('$aid', '$user', '$qty', 'book')");
+        }
+        return $db->affectedRows();
+    }
+
+    public function fetchBook($aid) {
+        $session = \Config\Services::session();
+        $db = \Config\Database::connect();
+        $user = $session->id;
+        $cek = $db->query("SELECT * FROM aset_book WHERE aset_id = '$aid' AND user = '$user' AND `status` = 'book'")->getResultArray();
+        return $cek;
+    }
+
     public function countAset() {
         $db = \Config\Database::connect();
         $res = $db->query("SELECT COUNT(id) jum FROM aset")->getResultArray();

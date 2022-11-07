@@ -6,6 +6,7 @@ var application = new Vue({
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     },
     data: {
+        loading: false,
         search: null,
         items: [],
         totalData: null,
@@ -13,7 +14,11 @@ var application = new Vue({
         totalPage: null,
         currentPage: 1,
         perPage: 8,
-        details: []
+        details: [],
+        bid: null,
+        aid: null,
+        min: 0,
+        qty: 0
     },
     watch: {
         search: _.debounce(
@@ -53,8 +58,9 @@ var application = new Vue({
                 console.log(res.data);
                 if (res.data) {
                     this.details = res.data[0];
-                    // this.foto = res.data[0].foto;
-                    // this.nama = res.data[0].nama;
+                    this.aid = res.data[0].id;
+                    this.qty = res.data[0].book_qty;
+                    this.bid = res.data[0].book_id;
                 }
             }).catch(err => {
                 console.log(err);
@@ -64,5 +70,31 @@ var application = new Vue({
             this.currentPage = Number(pageNum);
             this.fetchAset();
         },
+        bookAset: function() {
+            if (this.aid) {
+                this.loading = true;
+                axios.post('../app/book-an-aset', JSON.stringify({
+                    aid: this.aid,
+                    qty: this.$refs.qx.value
+                })).then(res => {
+                    console.log(res.data);
+                    if (res.data.length > 0) {
+                        console.log(res.data);
+                        this.bid = res.data[0].id;
+                        this.qty = res.data[0].qty;
+                    } else {
+                        this.bid = null;
+                        this.qty = 0;
+                    }
+                    this.loading = false;
+                }).catch(err => {
+                    console.log(err);
+                    this.loading = false;
+                });
+            }
+        },
+        checkQty: function(c) {
+            console.log(1);
+        }
     }
 });
