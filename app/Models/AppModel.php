@@ -52,8 +52,22 @@ class AppModel extends Model {
         $session = \Config\Services::session();
         $db = \Config\Database::connect();
         $user = $session->id;
-        $cek = $db->query("SELECT * FROM aset_book WHERE aset_id = '$aid' AND user = '$user' AND `status` = 'book'")->getResultArray();
+        $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND user = '$user' AND `book_status` = 'book'")->getResultArray();
         return $cek;
+    }
+
+    public function fetchBooks($d) {
+        $session = \Config\Services::session();
+        $db = \Config\Database::connect();
+        $user = $session->id;
+        $ref = $d['ref'];
+        if ($ref == 'all') {
+            $res = $db->query("SELECT * FROM v_book WHERE book_status = 'book'")->getResultArray();
+        } 
+        if ($ref == 'user') {
+            $res = $db->query("SELECT * FROM v_book WHERE user = '$user' AND book_status = 'book'")->getResultArray();
+        }
+        return $res;
     }
 
     public function countAset() {

@@ -53,6 +53,7 @@ $routes->post('/app/book-an-aset', 'App::bookAnAset');
 $routes->post('/app/count-aset', 'App::countAset');
 $routes->post('/app/rekam-aset', 'App::rekamAset');
 $routes->post('/app/update-aset', 'App::updateAset');
+$routes->post('/app/fetch-books', 'App::fetchBooks');
 
 // Auth
 $routes->get('/auth/login', 'Auth::index');

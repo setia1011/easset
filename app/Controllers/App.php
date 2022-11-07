@@ -45,7 +45,7 @@ class App extends BaseController {
         foreach ($asetData as $k => $a) {
             if (count($asetBook) > 0) {
                 $asetData[$k]['book_id'] = $asetBook[0]['id'];
-                $asetData[$k]['book_qty'] = $asetBook[0]['qty'];
+                $asetData[$k]['book_qty'] = $asetBook[0]['book_qty'];
             } else {
                 $asetData[$k]['book_id'] = null;
                 $asetData[$k]['book_qty'] = 0;
@@ -65,7 +65,8 @@ class App extends BaseController {
             $asetBook = $model->fetchBook($d['aid']);
             echo json_encode($asetBook);
         } else {
-            echo json_encode([]);
+            $asetBook = $model->fetchBook($d['aid']);
+            echo json_encode($asetBook);
         }
     }
 
@@ -213,6 +214,13 @@ class App extends BaseController {
         } else {
             return "Data tidak valid!";
         }
+    }
+
+    public function fetchBooks() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new AppModel();
+        $asetBook = $model->fetchBooks($d);
+        return json_encode($asetBook);
     }
 
     public function browseAset() {
