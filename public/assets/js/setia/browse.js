@@ -81,7 +81,7 @@ var application = new Vue({
                     if (res.data.length > 0) {
                         console.log(res.data);
                         this.bid = res.data[0].id;
-                        this.qty = res.data[0].qty;
+                        this.qty = res.data[0].book_qty;
                     } else {
                         this.bid = null;
                         this.qty = 0;
