@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `aset_book` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table db_easset.aset_book: ~3 rows (approximately)
 DELETE FROM `aset_book`;
@@ -215,11 +215,13 @@ CREATE TABLE `v_book` (
 	`satuan` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
 	`creator` INT(11) NOT NULL,
 	`created_at` TIMESTAMP NULL,
+	`created_atx` VARCHAR(24) NULL COLLATE 'utf8mb4_general_ci',
 	`editor` INT(11) NULL,
 	`edited_at` TIMESTAMP NULL,
 	`status` ENUM('available','not available') NULL COLLATE 'utf8mb4_general_ci',
 	`book_qty` INT(11) NULL,
 	`user` INT(11) NULL,
+	`book_user` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
 	`book_status` ENUM('book','cancel','allocated','returned') NULL COLLATE 'utf8mb4_general_ci'
 ) ENGINE=MyISAM;
 
@@ -267,13 +269,16 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_book` AS SELECT
 	a.satuan,
 	a.creator,
 	a.created_at,
+	DATE_FORMAT(a.created_at, '%d/%m/%Y %H:%i:%s') created_atx,
 	a.editor,
 	a.edited_at,
 	a.`status`,
 	b.qty book_qty, 
 	b.user,
+	c.nama book_user,
 	b.`status` book_status 
-FROM v_aset a INNER JOIN aset_book b ON a.id = b.aset_id ;
+FROM v_aset a INNER JOIN aset_book b ON a.id = b.aset_id 
+INNER JOIN user c ON b.user = c.id ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
