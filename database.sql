@@ -60,14 +60,22 @@ CREATE TABLE IF NOT EXISTS `aset_book` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_book: ~3 rows (approximately)
+-- Dumping data for table db_easset.aset_book: ~11 rows (approximately)
 DELETE FROM `aset_book`;
 INSERT INTO `aset_book` (`id`, `aset_id`, `qty`, `user`, `status`, `admin`, `created_at`, `updated_at`) VALUES
 	(3, 2, 1, 1, 'book', NULL, '2022-11-07 08:28:57', NULL),
 	(4, 1, 1, 1, 'book', NULL, '2022-11-07 08:29:02', NULL),
-	(6, 6, 1, 1, 'book', NULL, '2022-11-07 08:32:12', NULL);
+	(6, 6, 1, 1, 'book', NULL, '2022-11-07 08:32:12', NULL),
+	(9, 7, 8, 1, 'book', NULL, '2022-11-07 15:03:52', '2022-12-25 02:41:21'),
+	(10, 4, 1, 1, 'book', NULL, '2022-12-25 02:34:32', NULL),
+	(13, 6, 2, 23, 'book', NULL, '2022-12-25 02:55:15', NULL),
+	(14, 7, 2, 23, 'book', NULL, '2022-12-25 02:55:19', NULL),
+	(15, 1, 3, 23, 'book', NULL, '2022-12-25 02:55:23', NULL),
+	(16, 2, 1, 23, 'book', NULL, '2022-12-25 02:55:27', NULL),
+	(17, 4, 1, 23, 'book', NULL, '2022-12-25 02:55:32', NULL),
+	(18, 5, 1, 23, 'book', NULL, '2022-12-25 02:55:40', NULL);
 
 -- Dumping structure for table db_easset.aset_jenis
 CREATE TABLE IF NOT EXISTS `aset_jenis` (
@@ -219,9 +227,12 @@ CREATE TABLE `v_book` (
 	`editor` INT(11) NULL,
 	`edited_at` TIMESTAMP NULL,
 	`status` ENUM('available','not available') NULL COLLATE 'utf8mb4_general_ci',
+	`book_id` INT(11) NOT NULL,
 	`book_qty` INT(11) NULL,
 	`user` INT(11) NULL,
 	`book_user` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`booked_at` TIMESTAMP NULL,
+	`booked_atx` VARCHAR(24) NULL COLLATE 'utf8mb4_general_ci',
 	`book_status` ENUM('book','cancel','allocated','returned') NULL COLLATE 'utf8mb4_general_ci'
 ) ENGINE=MyISAM;
 
@@ -273,9 +284,12 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_book` AS SELECT
 	a.editor,
 	a.edited_at,
 	a.`status`,
+	b.id book_id,
 	b.qty book_qty, 
 	b.user,
 	c.nama book_user,
+	b.created_at booked_at,
+	DATE_FORMAT(b.created_at, '%d/%m/%Y %H:%i:%s') booked_atx,
 	b.`status` book_status 
 FROM v_aset a INNER JOIN aset_book b ON a.id = b.aset_id 
 INNER JOIN user c ON b.user = c.id ;

@@ -14,38 +14,62 @@
         </div><!-- .nk-block-between -->
     </div><!-- .nk-block-head -->
     <div class="nk-block">
+        <input type="hidden" ref="userlev" value="<?= $_SESSION['level']; ?>">
         <div class="form-control-wrap mb-2">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search by aset">
+            <div class="input-group" style="max-width: 600px;">
+                <input type="text" v-model="search" class="form-control" placeholder="Search by aset">
                 <div class="input-group-append">
                     <button class="btn btn-outline-primary btn-dim"><em class="icon ni ni-search"></em></button>
                 </div>
             </div>
         </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Aset</th>
-                    <th scope="col">Stok</th>
-                    <th scope="col">Book Qty</th>
-                    <th scope="col">Book Date</th>
-                    <th scope="col">User</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, index) in items">
-                    <th scope="row">{{ index + 1 }}</th>
-                    <td>{{ item.nama }}</td>
-                    <td>{{ item.jumlah }} ({{ item.satuan }})</td>
-                    <td>{{ item.book_qty }} ({{ item.satuan }})</td>
-                    <td>{{ item.created_atx }}</td>
-                    <td>{{ item.book_user }}</td>
-                    <td><button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="card card-bordered mb-4">
+            <table class="table">
+                <thead style="height: 40px; vertical-align: middle;">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Aset</th>
+                        <th scope="col">Stok</th>
+                        <th scope="col">Book Qty</th>
+                        <th scope="col">Book Date</th>
+                        <th scope="col">User</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="vertical-align: middle;" v-for="(item, index) in items">
+                        <th scope="row">{{ index + 1 }}</th>
+                        <td>{{ item.nama }}</td>
+                        <td>{{ item.jumlah }} ({{ item.satuan }})</td>
+                        <td>{{ item.book_qty }} ({{ item.satuan }})</td>
+                        <td>{{ item.booked_atx }}</td>
+                        <td>{{ item.book_user }}</td>
+                        <td><button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id, item.book_id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="col-sm-12">
+            <span class="pagination justify-content-center justify-content-md-start" v-if="items !== null">
+                <paginate 
+                    first-last-button
+                    :page-count="getPageCount" 
+                    :page-range="3" 
+                    :margin-pages="1" 
+                    :click-handler="clickCallback" 
+                    :disabled-class="'disabled'"
+                    :active-class="'active'"
+                    :prev-link-class="'page-link'"
+                    :prev-text="'<'" 
+                    :next-link-class="'page-link'"
+                    :next-text="'＞'"
+                    :container-class="'pagination'" 
+                    :page-class="'page-item'"
+                    :page-link-class="'page-link'">
+                </paginate>
+            </span>
+        </div>
     </div><!-- .nk-block -->
     <div class="modal fade" tabindex="-1" id="modalDetails">
         <div class="modal-dialog modal-lg" role="document">
@@ -99,7 +123,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 mt-2">
-                                        <button type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" style="">Cancel</button>
+                                        <button style="float: right; margin-left: 3px;" type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" style="">Cancel</button>
                                         <button type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" style="float: right;">Allocated</button>
                                     </div>
                                     <div class="col-sm-12 mt-2">

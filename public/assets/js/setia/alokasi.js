@@ -1,3 +1,4 @@
+Vue.component('paginate', VuejsPaginate);
 var application = new Vue({
     el: '#v-alokasi',
     created() {
@@ -11,39 +12,58 @@ var application = new Vue({
         min: 0,
         qty: 0,
         items: [],
-        search: '',
+        search: null,
+        totalData: null,
+        totalRows: null,
+        totalPage: null,
         perPage: 5,
-        currentPage: null
+        currentPage: 1,
+        userlev: null
+        
     },
     watch: {
+        search: _.debounce(
+            function() {
+               this.fetchBooks();
+            }, 500
+        )
     },
     computed: {
+        getPageCount: function() {
+            return this.totalPage;
+        }
     },
     mounted() {
         this.fetchBooks();
     },
     methods: {
         fetchBooks: function() {
+            this.userlev = this.$refs.userlev.value;
             axios.post('../app/fetch-books', JSON.stringify({
-                ref: 'all',
+                userlev: this.userlev,
                 search: this.search,
                 perPage: this.perPage,
                 currentPage: this.currentPage
             })).then(res => {
-                console.log(res.data);
-                this.items = res.data;
-                // this.totalUser = res.data['totalData'];
-                // this.totalRows = res.data['totalRows'];
-                // this.items = res.data['items'];
-                // this.totalPage = res.data['totalPage'];
-                // this.index = this.currentPage * this.perPage;
+                // console.log(res.data.items);
+                // this.items = res.data.items;
+                this.totalUser = res.data['totalData'];
+                this.totalRows = res.data['totalRows'];
+                this.items = res.data['items'];
+                this.totalPage = res.data['totalPage'];
+                this.index = this.currentPage * this.perPage;
             }).catch(err => {
                 console.log(err);
             });
         },
-        fetchDetails: function(e, v) {
+        clickCallback: function(pageNum) {
+            this.currentPage = Number(pageNum);
+            this.fetchBooks();
+        },
+        fetchDetails: function(e, v, b) {
             axios.post('../app/fetch-an-aset', JSON.stringify({
-                aid: v
+                aid: v,
+                bid: b
             })).then(res => {
                 console.log(res.data);
                 if (res.data) {
