@@ -41,7 +41,7 @@ class App extends BaseController {
         $d = json_decode(file_get_contents("php://input"), TRUE);
         $model = new AppModel();
         $asetData = $model->fetchAnAsset($d['aid']);
-        $asetBook = $model->fetchBook($d['aid']);
+        $asetBook = $model->fetchBook($d['aid'], $d['bid']);
         foreach ($asetData as $k => $a) {
             if (count($asetBook) > 0) {
                 $asetData[$k]['book_id'] = $asetBook[0]['id'];

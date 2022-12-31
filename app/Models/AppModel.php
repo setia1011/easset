@@ -48,11 +48,16 @@ class AppModel extends Model {
         return $db->affectedRows();
     }
 
-    public function fetchBook($aid) {
+    public function fetchBook($aid, $bid) {
         $session = \Config\Services::session();
         $db = \Config\Database::connect();
         $user = $session->id;
-        $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND user = '$user' AND `book_status` = 'book'")->getResultArray();
+        if ($session->level == 'admin') {
+            $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND book_id = '$bid' AND `book_status` = 'book'")->getResultArray();
+        } else {
+            $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND book_id = '$bid' AND user = '$user' AND `book_status` = 'book'")->getResultArray();
+        }
+        
         return $cek;
     }
 

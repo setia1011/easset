@@ -33,6 +33,7 @@
                         <th scope="col">Book Qty</th>
                         <th scope="col">Book Date</th>
                         <th scope="col">User</th>
+                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -44,6 +45,7 @@
                         <td>{{ item.book_qty }} ({{ item.satuan }})</td>
                         <td>{{ item.booked_atx }}</td>
                         <td>{{ item.book_user }}</td>
+                        <td><span class="text-success text-bold">{{ item.book_status}}</span></td>
                         <td><button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id, item.book_id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button></td>
                     </tr>
                 </tbody>
