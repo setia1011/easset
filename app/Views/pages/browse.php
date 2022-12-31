@@ -141,32 +141,36 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <div class="col-sm-12 mt-2">
-                                        <div class="form-control-wrap number-spinner-wrap" style="width: 140px; float: right;">
-                                            <button class="btn btn-icon btn-primary number-spinner-btn number-minus" data-number="minus">
-                                                <em class="icon ni ni-minus"></em>
-                                            </button>
-                                            <input type="number" ref="qx" class="form-control number-spinner" :value="qty" :min="min" :max="details.jumlah">
-                                            <button class="btn btn-icon btn-primary number-spinner-btn number-plus" data-number="plus">
-                                                <em class="icon ni ni-plus"></em>
-                                            </button>
+
+                            <?php if ($_SESSION['level'] == 'user') { ?>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-sm-12 mt-2">
+                                            <div class="form-control-wrap number-spinner-wrap" style="width: 140px; float: right;">
+                                                <button class="btn btn-icon btn-primary number-spinner-btn number-minus" data-number="minus">
+                                                    <em class="icon ni ni-minus"></em>
+                                                </button>
+                                                <input type="number" ref="qx" class="form-control number-spinner" :value="qty" :min="min" :max="details.jumlah">
+                                                <button class="btn btn-icon btn-primary number-spinner-btn number-plus" data-number="plus">
+                                                    <em class="icon ni ni-plus"></em>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-12 mt-2">
-                                        <button type="submit" v-on:click="bookAset" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" style="float: right;">Book</button>
-                                    </div>
-                                    <div class="col-sm-12 mt-2">
-                                        <!-- <div class="alert alert-success alert-icon">
-                                            <em class="icon ni ni-check-circle"></em> <strong>asas</strong>
-                                        </div> -->
-                                        <div class="loading-info" style="float: right;" v-show="loading">
-                                            <span><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> Processing..</span>
+                                        <div class="col-sm-12 mt-2">
+                                            <button type="submit" v-on:click="bookAset" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" style="float: right;">Book</button>
+                                        </div>
+                                        <div class="col-sm-12 mt-2">
+                                            <!-- <div class="alert alert-success alert-icon">
+                                                <em class="icon ni ni-check-circle"></em> <strong>asas</strong>
+                                            </div> -->
+                                            <div class="loading-info" style="float: right;" v-show="loading">
+                                                <span><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> Processing..</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php } ?>
+                            
                         </div>
                         <!-- <div class="form-group mt-4">
                             <button type="submit" class="btn btn-lg btn-success">Create</button>

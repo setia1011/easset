@@ -38,14 +38,25 @@ class App extends BaseController {
     }
 
     public function fetchAnAset() {
+        $session = \Config\Services::session();
         $d = json_decode(file_get_contents("php://input"), TRUE);
+        if (isset($d['bid'])) {
+            $bid = $d['bid'];
+        } else {
+            $bid = '';
+        }
         $model = new AppModel();
         $asetData = $model->fetchAnAsset($d['aid']);
-        $asetBook = $model->fetchBook($d['aid'], $d['bid']);
+        $asetBook = $model->fetchBook($d['aid'], $bid);
         foreach ($asetData as $k => $a) {
             if (count($asetBook) > 0) {
-                $asetData[$k]['book_id'] = $asetBook[0]['id'];
-                $asetData[$k]['book_qty'] = $asetBook[0]['book_qty'];
+                if ($session->level == 'admin' & $bid == '') {
+                    $asetData[$k]['book_id'] = null;
+                    $asetData[$k]['book_qty'] = 0;
+                } else {
+                    $asetData[$k]['book_id'] = $asetBook[0]['book_id'];
+                    $asetData[$k]['book_qty'] = $asetBook[0]['book_qty'];
+                }
             } else {
                 $asetData[$k]['book_id'] = null;
                 $asetData[$k]['book_qty'] = 0;
@@ -59,15 +70,25 @@ class App extends BaseController {
 
     public function bookAnAset() {
         $d = json_decode(file_get_contents("php://input"), TRUE);
+        if (isset($d['bid'])) {
+            $bid = $d['bid'];
+        } else {
+            $bid = '';
+        }
         $model = new AppModel();
         $asetData = $model->bookAnAset($d);
         if ($asetData) {
-            $asetBook = $model->fetchBook($d['aid']);
+            $asetBook = $model->fetchBook($d['aid'], $bid);
             echo json_encode($asetBook);
         } else {
-            $asetBook = $model->fetchBook($d['aid']);
+            $asetBook = $model->fetchBook($d['aid'], $bid);
             echo json_encode($asetBook);
         }
+    }
+
+    public function allocation() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        echo json_encode($d);
     }
 
     public function countAset() {

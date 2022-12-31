@@ -76,5 +76,17 @@ var application = new Vue({
                 console.log(err);
             });
         },
+        allocated: function() {
+            axios.post('../app/allocation', JSON.stringify({
+                aid: this.aid,
+                bid: this.bid,
+                oqty: this.qty,
+                nqty: this.$refs.qx.value
+            })).then(res => {
+                console.log(res.data);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
     }
 });

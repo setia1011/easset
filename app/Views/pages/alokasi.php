@@ -125,8 +125,8 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 mt-2">
-                                        <button style="float: right; margin-left: 3px;" type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" style="">Cancel</button>
-                                        <button type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" style="float: right;">Allocated</button>
+                                        <button style="float: right; margin-left: 3px;" type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'">Cancel</button>
+                                        <button type="submit" class="btn btn-md" v-bind:class="(bid !== null) ? 'btn-success' : 'btn-primary'" style="float: right;" v-on:click="allocated($event)">Allocated</button>
                                     </div>
                                     <div class="col-sm-12 mt-2">
                                         <!-- <div class="alert alert-success alert-icon">
