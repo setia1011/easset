@@ -31,7 +31,6 @@ var application = new Vue({
                             this.loading = true;
                             setTimeout(() => {
                                 this.loading = false;
-                                this.loading
                                 this.linfo = true;
                                 setTimeout(() => {
                                     this.linfo = false;
@@ -49,7 +48,6 @@ var application = new Vue({
                         this.loading = true;
                         setTimeout(() => {
                             this.loading = false;
-                            this.loading
                             this.linfo = true;
                             setTimeout(() => {
                                 this.linfo = false;

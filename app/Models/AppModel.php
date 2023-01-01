@@ -56,19 +56,24 @@ class AppModel extends Model {
     //     return $cek;
     // }
 
-    public function fetchBook($aid, $bid) {
+    public function fetchBook($d) {
+        $aid = $d['aid'];
+        $bid = '';
+        if (isset($d['bid'])) {
+            $bid = $d['bid'];
+        }
         $session = \Config\Services::session();
         $db = \Config\Database::connect();
         $user = $session->id;
         if ($session->level == 'admin') {
             if (!empty($bid)) {
-                $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND book_id = '$bid' AND `book_status` = 'book'")->getResultArray();
+                $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND book_id = '$bid'")->getResultArray();
             } else {
                 $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND `book_status` = 'book'")->getResultArray();
             }
         } else {
             if (!empty($bid)) {
-                $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND book_id = '$bid' AND user = '$user' AND `book_status` = 'book'")->getResultArray();
+                $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND book_id = '$bid' AND user = '$user'")->getResultArray();
             } else {
                 $cek = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND user = '$user' AND `book_status` = 'book'")->getResultArray();
             }
@@ -83,15 +88,22 @@ class AppModel extends Model {
         $user = $session->id;
         $userlev = $d['userlev'];
         if ($userlev == 'admin') {
+            $status = $d['status'];
             $search = $d['search'];
             $currentPage = $d['currentPage'];
             $perPage = $d['perPage'];
             $offset = ($currentPage - 1) * $perPage;
 
-            $sql0 = "SELECT id FROM v_book WHERE book_status = 'book'";
-            $sql1 = "SELECT id FROM v_book WHERE book_status = 'book'";
-            $sql2 = "SELECT * FROM v_book WHERE book_status = 'book'";
-
+            if ($status == 'all') {
+                $sql0 = "SELECT id FROM v_book WHERE 1 = 1";
+                $sql1 = "SELECT id FROM v_book WHERE 1 = 1";
+                $sql2 = "SELECT * FROM v_book WHERE 1 = 1";
+            } else {
+                $sql0 = "SELECT id FROM v_book WHERE book_status = '$status'";
+                $sql1 = "SELECT id FROM v_book WHERE book_status = '$status'";
+                $sql2 = "SELECT * FROM v_book WHERE book_status = '$status'";
+            }
+            
             if (!empty($search)) {
                 $sql1 .= " AND nama LIKE '%$search%'";
                 $sql2 .= " AND nama LIKE '%$search%'";
@@ -112,15 +124,22 @@ class AppModel extends Model {
             $data['sql'] = $sql2;
         } 
         if ($userlev == 'user') {
+            $status = $d['status'];
             $search = $d['search'];
             $currentPage = $d['currentPage'];
             $perPage = $d['perPage'];
             $offset = ($currentPage - 1) * $perPage;
 
-            $sql0 = "SELECT id FROM v_book WHERE user = '$user'";
-            $sql1 = "SELECT id FROM v_book WHERE user = '$user'";
-            $sql2 = "SELECT * FROM v_book WHERE user = '$user'";
-
+            if ($status == 'all') {
+                $sql0 = "SELECT id FROM v_book WHERE user = '$user'";
+                $sql1 = "SELECT id FROM v_book WHERE user = '$user'";
+                $sql2 = "SELECT * FROM v_book WHERE user = '$user'";
+            } else {
+                $sql0 = "SELECT id FROM v_book WHERE user = '$user' AND `book_status` = '$status'";
+                $sql1 = "SELECT id FROM v_book WHERE user = '$user' AND `book_status` = '$status'";
+                $sql2 = "SELECT * FROM v_book WHERE user = '$user' AND `book_status` = '$status'";
+            }
+            
             if (!empty($search)) {
                 $sql1 .= " AND nama LIKE '%$search%'";
                 $sql2 .= " AND nama LIKE '%$search%'";
@@ -203,6 +222,57 @@ class AppModel extends Model {
             return $data;
         } catch (\Exception $e) {
             return array();
+        }
+    }
+
+    public function fetchBook2($d) {
+        $db = \Config\Database::connect();
+        $aid = $d['aid'];
+        $bid = $d['bid'];
+        $r = $db->query("SELECT * FROM v_book WHERE id = '$aid' AND book_id = '$bid'")->getResultArray();
+        return $r;
+
+    }
+
+    // alokasi
+    public function allocation($d) {
+        $db = \Config\Database::connect();
+        $aid = $d['aid'];
+        $bid = $d['bid'];
+        $nqty = $d['nqty'];
+        $oqty = $d['oqty'];
+        if ($db->query("CALL proc_book($aid, $bid, $nqty)")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function reject($d) {
+        $db = \Config\Database::connect();
+        $aid = $d['aid'];
+        $bid = $d['bid'];
+        $nqty = $d['nqty'];
+        $oqty = $d['oqty'];
+        $status = $d['status'];
+        if ($status == 'book') {
+            if ($db->query("UPDATE aset_book SET `status` = 'rejected' WHERE id = '$aid'")) {
+                return true;
+            }
+        }
+        if ($status == 'allocated') {
+            if ($db->query("UPDATE aset SET jumlah = jumlah + '$oqty' WHERE id = '$aid'")) {
+                if ($db->query("UPDATE aset_book SET `status` = 'rejected' WHERE id = '$bid'")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+        if ($status == 'returned' || $status == 'rejected') {
+            return false;
         }
     }
 }

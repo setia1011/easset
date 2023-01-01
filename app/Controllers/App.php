@@ -47,7 +47,7 @@ class App extends BaseController {
         }
         $model = new AppModel();
         $asetData = $model->fetchAnAsset($d['aid']);
-        $asetBook = $model->fetchBook($d['aid'], $bid);
+        $asetBook = $model->fetchBook($d);
         foreach ($asetData as $k => $a) {
             if (count($asetBook) > 0) {
                 if ($session->level == 'admin' & $bid == '') {
@@ -78,17 +78,78 @@ class App extends BaseController {
         $model = new AppModel();
         $asetData = $model->bookAnAset($d);
         if ($asetData) {
-            $asetBook = $model->fetchBook($d['aid'], $bid);
+            $asetBook = $model->fetchBook($d);
             echo json_encode($asetBook);
         } else {
-            $asetBook = $model->fetchBook($d['aid'], $bid);
+            $asetBook = $model->fetchBook($d);
             echo json_encode($asetBook);
         }
     }
 
     public function allocation() {
         $d = json_decode(file_get_contents("php://input"), TRUE);
-        echo json_encode($d);
+        if ($d['nqty'] < 1) {
+            echo json_encode("Jumlah booking minimal 1 unit");
+            die();
+        }
+        $model = new AppModel();
+        $book = $model->fetchBook2($d);
+        if (count($book) > 0) {
+            if ($book[0]['book_status'] == 'book') {
+                $aset = $model->fetchAnAsset($d['aid']);
+                if (count($aset) > 0) {
+                    if (intval($aset[0]['jumlah']) >= $d['nqty']) {
+                        if ($model->allocation($d)) {
+                            echo json_encode("Alokasi aset berhasil");
+                        } else {
+                            echo json_encode("Alokasi aset gagal");
+                        }
+                    } else {
+                        echo json_encode("Stok aset sudah habis");
+                    }
+                } else {
+                    echo json_encode("Aset tidak ditemukan");
+                }
+            } else {
+                echo json_encode("Status aset sudah/tidak bisa dialokasikan");
+            }
+        } else {
+            echo json_encode("Aset tidak ditemukan");
+        }
+    }
+
+    public function reject() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new AppModel();
+        $book = $model->fetchBook2($d);
+        if (count($book) > 0) {
+            
+            if ($book[0]['book_status'] == 'returned' || $book[0]['book_status'] == 'rejected') {
+                echo json_encode("Status aset tidak bisa direject");
+            } else {
+                if ($book[0]['book_status'] == 'book') {
+                    // update status
+                    $d['status'] = 'book';
+                    if ($model->reject($d)) {
+                        echo json_encode("Aset berhasil direject ~ 1");
+                    } else {
+                        echo json_encode("Aset gagal direject");
+                    }
+                }
+                if ($book[0]['book_status'] == 'allocated') {
+                    $d['status'] = 'allocated';
+                    // kembalikan stok
+                    // update status
+                    if ($model->reject($d)) {
+                        echo json_encode("Aset berhasil direject ~ 2");
+                    } else {
+                        echo json_encode("Aset gagal direject");
+                    }
+                }
+            }
+        } else {
+            echo json_encode("Aset tidak ditemukan");
+        }
     }
 
     public function countAset() {

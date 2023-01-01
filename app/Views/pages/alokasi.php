@@ -14,64 +14,87 @@
         </div><!-- .nk-block-between -->
     </div><!-- .nk-block-head -->
     <div class="nk-block">
-        <input type="hidden" ref="userlev" value="<?= $_SESSION['level']; ?>">
-        <div class="form-control-wrap mb-2">
-            <div class="input-group" style="max-width: 600px;">
-                <input type="text" v-model="search" class="form-control" placeholder="Search by aset">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-primary btn-dim"><em class="icon ni ni-search"></em></button>
+        <div class="row">
+            <div class="col-md-4">
+                <input type="hidden" ref="userlev" value="<?= $_SESSION['level']; ?>">
+                <div class="form-group">
+                    <div class="form-control-wrap">
+                        <select class="form-select" v-model="opt_status">
+                            <option value="all">All</option>
+                            <option value="book">Book</option>
+                            <option value="allocated">Allocated</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-control-wrap mb-2">
+                    <div class="input-group">
+                        <input type="text" v-model="search" class="form-control" placeholder="Search by aset">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary btn-dim"><em class="icon ni ni-search"></em></button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card card-bordered mb-4">
-            <table class="table">
-                <thead style="height: 40px; vertical-align: middle;">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Aset</th>
-                        <th scope="col">Stok</th>
-                        <th scope="col">Book Qty</th>
-                        <th scope="col">Book Date</th>
-                        <th scope="col">User</th>
-                        <th scope="col">Status</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="vertical-align: middle;" v-for="(item, index) in items">
-                        <th scope="row">{{ index + 1 }}</th>
-                        <td>{{ item.nama }}</td>
-                        <td>{{ item.jumlah }} ({{ item.satuan }})</td>
-                        <td>{{ item.book_qty }} ({{ item.satuan }})</td>
-                        <td>{{ item.booked_atx }}</td>
-                        <td>{{ item.book_user }}</td>
-                        <td><span class="text-success text-bold">{{ item.book_status}}</span></td>
-                        <td><button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id, item.book_id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button></td>
-                    </tr>
-                </tbody>
-            </table>
+
+            <div class="col-md-8">
+                <div class="card card-bordered mb-4">
+                <table class="table">
+                    <thead style="height: 40px; vertical-align: middle;">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Aset</th>
+                            <th scope="col">Stok</th>
+                            <th scope="col">Book Qty</th>
+                            <th scope="col">Book Date</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Status</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="vertical-align: middle;" v-for="(item, index) in items">
+                            <th scope="row">{{ index + 1 }}</th>
+                            <td>{{ item.nama }}</td>
+                            <td>{{ item.jumlah }} ({{ item.satuan }})</td>
+                            <td>{{ item.book_qty }} ({{ item.satuan }})</td>
+                            <td>{{ item.booked_atx }}</td>
+                            <td>{{ item.book_user }}</td>
+                            <td>
+                                <span 
+                                    class="text-bold" 
+                                    v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected'}">{{ item.book_status}}</span>
+                            </td>
+                            <td><button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id, item.book_id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="col-sm-12">
+                <span class="pagination justify-content-center justify-content-md-start" v-if="items !== null">
+                    <paginate 
+                        first-last-button
+                        :page-count="getPageCount" 
+                        :page-range="3" 
+                        :margin-pages="1" 
+                        :click-handler="clickCallback" 
+                        :disabled-class="'disabled'"
+                        :active-class="'active'"
+                        :prev-link-class="'page-link'"
+                        :prev-text="'<'" 
+                        :next-link-class="'page-link'"
+                        :next-text="'＞'"
+                        :container-class="'pagination'" 
+                        :page-class="'page-item'"
+                        :page-link-class="'page-link'">
+                    </paginate>
+                </span>
+            </div>
+            </div>
         </div>
         
-        <div class="col-sm-12">
-            <span class="pagination justify-content-center justify-content-md-start" v-if="items !== null">
-                <paginate 
-                    first-last-button
-                    :page-count="getPageCount" 
-                    :page-range="3" 
-                    :margin-pages="1" 
-                    :click-handler="clickCallback" 
-                    :disabled-class="'disabled'"
-                    :active-class="'active'"
-                    :prev-link-class="'page-link'"
-                    :prev-text="'<'" 
-                    :next-link-class="'page-link'"
-                    :next-text="'＞'"
-                    :container-class="'pagination'" 
-                    :page-class="'page-item'"
-                    :page-link-class="'page-link'">
-                </paginate>
-            </span>
-        </div>
+        
     </div><!-- .nk-block -->
     <div class="modal fade" tabindex="-1" id="modalDetails">
         <div class="modal-dialog modal-lg" role="document">
@@ -125,13 +148,13 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-12 mt-2">
-                                        <button style="float: right; margin-left: 3px;" type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'">Cancel</button>
+                                        <button style="float: right; margin-left: 3px;" type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" v-on:click="reject($event)">Reject</button>
                                         <button type="submit" class="btn btn-md" v-bind:class="(bid !== null) ? 'btn-success' : 'btn-primary'" style="float: right;" v-on:click="allocated($event)">Allocated</button>
                                     </div>
                                     <div class="col-sm-12 mt-2">
-                                        <!-- <div class="alert alert-success alert-icon">
-                                            <em class="icon ni ni-check-circle"></em> <strong>asas</strong>
-                                        </div> -->
+                                        <div class="alert alert-success alert-icon" v-show="linfo">
+                                            <em class="icon ni ni-check-circle"></em><strong>{{ ainfo }}</strong>
+                                        </div>
                                         <div class="loading-info" style="float: right;" v-show="loading">
                                             <span><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> Processing..</span>
                                         </div>

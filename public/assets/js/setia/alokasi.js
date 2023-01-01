@@ -6,6 +6,8 @@ var application = new Vue({
     },
     data: {
         loading: false,
+        linfo: false,
+        ainfo: null,
         details: [],
         bid: null,
         aid: null,
@@ -18,7 +20,8 @@ var application = new Vue({
         totalPage: null,
         perPage: 5,
         currentPage: 1,
-        userlev: null
+        userlev: null,
+        opt_status: 'all'
         
     },
     watch: {
@@ -26,6 +29,11 @@ var application = new Vue({
             function() {
                this.fetchBooks();
             }, 500
+        ),
+        opt_status: _.debounce(
+            function() {
+               this.fetchBooks();
+            }, 100
         )
     },
     computed: {
@@ -40,13 +48,12 @@ var application = new Vue({
         fetchBooks: function() {
             this.userlev = this.$refs.userlev.value;
             axios.post('../app/fetch-books', JSON.stringify({
+                status: this.opt_status,
                 userlev: this.userlev,
                 search: this.search,
                 perPage: this.perPage,
                 currentPage: this.currentPage
             })).then(res => {
-                // console.log(res.data.items);
-                // this.items = res.data.items;
                 this.totalUser = res.data['totalData'];
                 this.totalRows = res.data['totalRows'];
                 this.items = res.data['items'];
@@ -63,7 +70,8 @@ var application = new Vue({
         fetchDetails: function(e, v, b) {
             axios.post('../app/fetch-an-aset', JSON.stringify({
                 aid: v,
-                bid: b
+                bid: b,
+                ref: 'alokasi'
             })).then(res => {
                 console.log(res.data);
                 if (res.data) {
@@ -77,16 +85,56 @@ var application = new Vue({
             });
         },
         allocated: function() {
+            this.loading = true;
             axios.post('../app/allocation', JSON.stringify({
                 aid: this.aid,
                 bid: this.bid,
                 oqty: this.qty,
                 nqty: this.$refs.qx.value
             })).then(res => {
-                console.log(res.data);
+                this.ainfo = res.data;
+                setTimeout(() => {
+                    this.loading = true;
+                    setTimeout(() => {
+                        this.loading = false;
+                        this.linfo = true;
+                        setTimeout(() => {
+                            this.linfo = false;
+                        }, 1500);
+                    }, 1000);
+                }, 1000);
             }).catch(err => {
                 console.log(err);
+                this.loading = false;
             });
+
+            this.fetchBooks();
+        },
+        reject: function() {
+            this.loading = true;
+            axios.post('../app/reject', JSON.stringify({
+                aid: this.aid,
+                bid: this.bid,
+                oqty: this.qty,
+                nqty: this.$refs.qx.value
+            })).then(res => {
+                this.ainfo = res.data;
+                setTimeout(() => {
+                    this.loading = true;
+                    setTimeout(() => {
+                        this.loading = false;
+                        this.linfo = true;
+                        setTimeout(() => {
+                            this.linfo = false;
+                        }, 1500);
+                    }, 1000);
+                }, 1000);
+            }).catch(err => {
+                console.log(err);
+                this.loading = false;
+            });
+
+            this.fetchBooks();
         }
     }
 });
