@@ -41,13 +41,13 @@ CREATE TABLE IF NOT EXISTS `aset` (
 -- Dumping data for table db_easset.aset: ~7 rows (approximately)
 DELETE FROM `aset`;
 INSERT INTO `aset` (`id`, `jenis`, `merk`, `nama`, `uraian`, `kondisi`, `foto`, `jumlah`, `satuan`, `creator`, `created_at`, `editor`, `edited_at`, `status`) VALUES
-	(1, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1667277849_33b29f513d5252d103ff.jpg', 12, 3, 1, '2022-10-07 22:41:27', NULL, '2022-11-01 04:44:10', 'available'),
-	(2, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1665182491_bea6eab29aa0ec28e6ba.jpg', 12, 3, 1, '2022-10-07 22:41:31', NULL, NULL, 'available'),
+	(1, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1667277849_33b29f513d5252d103ff.jpg', 6, 3, 1, '2022-10-07 22:41:27', NULL, '2023-01-01 07:55:37', 'available'),
+	(2, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1665182491_bea6eab29aa0ec28e6ba.jpg', 108, 3, 1, '2022-10-07 22:41:31', NULL, '2023-01-01 10:17:20', 'available'),
 	(3, 2, 'KK', 'Kursi', 'Kursi kayu dari jepara', 7, '1667295638_df094fab18f1c60ef08d.jpg', 0, 3, 1, '2022-10-07 22:41:35', NULL, '2022-11-01 09:40:38', 'available'),
 	(4, 2, 'Mejo', 'Meja', 'Meja kayu jati', 1, '1665182903_c593d2f3aaeabe1eb5c2.jpg', 100, 2, 1, '2022-10-07 22:48:24', NULL, NULL, 'available'),
 	(5, 1, 'Pilot', 'Pensil', 'Pensil Hitam', 1, '1665183103_034ce8cb8d409bd6b292.jpg', 100, 1, 1, '2022-10-07 22:51:43', NULL, NULL, 'available'),
-	(6, 1, 'Pilot', 'Bolpoin', 'Bolpin Merah', 1, '1667792348_1769e21c3904c7a2d68f.png', 100, 1, 1, '2022-10-07 22:52:15', NULL, '2022-11-07 03:39:08', 'available'),
-	(7, 1, 'Pilot', 'Bolpoin', 'Bolpin warna merah', 1, '1667792468_f528376e24344bc9d284.jpg', 100, 1, 1, '2022-10-07 23:10:13', NULL, '2022-11-07 03:41:08', 'not available');
+	(6, 1, 'Pilot', 'Bolpoin', 'Bolpin Merah', 1, '1667792348_1769e21c3904c7a2d68f.png', 88, 1, 1, '2022-10-07 22:52:15', NULL, '2023-01-01 09:10:54', 'available'),
+	(7, 1, 'Pilot', 'Bolpoin', 'Bolpin warna merah', 1, '1667792468_f528376e24344bc9d284.jpg', 105, 1, 1, '2022-10-07 23:10:13', NULL, '2023-01-01 10:13:12', 'not available');
 
 -- Dumping structure for table db_easset.aset_book
 CREATE TABLE IF NOT EXISTS `aset_book` (
@@ -55,27 +55,25 @@ CREATE TABLE IF NOT EXISTS `aset_book` (
   `aset_id` int(11) DEFAULT NULL,
   `qty` int(11) DEFAULT NULL,
   `user` int(11) DEFAULT NULL,
-  `status` enum('book','cancel','allocated','returned') DEFAULT NULL,
+  `status` enum('book','rejected','allocated','returned') DEFAULT NULL,
   `admin` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_book: ~11 rows (approximately)
+-- Dumping data for table db_easset.aset_book: ~9 rows (approximately)
 DELETE FROM `aset_book`;
 INSERT INTO `aset_book` (`id`, `aset_id`, `qty`, `user`, `status`, `admin`, `created_at`, `updated_at`) VALUES
-	(3, 2, 1, 1, 'book', NULL, '2022-11-07 08:28:57', NULL),
-	(4, 1, 1, 1, 'book', NULL, '2022-11-07 08:29:02', NULL),
-	(6, 6, 1, 1, 'book', NULL, '2022-11-07 08:32:12', NULL),
-	(9, 7, 8, 1, 'book', NULL, '2022-11-07 15:03:52', '2022-12-25 02:41:21'),
-	(10, 4, 1, 1, 'book', NULL, '2022-12-25 02:34:32', NULL),
-	(13, 6, 2, 23, 'book', NULL, '2022-12-25 02:55:15', NULL),
-	(14, 7, 2, 23, 'book', NULL, '2022-12-25 02:55:19', NULL),
-	(15, 1, 3, 23, 'book', NULL, '2022-12-25 02:55:23', NULL),
-	(16, 2, 1, 23, 'book', NULL, '2022-12-25 02:55:27', NULL),
-	(17, 4, 1, 23, 'book', NULL, '2022-12-25 02:55:32', NULL),
-	(18, 5, 1, 23, 'book', NULL, '2022-12-25 02:55:40', NULL);
+	(1, 6, 3, 23, 'allocated', NULL, '2022-12-31 15:33:06', '2023-01-01 08:13:15'),
+	(2, 1, 1, 23, 'rejected', NULL, '2022-12-31 15:33:28', '2023-01-01 10:10:47'),
+	(3, 2, 2, 23, 'allocated', NULL, '2022-12-31 15:47:38', '2023-01-01 06:57:40'),
+	(4, 2, 1, 23, 'rejected', NULL, '2023-01-01 07:01:02', '2023-01-01 10:17:20'),
+	(5, 2, 4, 23, 'rejected', NULL, '2023-01-01 09:04:57', '2023-01-01 10:14:17'),
+	(6, 7, 1, 23, 'rejected', NULL, '2023-01-01 09:36:24', '2023-01-01 10:13:12'),
+	(9, 4, 2, 23, 'book', NULL, '2023-01-01 09:37:57', NULL),
+	(10, 6, 1, 23, 'book', NULL, '2023-01-01 10:17:57', NULL),
+	(11, 1, 1, 23, 'book', NULL, '2023-01-01 10:18:02', NULL);
 
 -- Dumping structure for table db_easset.aset_jenis
 CREATE TABLE IF NOT EXISTS `aset_jenis` (
@@ -122,6 +120,27 @@ INSERT INTO `aset_kondisi` (`id`, `kondisi`, `uraian`, `creator`, `created_at`, 
 	(6, 'used acceptable', 'used acceptable', 1, '2022-09-29 07:55:54', 1, '2022-09-30 00:15:52', 'tidak aktif'),
 	(7, 'renewed', 'renewed', 1, '2022-09-29 07:56:28', NULL, NULL, 'aktif');
 
+-- Dumping structure for table db_easset.aset_pemakaian
+CREATE TABLE IF NOT EXISTS `aset_pemakaian` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aset_id` int(11) DEFAULT NULL,
+  `book_id` int(11) DEFAULT NULL,
+  `kondisi_id` int(11) DEFAULT NULL,
+  `keterangan` text,
+  `user_id` int(11) DEFAULT NULL,
+  `status` enum('exist','ended') DEFAULT 'exist',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table db_easset.aset_pemakaian: ~0 rows (approximately)
+DELETE FROM `aset_pemakaian`;
+INSERT INTO `aset_pemakaian` (`id`, `aset_id`, `book_id`, `kondisi_id`, `keterangan`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+	(1, 6, 1, 1, 'Test', 23, 'exist', '2023-01-01 15:57:42', NULL),
+	(2, 2, 3, 7, 'Test', 23, '', '2023-01-01 15:58:24', NULL),
+	(3, 2, 3, 6, 'Test', 23, 'ended', '2023-01-01 15:59:01', NULL);
+
 -- Dumping structure for table db_easset.aset_satuan
 CREATE TABLE IF NOT EXISTS `aset_satuan` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -142,6 +161,26 @@ INSERT INTO `aset_satuan` (`id`, `satuan`, `uraian`, `creator`, `created_at`, `e
 	(1, 'pce', 'piece', 1, NULL, 1, '2022-09-29 07:18:33', 'tidak aktif'),
 	(2, 'unit', 'unit', 1, NULL, 1, '2022-09-29 07:18:33', 'aktif'),
 	(3, 'tes', 'asas', 1, NULL, 1, '2022-09-29 07:18:02', 'aktif');
+
+-- Dumping structure for procedure db_easset.proc_book
+DELIMITER //
+CREATE PROCEDURE `proc_book`(
+	IN `aid` INT,
+	IN `bid` INT,
+	IN `jumlahx` INT
+)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+		BEGIN
+			ROLLBACK;
+			RESIGNAL;
+		END;
+	START TRANSACTION;
+		UPDATE aset SET jumlah = jumlah - jumlahx WHERE id = aid;
+		UPDATE aset_book SET `status` = 'allocated' WHERE id = bid AND `status` = 'book';
+	COMMIT;
+END//
+DELIMITER ;
 
 -- Dumping structure for table db_easset.user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -233,7 +272,19 @@ CREATE TABLE `v_book` (
 	`book_user` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
 	`booked_at` TIMESTAMP NULL,
 	`booked_atx` VARCHAR(24) NULL COLLATE 'utf8mb4_general_ci',
-	`book_status` ENUM('book','cancel','allocated','returned') NULL COLLATE 'utf8mb4_general_ci'
+	`book_status` ENUM('book','rejected','allocated','returned') NULL COLLATE 'utf8mb4_general_ci'
+) ENGINE=MyISAM;
+
+-- Dumping structure for view db_easset.v_pemakaian
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `v_pemakaian` (
+	`id` INT(11) NOT NULL,
+	`aset_id` INT(11) NULL,
+	`book_id` INT(11) NULL,
+	`kondisi_id` INT(11) NULL,
+	`kondisi` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`user_id` INT(11) NULL,
+	`status` ENUM('exist','ended') NULL COLLATE 'utf8mb4_general_ci'
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view db_easset.v_aset
@@ -293,6 +344,11 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_book` AS SELECT
 	b.`status` book_status 
 FROM v_aset a INNER JOIN aset_book b ON a.id = b.aset_id 
 INNER JOIN user c ON b.user = c.id ;
+
+-- Dumping structure for view db_easset.v_pemakaian
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `v_pemakaian`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_pemakaian` AS SELECT a.id, a.aset_id, a.book_id, a.kondisi_id, b.kondisi, a.user_id, a.`status` FROM aset_pemakaian a INNER JOIN aset_kondisi b ON a.kondisi_id = b.id ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

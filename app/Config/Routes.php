@@ -56,6 +56,7 @@ $routes->post('/app/update-aset', 'App::updateAset');
 $routes->post('/app/fetch-books', 'App::fetchBooks');
 $routes->post('/app/allocation', 'App::allocation');
 $routes->post('/app/reject', 'App::reject');
+$routes->post('/app/xhr-pemakaian', 'App::xhrPemakaian');
 
 // Auth
 $routes->get('/auth/login', 'Auth::index');

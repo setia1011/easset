@@ -66,6 +66,7 @@
                             </li><!-- .nk-menu-item -->
                             <?php } ?>
                             
+                            <?php if ($_SESSION['level'] == 'user') { ?>
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/my-aset'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">My Aset</span>
@@ -76,6 +77,8 @@
                                     <span class="nk-menu-text">Pemakaian (Kondisi)</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
+                            <?php } ?>
+                            
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pengembalian'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengembalian</span>

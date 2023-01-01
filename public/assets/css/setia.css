@@ -52,6 +52,11 @@
     max-height: 500px !important;
 }
 
+.f-150 {
+    max-height: 150px;
+    max-width: 150px;
+}
+
 
 /* responsive */
 @media only screen and (min-width: 992px) {

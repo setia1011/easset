@@ -234,6 +234,35 @@ class AppModel extends Model {
 
     }
 
+    public function fetchPemakaian($d) {
+        $db = \Config\Database::connect();
+        $aid = $d['aid'];
+        $bid = $d['bid'];
+        $r = $db->query("SELECT * FROM v_pemakaian WHERE aset_id = '$aid' AND book_id = '$bid' ORDER BY id DESC LIMIT 0, 1")->getResultArray();
+        return $r;
+    }
+
+    public function xhrPemakaian($d) {
+        $db = \Config\Database::connect();
+        $session = \Config\Services::session();
+        $user_id = $session->id;
+        $aid = $d['aid'];
+        $bid = $d['bid'];
+        $kondisi = $d['kondisi'];
+        $status = $d['status'];
+        $keterangan = $d['keterangan'];
+        // $q1 = $db->query("SELECT * FROM aset_pemakaian WHERE aset_id = '$aid' AND book_id = '$bid'")->getResultArray();
+        // if (count($q1) > 0) {
+        //     $db->query("UPDATE aset_pemakaian SET kondisi = '$kondisi', `status` = '$status', keterangan = '$keterangan'")
+        // }
+        $db->query("INSERT INTO aset_pemakaian (kondisi_id, status, keterangan, user_id, aset_id, book_id) VALUES ('$kondisi', '$status', '$keterangan', '$user_id', '$aid', '$bid')");
+        if ($db->affectedRows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // alokasi
     public function allocation($d) {
         $db = \Config\Database::connect();

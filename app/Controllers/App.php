@@ -48,19 +48,33 @@ class App extends BaseController {
         $model = new AppModel();
         $asetData = $model->fetchAnAsset($d['aid']);
         $asetBook = $model->fetchBook($d);
+        $asetPemakaian = $model->fetchPemakaian($d);
         foreach ($asetData as $k => $a) {
             if (count($asetBook) > 0) {
                 if ($session->level == 'admin' & $bid == '') {
                     $asetData[$k]['book_id'] = null;
                     $asetData[$k]['book_qty'] = 0;
+                    $asetData[$k]['book_status'] = null;
                 } else {
                     $asetData[$k]['book_id'] = $asetBook[0]['book_id'];
                     $asetData[$k]['book_qty'] = $asetBook[0]['book_qty'];
+                    $asetData[$k]['book_status'] = $asetBook[0]['book_status'];
                 }
             } else {
                 $asetData[$k]['book_id'] = null;
                 $asetData[$k]['book_qty'] = 0;
             }
+
+            if (count($asetPemakaian) > 0) {
+                if ($session->level == 'admin' & $bid == '') {
+                    $asetData[$k]['pemakaian_status'] = null;
+                } else {
+                    $asetData[$k]['pemakaian_status'] = $asetPemakaian[0]['status'];
+                }
+            } else {
+                $asetData[$k]['pemakaian_status'] = null;
+            }
+
             if (!file_exists(FCPATH . $a['foto'])) {
                 $asetData[$k]['foto'] = "images/add-image.png";
             } 
@@ -115,6 +129,16 @@ class App extends BaseController {
             }
         } else {
             echo json_encode("Aset tidak ditemukan");
+        }
+    }
+
+    public function xhrPemakaian() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new AppModel();
+        if ($model->xhrPemakaian($d)) {
+            echo json_encode("Kondisi pemakaian aset berhasil di update");
+        } else {
+            echo json_encode("Kondisi pemakaian gagal diupdate");
         }
     }
 
