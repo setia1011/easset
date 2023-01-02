@@ -47,7 +47,7 @@ INSERT INTO `aset` (`id`, `jenis`, `merk`, `nama`, `uraian`, `kondisi`, `foto`, 
 	(4, 2, 'Mejo', 'Meja', 'Meja kayu jati', 1, '1665182903_c593d2f3aaeabe1eb5c2.jpg', 100, 2, 1, '2022-10-07 22:48:24', NULL, NULL, 'available'),
 	(5, 1, 'Pilot', 'Pensil', 'Pensil Hitam', 1, '1665183103_034ce8cb8d409bd6b292.jpg', 100, 1, 1, '2022-10-07 22:51:43', NULL, NULL, 'available'),
 	(6, 1, 'Pilot', 'Bolpoin', 'Bolpin Merah', 1, '1667792348_1769e21c3904c7a2d68f.png', 88, 1, 1, '2022-10-07 22:52:15', NULL, '2023-01-01 09:10:54', 'available'),
-	(7, 1, 'Pilot', 'Bolpoin', 'Bolpin warna merah', 1, '1667792468_f528376e24344bc9d284.jpg', 105, 1, 1, '2022-10-07 23:10:13', NULL, '2023-01-01 10:13:12', 'not available');
+	(7, 1, 'Pilot', 'Bolpoin', 'Bolpin warna merah', 1, '1667792468_f528376e24344bc9d284.jpg', 105, 1, 1, '2022-10-07 23:10:13', NULL, '2023-01-02 03:59:40', 'available');
 
 -- Dumping structure for table db_easset.aset_book
 CREATE TABLE IF NOT EXISTS `aset_book` (
@@ -126,20 +126,25 @@ CREATE TABLE IF NOT EXISTS `aset_pemakaian` (
   `aset_id` int(11) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL,
   `kondisi_id` int(11) DEFAULT NULL,
+  `exist` int(11) DEFAULT NULL,
+  `ended` int(11) DEFAULT NULL,
   `keterangan` text,
   `user_id` int(11) DEFAULT NULL,
   `status` enum('exist','ended') DEFAULT 'exist',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- Dumping data for table db_easset.aset_pemakaian: ~0 rows (approximately)
+-- Dumping data for table db_easset.aset_pemakaian: ~3 rows (approximately)
 DELETE FROM `aset_pemakaian`;
-INSERT INTO `aset_pemakaian` (`id`, `aset_id`, `book_id`, `kondisi_id`, `keterangan`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
-	(1, 6, 1, 1, 'Test', 23, 'exist', '2023-01-01 15:57:42', NULL),
-	(2, 2, 3, 7, 'Test', 23, '', '2023-01-01 15:58:24', NULL),
-	(3, 2, 3, 6, 'Test', 23, 'ended', '2023-01-01 15:59:01', NULL);
+INSERT INTO `aset_pemakaian` (`id`, `aset_id`, `book_id`, `kondisi_id`, `exist`, `ended`, `keterangan`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+	(1, 2, 3, 7, NULL, NULL, 'Masih bisa digunakan dengan baik', 23, 'exist', '2023-01-02 01:26:38', NULL),
+	(2, 2, 3, 6, NULL, NULL, 'Masih bisa digunakan dengan baik, tapi ada sedikit rusak', 23, 'exist', '2023-01-02 01:26:57', NULL),
+	(3, 6, 1, 1, NULL, NULL, 'Sudah habis digunakan', 23, 'ended', '2023-01-02 02:18:21', NULL),
+	(4, 2, 3, 7, 1, 1, 'Masih bisa digunakan dengan baik, tapi ada sedikit rusak', 23, 'exist', '2023-01-02 07:23:19', NULL),
+	(5, 2, 3, 7, 0, 2, 'Masih bisa digunakan dengan baik, tapi ada sedikit rusak', 23, 'exist', '2023-01-02 07:23:37', NULL),
+	(6, 2, 3, 7, 1, 1, 'Masih bisa digunakan dengan baik, tapi ada sedikit rusak', 23, 'exist', '2023-01-02 07:24:00', NULL);
 
 -- Dumping structure for table db_easset.aset_satuan
 CREATE TABLE IF NOT EXISTS `aset_satuan` (
@@ -283,8 +288,14 @@ CREATE TABLE `v_pemakaian` (
 	`book_id` INT(11) NULL,
 	`kondisi_id` INT(11) NULL,
 	`kondisi` VARCHAR(50) NULL COLLATE 'utf8mb4_general_ci',
+	`exist` INT(11) NULL,
+	`ended` INT(11) NULL,
+	`keterangan` TEXT NULL COLLATE 'utf8mb4_general_ci',
 	`user_id` INT(11) NULL,
-	`status` ENUM('exist','ended') NULL COLLATE 'utf8mb4_general_ci'
+	`status` ENUM('exist','ended') NULL COLLATE 'utf8mb4_general_ci',
+	`created_at` TIMESTAMP NULL,
+	`created_atx` VARCHAR(24) NULL COLLATE 'utf8mb4_general_ci',
+	`updated_at` TIMESTAMP NULL
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view db_easset.v_aset
@@ -348,7 +359,7 @@ INNER JOIN user c ON b.user = c.id ;
 -- Dumping structure for view db_easset.v_pemakaian
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `v_pemakaian`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_pemakaian` AS SELECT a.id, a.aset_id, a.book_id, a.kondisi_id, b.kondisi, a.user_id, a.`status` FROM aset_pemakaian a INNER JOIN aset_kondisi b ON a.kondisi_id = b.id ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_pemakaian` AS SELECT a.id, a.aset_id, a.book_id, a.kondisi_id, b.kondisi, a.exist, a.ended, a.keterangan, a.user_id, a.`status`, a.created_at, DATE_FORMAT(a.created_at, '%d/%m/%Y %H:%i:%s') created_atx, a.updated_at FROM aset_pemakaian a INNER JOIN aset_kondisi b ON a.kondisi_id = b.id ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
