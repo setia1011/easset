@@ -115,6 +115,7 @@ var application = new Vue({
             this.fetchBooks();
         },
         fetchDetails: function(e, v, b) {
+            this.returned = false;
             axios.post('../app/fetch-an-aset', JSON.stringify({
                 aid: v,
                 bid: b,
@@ -194,14 +195,6 @@ var application = new Vue({
             this.fetchBooks();
         },
         pemakaian: function() {
-            // formData.append('nama', this.nama);
-            // formData.append('uraian', this.uraian);
-            // formData.append('merk', this.merk);
-            // formData.append('jenis', this.jenis);
-            // formData.append('jumlah', this.jumlah);
-            // formData.append('satuan', this.satuan);
-            // formData.append('kondisi', this.kondisi);
-            // formData.append('status', this.status);
             this.loading = true;
             axios.post('../app/xhr-pemakaian', JSON.stringify({
                 aid: this.aid,
@@ -222,15 +215,17 @@ var application = new Vue({
                         this.linfo = true;
                         setTimeout(() => {
                             this.linfo = false;
+                            this.$refs.baka2.click();
+                            this.fetchBooks();
                         }, 1500);
                     }, 1000);
                 }, 1000);
             }).catch(err => {
                 console.log(err);
                 this.loading = false;
+                this.$refs.baka2.click();
+                this.fetchBooks();
             });
-
-            this.fetchBooks();
         }
     }
 });

@@ -150,7 +150,7 @@
     <div class="modal fade" tabindex="-1" id="modalDetails">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <a href="#" class="close" ref="baka" data-bs-dismiss="modal" aria-label="Close">
+                <a href="#" class="close" ref="baka1" data-bs-dismiss="modal" aria-label="Close">
                     <em class="icon ni ni-cross"></em>
                 </a>
                 <div class="modal-header">
@@ -240,7 +240,7 @@
     <div class="modal fade" tabindex="-1" id="modalPemakaian">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <a href="#" class="close" ref="baka" data-bs-dismiss="modal" aria-label="Close">
+                <a href="#" class="close" ref="baka2" data-bs-dismiss="modal" aria-label="Close">
                     <em class="icon ni ni-cross"></em>
                 </a>
                 <div class="modal-header">

@@ -198,7 +198,7 @@ class App extends BaseController {
         $book = $model->fetchBook2($d);
         if (count($book) > 0) {
             
-            if ($book[0]['book_status'] == 'returned' || $book[0]['book_status'] == 'rejected') {
+            if ($book[0]['book_status'] == 'return' || $book[0]['book_status'] == 'rejected' || $book[0]['book_status'] == 'returned') {
                 echo json_encode("Status aset tidak bisa direject");
             } else {
                 if ($book[0]['book_status'] == 'book') {
@@ -234,6 +234,7 @@ class App extends BaseController {
 
     public function xhrPemakaian() {
         $session = \Config\Services::session();
+        $database = \Config\Database::connect();
         $model = new AppModel();
         $d = json_decode(file_get_contents("php://input"), TRUE);
         $d['creator'] = $session->id;
@@ -270,30 +271,62 @@ class App extends BaseController {
                 'status' => 'available'
             );
 
-            if (copy($f, $fd)) {
-                $database = \Config\Database::connect();
-                $db = $database->table('aset_returned');
-                if ($db->insert($dx)) { 
-                    $db2 = $database->table('aset_book');
-                    $db2->set('status', 'return');
-                    $db2->where([
-                        'id' => $bid,
-                        'aset_id' => $aid
-                    ]);
-                    $db2->update();
-                    
-                    if ($model->xhrPemakaian($d)) {
-                        echo json_encode("Kondisi pemakaian aset berhasil di update");
-                    } else {
-                        echo json_encode("Kondisi pemakaian gagal diupdate");
-                    }
+            if ($jumlah <= 0) {
+                if ($model->xhrPemakaian($d)) {
+                    echo json_encode("Pengembalian gagal & kondisi pemakaian aset berhasil di update");
                 } else {
-                    unlink($fd);
+                    echo json_encode("Pengembalian gagal & kondisi pemakaian gagal diupdate");
+                }
+                die();
+            }
+
+            $db1 = $database->table('aset_returned');
+            $db1->where(['aset_id' => $aid, 'kondisi' => $kondisi]);
+            $r1 = $db1->get()->getResultArray();
+
+            if (count($r1) > 0) {
+                $db6 = $database->table('aset_returned');
+                $db6->set(['jumlah' => intval($r1[0]['jumlah']) + $jumlah, 'editor' => $creator]);
+                $db6->where(['aset_id' => $aid, 'kondisi' => $kondisi]);
+                $db6->update();
+
+                $db7 = $database->table('aset_book');
+                $db7->set('status', 'return');
+                $db7->where([
+                    'id' => $bid,
+                    'aset_id' => $aid
+                ]);
+                $db7->update();
+
+                if ($model->xhrPemakaian($d)) {
+                    echo json_encode("Kondisi pemakaian aset berhasil di update");
+                } else {
                     echo json_encode("Kondisi pemakaian gagal diupdate");
                 }
             } else {
-                echo json_encode("Kondisi pemakaian gagal diupdate");
-                die();
+                if (copy($f, $fd)) {
+                    $db2 = $database->table('aset_returned');
+                    if ($db2->insert($dx)) { 
+                        $db3 = $database->table('aset_book');
+                        $db3->set('status', 'return');
+                        $db3->where([
+                            'id' => $bid,
+                            'aset_id' => $aid
+                        ]);
+                        $db3->update();
+                        if ($model->xhrPemakaian($d)) {
+                            echo json_encode("Kondisi pemakaian aset berhasil di update");
+                        } else {
+                            echo json_encode("Kondisi pemakaian gagal diupdate");
+                        }
+                    } else {
+                        unlink($fd);
+                        echo json_encode("Kondisi pemakaian gagal diupdate");
+                    }
+                } else {
+                    echo json_encode("Kondisi pemakaian gagal diupdate");
+                    die();
+                }
             }
         } else {
             if ($model->xhrPemakaian($d)) {
@@ -488,9 +521,9 @@ class App extends BaseController {
 
     // pengembalian
     public function pengembalian() {
-        $data['pagefile'] = 'alokasi';
-        $data['pagename'] = 'Alokasi';
-        return view('pages/alokasi', $data);
+        $data['pagefile'] = 'pengembalian';
+        $data['pagename'] = 'Pengembalian';
+        return view('pages/pengembalian', $data);
     }
 
     // pengeluaran
