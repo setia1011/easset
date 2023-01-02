@@ -72,6 +72,9 @@
                                     <span class="nk-menu-text">My Aset</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
+                            <?php } ?>
+
+                            <?php if ($_SESSION['level'] == 'admin') { ?> 
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pemakaian'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pemakaian (Kondisi)</span>

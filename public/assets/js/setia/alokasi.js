@@ -44,7 +44,8 @@ var application = new Vue({
         ),
         opt_status: _.debounce(
             function() {
-               this.fetchBooks();
+                this.currentPage = 1;
+                this.fetchBooks();
             }, 100
         )
     },
@@ -114,6 +115,7 @@ var application = new Vue({
                     this.kondisi = res.data[0].kondisi_id;
                     this.selectedOptKondisi(this.kondisi);
                     this.status = res.data[0].pemakaian_status;
+                    this.keterangan = res.data[0].pemakaian_keterangan;
                 }
             }).catch(err => {
                 console.log(err);

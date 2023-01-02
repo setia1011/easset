@@ -101,7 +101,9 @@
                             </td>
                             <td>
                                 <button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id, item.book_id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button>
+                                <?php if ($_SESSION['level'] == 'user') { ?>
                                 <button v-if="item.book_status == 'allocated'" class="btn btn-icon btn-primary btn-table-sm" data-bs-toggle="modal" data-bs-target="#modalPemakaian" v-on:click="fetchDetails($event, item.id, item.book_id)"><em class="icon ni ni-edit"></em></button>
+                                <?php } ?>
                             </td>
                         </tr>
                     </tbody>
@@ -301,6 +303,14 @@
                             </div>
                             <div class="col-sm-12 mt-1">
                                 <button type="submit" class="btn btn-md btn-primary" v-on:click="pemakaian($event)">Update</button>
+                            </div>
+                            <div class="col-sm-12 mt-2">
+                                <div class="alert alert-warning alert-icon" v-show="linfo">
+                                    <em class="icon ni ni-check-circle"></em><strong>{{ ainfo }}</strong>
+                                </div>
+                                <div class="loading-info" v-show="loading">
+                                    <span><img src="<?= base_url('assets/images/utils/loading.svg'); ?>"> Processing..</span>
+                                </div>
                             </div>
                         </div>
                     </div>

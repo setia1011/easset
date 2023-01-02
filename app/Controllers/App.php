@@ -68,8 +68,10 @@ class App extends BaseController {
             if (count($asetPemakaian) > 0) {
                 if ($session->level == 'admin' & $bid == '') {
                     $asetData[$k]['pemakaian_status'] = null;
+                    $asetData[$k]['pemakaian_keterangan'] = null;
                 } else {
                     $asetData[$k]['pemakaian_status'] = $asetPemakaian[0]['status'];
+                    $asetData[$k]['pemakaian_keterangan'] = $asetPemakaian[0]['keterangan'];
                 }
             } else {
                 $asetData[$k]['pemakaian_status'] = null;
