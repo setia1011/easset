@@ -69,7 +69,7 @@
                             <?php if ($_SESSION['level'] == 'user') { ?>
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/my-aset'); ?>" class="nk-menu-link">
-                                    <span class="nk-menu-text">My Aset</span>
+                                    <span class="nk-menu-text">My Aset (Kelola)</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
                             <?php } ?>
@@ -80,15 +80,11 @@
                                     <span class="nk-menu-text">Pemakaian (Kondisi)</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
-                            <?php } ?>
-                            
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pengembalian'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengembalian</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
-
-                            <?php if ($_SESSION['level'] == 'admin') { ?> 
                             <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pengeluaran'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengeluaran</span>

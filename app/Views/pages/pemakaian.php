@@ -37,12 +37,12 @@
         <div class="nk-block-between">
             <div class="nk-block-head-content">
                 <?php if ($_SESSION['level'] == 'admin') { ?>
-                <h3 class="nk-block-title page-title">Alokasi</h3>
+                <h3 class="nk-block-title page-title">Pemakaian</h3>
                 <?php } else { ?>
                 <h3 class="nk-block-title page-title">My Aset</h3>
                 <?php } ?>
                 <div class="nk-block-des text-soft">
-                    <p>Manajemen alokasi aset</p>
+                    <p>Manajemen pemakaian aset</p>
                 </div>
             </div>
         </div><!-- .nk-block-between -->
@@ -78,8 +78,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Aset</th>
-                            <th scope="col">Stok</th>
-                            <th scope="col">Book Qty</th>
+                            <th scope="col">Book/Stok</th>
                             <th scope="col">Book Date</th>
                             <th scope="col">User</th>
                             <th scope="col">Status</th>
@@ -90,8 +89,7 @@
                         <tr style="vertical-align: middle;" v-for="(item, index) in items">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item.nama }}</td>
-                            <td>{{ item.jumlah }} {{ item.satuan }}</td>
-                            <td>{{ item.book_qty }} {{ item.satuan }}</td>
+                            <td><span class="fw-bold text-dark">{{ item.book_qty }}</span>/{{ item.jumlah }} {{ item.satuan }}</td>
                             <td>{{ item.booked_atx }}</td>
                             <td>{{ item.book_user }}</td>
                             <td>
@@ -99,7 +97,7 @@
                                     class="text-bold" 
                                     v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected'}">{{ item.book_status}}</span>
                             </td>
-                            <td style="width: 104px; display: inline-block;">
+                            <td style="width: 45px; display: inline-block;">
                                 <button v-if="item.book_status == 'allocated'" class="btn btn-icon btn-warning btn-table-sm" data-bs-toggle="modal" data-bs-target="#modalPemakaian" v-on:click="fetchDetails($event, item.id, item.book_id)"><em class="icon ni ni-todo"></em></button>
                             </td>
                         </tr>
@@ -182,8 +180,9 @@
                                 <table class="table table-sm">
                                     <thead>
                                         <tr>
-                                            <th scope="col">#</th>
+                                            <!-- <th scope="col">#</th> -->
                                             <th scope="col">Datetime</th>
+                                            <th scope="col">Pemakaian</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Kondisi</th>
                                             <th scope="col">Keterangan</th>
@@ -191,8 +190,9 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, index) in pemakaian_his">
-                                            <th scope="row">{{ index + 1 }}</th>
+                                            <!-- <th scope="row">{{ index + 1 }}</th> -->
                                             <td style="width: 90px;">{{ item.created_atx }}</td>
+                                            <td>{{ item.ended }}/{{ item.exist }}</td>
                                             <td>{{ item.status}}</td>
                                             <td>{{ item.kondisi}}</td>
                                             <td>{{ item.keterangan}}</td>

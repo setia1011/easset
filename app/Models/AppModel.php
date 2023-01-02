@@ -237,16 +237,24 @@ class AppModel extends Model {
     public function fetchPemakaianLatest($d) {
         $db = \Config\Database::connect();
         $aid = $d['aid'];
-        $bid = $d['bid'];
-        $r = $db->query("SELECT * FROM v_pemakaian WHERE aset_id = '$aid' AND book_id = '$bid' ORDER BY id DESC LIMIT 0, 1")->getResultArray();
+        if (isset($d['bid'])) {
+            $bid = $d['bid'];
+            $r = $db->query("SELECT * FROM v_pemakaian WHERE aset_id = '$aid' AND book_id = '$bid' ORDER BY id DESC LIMIT 0, 1")->getResultArray();
+        } else {
+            $r = $db->query("SELECT * FROM v_pemakaian WHERE aset_id = '$aid' AND book_id = '0' ORDER BY id DESC LIMIT 0, 1")->getResultArray();
+        }
         return $r;
     }
 
     public function fetchPemakaianAll($d) {
         $db = \Config\Database::connect();
         $aid = $d['aid'];
-        $bid = $d['bid'];
-        $r = $db->query("SELECT * FROM v_pemakaian WHERE aset_id = '$aid' AND book_id = '$bid' ORDER BY id DESC")->getResultArray();
+        if (isset($d['bid'])) {
+            $bid = $d['bid'];
+            $r = $db->query("SELECT * FROM v_pemakaian WHERE aset_id = '$aid' AND book_id = '$bid' ORDER BY id DESC")->getResultArray();
+        } else {
+            $r = $db->query("SELECT * FROM v_pemakaian WHERE aset_id = '$aid' AND book_id = '0' ORDER BY id DESC")->getResultArray();
+        }
         return $r;
     }
 
@@ -261,16 +269,16 @@ class AppModel extends Model {
         $keterangan = $d['keterangan'];
         $exist = $d['exist'];
         $ended = $d['ended'];
-        // $q1 = $db->query("SELECT * FROM aset_pemakaian WHERE aset_id = '$aid' AND book_id = '$bid'")->getResultArray();
-        // if (count($q1) > 0) {
-        //     $db->query("UPDATE aset_pemakaian SET kondisi = '$kondisi', `status` = '$status', keterangan = '$keterangan'")
-        // }
         $db->query("INSERT INTO aset_pemakaian (kondisi_id, status, exist, ended, keterangan, user_id, aset_id, book_id) VALUES ('$kondisi', '$status', '$exist', '$ended', '$keterangan', '$user_id', '$aid', '$bid')");
         if ($db->affectedRows() > 0) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public function returnAset() {
+
     }
 
     // alokasi

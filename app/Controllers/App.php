@@ -102,7 +102,7 @@ class App extends BaseController {
         $model = new AppModel();
         $asetData = $model->fetchAnAsset($d['aid']);
         $asetBook = $model->fetchBook($d);
-        $asetPemakaian = $model->fetchPemakaianAll($d);
+        $asetPemakaian = $model->fetchPemakaianLatest($d);
         foreach ($asetData as $k => $a) {
             if (count($asetBook) > 0) {
                 if ($session->level == 'admin' & $bid == '') {
@@ -192,16 +192,6 @@ class App extends BaseController {
         }
     }
 
-    public function xhrPemakaian() {
-        $d = json_decode(file_get_contents("php://input"), TRUE);
-        $model = new AppModel();
-        if ($model->xhrPemakaian($d)) {
-            echo json_encode("Kondisi pemakaian aset berhasil di update");
-        } else {
-            echo json_encode("Kondisi pemakaian gagal diupdate");
-        }
-    }
-
     public function reject() {
         $d = json_decode(file_get_contents("php://input"), TRUE);
         $model = new AppModel();
@@ -240,6 +230,78 @@ class App extends BaseController {
     public function countAset() {
         $model = new AppModel();
         echo json_encode($model->countAset());
+    }
+
+    public function xhrPemakaian() {
+        $session = \Config\Services::session();
+        $model = new AppModel();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $d['creator'] = $session->id;
+        if ($d['returned']) {
+            $aid = $d['aid'];
+            $bid = $d['bid'];
+            $jenis_id = $d['details']['jenis_id'];
+            $merk = $d['details']['merk'];
+            $nama = $d['details']['nama'];
+            $uraian = $d['details']['uraian'];
+            $kondisi = $d['kondisi'];
+            $foto = $d['details']['foto'];
+            $jumlah = $d['exist'];
+            $satuan_id = $d['details']['satuan_id'];
+            $creator = $d['creator'];
+
+            $f = FCPATH.$foto;
+            $fo = new \CodeIgniter\Files\File($foto);
+            $fx = $fo->getRandomName();
+            $fd = FCPATH . '/uploads/aset/' . $fx;
+
+            $dx = array(
+                'aset_id' => $aid,
+                'book_id' => $bid,
+                'jenis' => $jenis_id,
+                'merk' => $merk,
+                'nama' => $nama,
+                'uraian' => $uraian,
+                'kondisi' => $kondisi,
+                'foto' => $fx,
+                'jumlah' => $jumlah,
+                'satuan' => $satuan_id,
+                'creator' => $creator,
+                'status' => 'available'
+            );
+
+            if (copy($f, $fd)) {
+                $database = \Config\Database::connect();
+                $db = $database->table('aset_returned');
+                if ($db->insert($dx)) { 
+                    $db2 = $database->table('aset_book');
+                    $db2->set('status', 'return');
+                    $db2->where([
+                        'id' => $bid,
+                        'aset_id' => $aid
+                    ]);
+                    $db2->update();
+                    
+                    if ($model->xhrPemakaian($d)) {
+                        echo json_encode("Kondisi pemakaian aset berhasil di update");
+                    } else {
+                        echo json_encode("Kondisi pemakaian gagal diupdate");
+                    }
+                } else {
+                    unlink($fd);
+                    echo json_encode("Kondisi pemakaian gagal diupdate");
+                }
+            } else {
+                echo json_encode("Kondisi pemakaian gagal diupdate");
+                die();
+            }
+        } else {
+            if ($model->xhrPemakaian($d)) {
+                echo json_encode("Kondisi pemakaian aset berhasil di update");
+            } else {
+                echo json_encode("Kondisi pemakaian gagal diupdate");
+            }
+        }
     }
 
     public function rekamAset() {

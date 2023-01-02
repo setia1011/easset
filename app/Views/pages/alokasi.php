@@ -38,12 +38,15 @@
             <div class="nk-block-head-content">
                 <?php if ($_SESSION['level'] == 'admin') { ?>
                 <h3 class="nk-block-title page-title">Alokasi</h3>
-                <?php } else { ?>
-                <h3 class="nk-block-title page-title">My Aset</h3>
-                <?php } ?>
                 <div class="nk-block-des text-soft">
                     <p>Manajemen alokasi aset</p>
                 </div>
+                <?php } else { ?>
+                <h3 class="nk-block-title page-title">My Aset</h3>
+                <div class="nk-block-des text-soft">
+                    <p>Manajemen aset</p>
+                </div>
+                <?php } ?>
             </div>
         </div><!-- .nk-block-between -->
     </div><!-- .nk-block-head -->
@@ -58,6 +61,7 @@
                             <option value="book">Book</option>
                             <option value="allocated">Allocated</option>
                             <option value="rejected">Rejected</option>
+                            <option value="return">Return</option>
                             <option value="returned">Returned</option>
                         </select>
                     </div>
@@ -71,7 +75,7 @@
                     </div>
                 </div>
                 <div class="form-group mb-1">
-                    <span v-if="opt_status == 'returned'">
+                    <span v-if="opt_status == 'returned' || opt_status == 'return'">
                         <span><em class="icon ni ni-info"></em> <span class="text-danger">Pengembalian seluruhnya atau sebagian</span></span>
                     </span>
                     <span v-else>
@@ -87,8 +91,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Aset</th>
-                            <th scope="col">Stok</th>
-                            <th scope="col">Book Qty</th>
+                            <th scope="col">Book/Stok</th>
                             <th scope="col">Book Date</th>
                             <th scope="col">User</th>
                             <th scope="col">Status</th>
@@ -99,14 +102,14 @@
                         <tr style="vertical-align: middle;" v-for="(item, index) in items">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item.nama }}</td>
-                            <td>{{ item.jumlah }} {{ item.satuan }}</td>
-                            <td>{{ item.book_qty }} {{ item.satuan }}</td>
+                            <td><span class="fw-bold text-dark">{{ item.book_qty }}</span>/{{ item.jumlah }} {{ item.satuan }}</td>
+                            <!-- <td>{{ item.book_qty }} {{ item.satuan }}</td> -->
                             <td>{{ item.booked_atx }}</td>
                             <td>{{ item.book_user }}</td>
                             <td>
                                 <span 
                                     class="text-bold" 
-                                    v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected'}">{{ item.book_status}}</span>
+                                    v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected', 'text-info': item.book_status == 'return', 'text-primary': item.book_status == 'returned'}">{{ item.book_status}}</span>
                             </td>
                             <td style="width: 104px; display: inline-block;">
                                 <button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id, item.book_id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button>
@@ -327,6 +330,12 @@
                                         </div>
                                         <input type="text" v-model="ended" class="form-control">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mt-3 mb-1">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" v-model="returned" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Check ini hanya apabila akan dilakukan <b>pengembalian</b> seluruh sisa (exist) aset!</label>
                                 </div>
                             </div>
                             <div class="form-group mt-2 mb-1">

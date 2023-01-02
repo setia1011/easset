@@ -36,7 +36,8 @@ var application = new Vue({
         ],
         keterangan: null,
         exist: 0,
-        ended: 0
+        ended: 0,
+        returned: false
     },
     watch: {
         search: _.debounce(
@@ -57,6 +58,9 @@ var application = new Vue({
                 this.ended = 0;
             }
             this.ended = parseInt(this.ended);
+        },
+        returned: function() {
+            console.log(this.returned);
         }
     },
     computed: {
@@ -190,6 +194,14 @@ var application = new Vue({
             this.fetchBooks();
         },
         pemakaian: function() {
+            // formData.append('nama', this.nama);
+            // formData.append('uraian', this.uraian);
+            // formData.append('merk', this.merk);
+            // formData.append('jenis', this.jenis);
+            // formData.append('jumlah', this.jumlah);
+            // formData.append('satuan', this.satuan);
+            // formData.append('kondisi', this.kondisi);
+            // formData.append('status', this.status);
             this.loading = true;
             axios.post('../app/xhr-pemakaian', JSON.stringify({
                 aid: this.aid,
@@ -198,7 +210,9 @@ var application = new Vue({
                 status: this.status,
                 keterangan: this.keterangan,
                 exist: this.exist,
-                ended: this.ended
+                ended: this.ended,
+                returned: this.returned,
+                details: this.details
             })).then(res => {
                 this.ainfo = res.data;
                 setTimeout(() => {
