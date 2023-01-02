@@ -203,7 +203,7 @@
                                         </div>
                                     <?php } ?>
                                     <?php if ($_SESSION['level'] == 'admin') { ?>
-                                    <div class="col-sm-12 mt-2">
+                                    <div class="col-sm-12 mt-2" v-if="details.book_status == 'book'">
                                         <div class="form-control-wrap number-spinner-wrap" style="width: 140px; float: right;">
                                             <button class="btn btn-icon btn-primary number-spinner-btn number-minus" data-number="minus">
                                                 <em class="icon ni ni-minus"></em>
@@ -214,7 +214,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12 mt-2">
+                                    <div class="col-sm-12 mt-2" v-if="details.book_status == 'book'">
                                         <button style="float: right; margin-left: 3px;" type="submit" class="btn btn-md" v-bind:class = "(bid !== null) ? 'btn-danger' : 'btn-primary'" v-on:click="reject($event)">Reject</button>
                                         <button type="submit" class="btn btn-md" v-bind:class="(bid !== null) ? 'btn-success' : 'btn-primary'" style="float: right;" v-on:click="allocated($event)">Allocated</button>
                                     </div>

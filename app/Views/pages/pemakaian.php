@@ -53,10 +53,12 @@
                 <input type="hidden" ref="userlev" value="<?= $_SESSION['level']; ?>">
                 <div class="form-group mb-1">
                     <div class="form-control-wrap">
-                        <select class="form-select" v-model="opt_status" disabled>
+                        <select class="form-select" v-model="opt_status">
                             <!-- <option value="all">All</option>
                             <option value="book">Book</option> -->
                             <option value="allocated">Allocated</option>
+                            <option value="return">Return</option>
+                            <option value="returned">Returned</option>
                             <!-- <option value="rejected">Rejected</option> -->
                         </select>
                     </div>
@@ -98,7 +100,7 @@
                                     v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected'}">{{ item.book_status}}</span>
                             </td>
                             <td style="width: 45px; display: inline-block;">
-                                <button v-if="item.book_status == 'allocated'" class="btn btn-icon btn-warning btn-table-sm" data-bs-toggle="modal" data-bs-target="#modalPemakaian" v-on:click="fetchDetails($event, item.id, item.book_id)"><em class="icon ni ni-todo"></em></button>
+                                <button v-if="item.book_status == 'allocated' || item.book_status == 'return' || item.book_status == 'returned'" class="btn btn-icon btn-warning btn-table-sm" data-bs-toggle="modal" data-bs-target="#modalPemakaian" v-on:click="fetchDetails($event, item.id, item.book_id)"><em class="icon ni ni-todo"></em></button>
                             </td>
                         </tr>
                     </tbody>

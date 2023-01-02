@@ -172,6 +172,9 @@ class AppModel extends Model {
     // kondisi
     public function fetchAset($d) {
         try {
+            $session = \Config\Services::session();
+            $user_level = $session->level;
+            
             $db = \Config\Database::connect();
             $search = $d['search'];
             $currentPage = $d['currentPage'];
@@ -199,11 +202,34 @@ class AppModel extends Model {
                 editor,
                 DATE_FORMAT(edited_at, '%d/%m/%Y %H:%i:%s') edited_at, 
                 status 
-            FROM v_aset";
+            FROM v_aset WHERE 1=1";
+
+            if ($user_level == 'user') {
+                $sql2 = "SELECT 
+                    id, 
+                    jenis_id,
+                    jenis, 
+                    merk,
+                    nama,
+                    uraian,
+                    kondisi_id,
+                    kondisi,
+                    CONCAT('/app/update?id=', id) edit,
+                    CONCAT('/uploads/aset/', foto) foto,
+                    jumlah,
+                    satuan_id,
+                    satuan,
+                    creator,
+                    DATE_FORMAT(created_at, '%d/%m/%Y %H:%i:%s') created_at, 
+                    editor,
+                    DATE_FORMAT(edited_at, '%d/%m/%Y %H:%i:%s') edited_at, 
+                    status 
+                FROM v_aset WHERE status = 'available' AND jumlah > 0";
+            }
 
             if (!empty($search)) {
-                $sql1 .= " WHERE nama LIKE '%$search%'";
-                $sql2 .= " WHERE nama LIKE '%$search%'";
+                $sql1 .= " AND nama LIKE '%$search%'";
+                $sql2 .= " AND nama LIKE '%$search%'";
             }
             $result = $db->query($sql1)->getNumRows();
             $total_rows = $result;
