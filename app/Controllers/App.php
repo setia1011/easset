@@ -48,7 +48,7 @@ class App extends BaseController {
         $model = new AppModel();
         $asetData = $model->fetchAnAsset($d['aid']);
         $asetBook = $model->fetchBook($d);
-        $asetPemakaian = $model->fetchPemakaian($d);
+        $asetPemakaian = $model->fetchPemakaianLatest($d);
         foreach ($asetData as $k => $a) {
             if (count($asetBook) > 0) {
                 if ($session->level == 'admin' & $bid == '') {
@@ -69,12 +69,70 @@ class App extends BaseController {
                 if ($session->level == 'admin' & $bid == '') {
                     $asetData[$k]['pemakaian_status'] = null;
                     $asetData[$k]['pemakaian_keterangan'] = null;
+                    $asetData[$k]['pemakaian_exist'] = null;
+                    $asetData[$k]['pemakaian_ended'] = null;
                 } else {
                     $asetData[$k]['pemakaian_status'] = $asetPemakaian[0]['status'];
                     $asetData[$k]['pemakaian_keterangan'] = $asetPemakaian[0]['keterangan'];
+                    $asetData[$k]['pemakaian_exist'] = $asetPemakaian[0]['exist'];
+                    $asetData[$k]['pemakaian_ended'] = $asetPemakaian[0]['ended'];
                 }
             } else {
                 $asetData[$k]['pemakaian_status'] = null;
+                $asetData[$k]['pemakaian_keterangan'] = null;
+                $asetData[$k]['pemakaian_exist'] = null;
+                $asetData[$k]['pemakaian_ended'] = null;
+            }
+
+            if (!file_exists(FCPATH . $a['foto'])) {
+                $asetData[$k]['foto'] = "images/add-image.png";
+            } 
+        }
+        echo json_encode($asetData);
+    }
+
+    public function fetchAnAsetV2() {
+        $session = \Config\Services::session();
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        if (isset($d['bid'])) {
+            $bid = $d['bid'];
+        } else {
+            $bid = '';
+        }
+        $model = new AppModel();
+        $asetData = $model->fetchAnAsset($d['aid']);
+        $asetBook = $model->fetchBook($d);
+        $asetPemakaian = $model->fetchPemakaianAll($d);
+        foreach ($asetData as $k => $a) {
+            if (count($asetBook) > 0) {
+                if ($session->level == 'admin' & $bid == '') {
+                    $asetData[$k]['book_id'] = null;
+                    $asetData[$k]['book_qty'] = 0;
+                    $asetData[$k]['book_status'] = null;
+                } else {
+                    $asetData[$k]['book_id'] = $asetBook[0]['book_id'];
+                    $asetData[$k]['book_qty'] = $asetBook[0]['book_qty'];
+                    $asetData[$k]['book_status'] = $asetBook[0]['book_status'];
+                }
+            } else {
+                $asetData[$k]['book_id'] = null;
+                $asetData[$k]['book_qty'] = 0;
+            }
+
+            if (count($asetPemakaian) > 0) {
+                if ($session->level == 'admin' & $bid == '') {
+                    $asetData[$k]['pemakaian_status'] = null;
+                    $asetData[$k]['pemakaian_keterangan'] = null;
+                    $asetData[$k]['pemakaian'] = null;
+                } else {
+                    $asetData[$k]['pemakaian_status'] = $asetPemakaian[0]['status'];
+                    $asetData[$k]['pemakaian_keterangan'] = $asetPemakaian[0]['keterangan'];
+                    $asetData[$k]['pemakaian'] = $asetPemakaian;
+                }
+            } else {
+                $asetData[$k]['pemakaian_status'] = null;
+                $asetData[$k]['pemakaian_keterangan'] = null;
+                $asetData[$k]['pemakaian'] = null;
             }
 
             if (!file_exists(FCPATH . $a['foto'])) {
@@ -166,11 +224,12 @@ class App extends BaseController {
                     $d['status'] = 'allocated';
                     // kembalikan stok
                     // update status
-                    if ($model->reject($d)) {
-                        echo json_encode("Aset berhasil direject ~ 2");
-                    } else {
-                        echo json_encode("Aset gagal direject");
-                    }
+                    // if ($model->reject($d)) {
+                    //     echo json_encode("Aset berhasil direject ~ 2");
+                    // } else {
+                    //     echo json_encode("Aset gagal direject");
+                    // }
+                    echo json_encode("Aset gagal direject");
                 }
             }
         } else {
@@ -360,9 +419,9 @@ class App extends BaseController {
 
     // pemakaian
     public function pemakaian() {
-        $data['pagefile'] = 'alokasi';
-        $data['pagename'] = 'Alokasi';
-        return view('pages/alokasi', $data);
+        $data['pagefile'] = 'pemakaian';
+        $data['pagename'] = 'Pemakaian';
+        return view('pages/pemakaian', $data);
     }
 
     // pengembalian

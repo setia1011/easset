@@ -51,13 +51,14 @@
         <div class="row">
             <div class="col-md-4">
                 <input type="hidden" ref="userlev" value="<?= $_SESSION['level']; ?>">
-                <div class="form-group">
+                <div class="form-group mb-1">
                     <div class="form-control-wrap">
                         <select class="form-select" v-model="opt_status">
                             <option value="all">All</option>
                             <option value="book">Book</option>
                             <option value="allocated">Allocated</option>
                             <option value="rejected">Rejected</option>
+                            <option value="returned">Returned</option>
                         </select>
                     </div>
                 </div>
@@ -68,6 +69,14 @@
                             <button class="btn btn-outline-primary btn-dim"><em class="icon ni ni-search"></em></button>
                         </div>
                     </div>
+                </div>
+                <div class="form-group mb-1">
+                    <span v-if="opt_status == 'returned'">
+                        <span><em class="icon ni ni-info"></em> <span class="text-danger">Pengembalian seluruhnya atau sebagian</span></span>
+                    </span>
+                    <span v-else>
+                        <span><em class="icon ni ni-info"></em></span>
+                    </span>
                 </div>
             </div>
 
@@ -90,8 +99,8 @@
                         <tr style="vertical-align: middle;" v-for="(item, index) in items">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item.nama }}</td>
-                            <td>{{ item.jumlah }} ({{ item.satuan }})</td>
-                            <td>{{ item.book_qty }} ({{ item.satuan }})</td>
+                            <td>{{ item.jumlah }} {{ item.satuan }}</td>
+                            <td>{{ item.book_qty }} {{ item.satuan }}</td>
                             <td>{{ item.booked_atx }}</td>
                             <td>{{ item.book_user }}</td>
                             <td>
@@ -99,7 +108,7 @@
                                     class="text-bold" 
                                     v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected'}">{{ item.book_status}}</span>
                             </td>
-                            <td>
+                            <td style="width: 104px; display: inline-block;">
                                 <button data-bs-toggle="modal" data-bs-target="#modalDetails" v-on:click="fetchDetails($event, item.id, item.book_id)" style="float: right;" class="btn btn-icon btn-secondary btn-table-sm"><em class="icon ni ni-file-text"></em></button>
                                 <?php if ($_SESSION['level'] == 'user') { ?>
                                 <button v-if="item.book_status == 'allocated'" class="btn btn-icon btn-primary btn-table-sm" data-bs-toggle="modal" data-bs-target="#modalPemakaian" v-on:click="fetchDetails($event, item.id, item.book_id)"><em class="icon ni ni-edit"></em></button>
@@ -271,31 +280,56 @@
                             </div>
                         </div>
                         <div class="row gy-3 mt-3">
-                            <div class="form-group mb-1">
-                                <div class="form-control-wrap">
-                                    <v-select 
-                                        :disabled="dio.kondisi === true" 
-                                        label="kondisi" 
-                                        v-model="kondisi" 
-                                        :reduce="kondisi => kondisi.id" 
-                                        :options="kondisi_options" 
-                                        placeholder="Choose kondisi"
-                                        @search="fetchOptKondisi"
-                                        @search:focus="fetchOptKondisi" 
-                                        @input="selectedOptKondisi">
-                                    </v-select>
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group mb-1">
+                                    <div class="form-control-wrap">
+                                        <v-select 
+                                            v-model="status" 
+                                            placeholder="Choose status"
+                                            :reduce="label => label.code" 
+                                            :options="status_options"></v-select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group mt-0 mb-1">
-                                <div class="form-control-wrap">
-                                    <v-select 
-                                        v-model="status" 
-                                        placeholder="Choose status"
-                                        :reduce="label => label.code" 
-                                        :options="status_options"></v-select>
+                            <div class="col-sm-6 mb-1">
+                                <div class="form-group mb-1">
+                                    <div class="form-control-wrap">
+                                        <v-select 
+                                            :disabled="dio.kondisi === true" 
+                                            label="kondisi" 
+                                            v-model="kondisi" 
+                                            :reduce="kondisi => kondisi.id" 
+                                            :options="kondisi_options" 
+                                            placeholder="Choose kondisi"
+                                            @search="fetchOptKondisi"
+                                            @search:focus="fetchOptKondisi" 
+                                            @input="selectedOptKondisi">
+                                        </v-select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group mt-1 mb-1">
+                            
+                            <div class="col-sm-6 mt-0">
+                                <div class="form-control-wrap">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Sisa (exist)</span>
+                                        </div>
+                                        <input type="text" v-model="exist" class="form-control" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mt-0">
+                                <div class="form-control-wrap">
+                                    <div class="input-group input-group-sm">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Habis (ended)</span>
+                                        </div>
+                                        <input type="text" v-model="ended" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-2 mb-1">
                                 <label class="form-label">Keterangan</label>
                                 <div class="form-control-wrap">
                                     <textarea v-model="keterangan" class="form-control form-control-sm"></textarea>

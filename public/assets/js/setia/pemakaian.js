@@ -22,7 +22,7 @@ var application = new Vue({
         perPage: 5,
         currentPage: 1,
         userlev: null,
-        opt_status: 'all',
+        opt_status: 'allocated',
         dio: {
             'kondisi': false
         },
@@ -35,8 +35,7 @@ var application = new Vue({
             {label: 'Ended', code: 'ended'},
         ],
         keterangan: null,
-        exist: 0,
-        ended: 0
+        pemakaian_his: []
     },
     watch: {
         search: _.debounce(
@@ -49,15 +48,7 @@ var application = new Vue({
                 this.currentPage = 1;
                 this.fetchBooks();
             }, 100
-        ),
-        ended: function() {
-            if (this.ended >= 0 & this.ended <= this.qty) {
-                this.exist = this.qty - this.ended;
-            } else {
-                this.ended = 0;
-            }
-            this.ended = parseInt(this.ended);
-        }
+        )
     },
     computed: {
         getPageCount: function() {
@@ -111,7 +102,7 @@ var application = new Vue({
             this.fetchBooks();
         },
         fetchDetails: function(e, v, b) {
-            axios.post('../app/fetch-an-aset', JSON.stringify({
+            axios.post('../app/fetch-an-aset-v2', JSON.stringify({
                 aid: v,
                 bid: b,
                 ref: 'alokasi'
@@ -126,12 +117,8 @@ var application = new Vue({
                     this.selectedOptKondisi(this.kondisi);
                     this.status = res.data[0].pemakaian_status;
                     this.keterangan = res.data[0].pemakaian_keterangan;
-                    if (res.data[0].pemakaian_exist) {
-                        this.exist = res.data[0].pemakaian_exist;
-                    } else {
-                        this.exist = this.qty;
-                    }
-                    this.ended = res.data[0].pemakaian_ended;
+                    this.pemakaian_his = res.data[0].pemakaian;
+                    console.log(this.pemakaian_his);
                 }
             }).catch(err => {
                 console.log(err);
@@ -196,9 +183,7 @@ var application = new Vue({
                 bid: this.bid,
                 kondisi: this.kondisi,
                 status: this.status,
-                keterangan: this.keterangan,
-                exist: this.exist,
-                ended: this.ended
+                keterangan: this.keterangan
             })).then(res => {
                 this.ainfo = res.data;
                 setTimeout(() => {

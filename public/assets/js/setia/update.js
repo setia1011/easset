@@ -1,4 +1,3 @@
-Vue.component('paginate', VuejsPaginate);
 Vue.component('v-select', VueSelect.VueSelect);
 var application = new Vue({
     el: '#v-update',
