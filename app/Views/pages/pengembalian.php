@@ -75,63 +75,62 @@
 
             <div class="col-md-8">
                 <div class="card card-bordered mb-4">
-                <table class="table">
-                    <thead style="height: 40px; vertical-align: middle;">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Aset</th>
-                            <th scope="col">Book/Stok</th>
-                            <th scope="col">Book Date</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Status</th>
-                            <th scope="col"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="vertical-align: middle;" v-for="(item, index) in items">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item.nama }}</td>
-                            <td><span class="fw-bold text-dark">{{ item.book_qty }}</span>/{{ item.jumlah }} {{ item.satuan }}</td>
-                            <td>{{ item.booked_atx }}</td>
-                            <td>{{ item.book_user }}</td>
-                            <td>
-                                <span 
-                                    class="text-bold" 
-                                    v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected'}">{{ item.book_status}}</span>
-                            </td>
-                            <td style="width: 45px; display: inline-block;">
-                                <button v-if="item.book_status == 'allocated' || item.book_status == 'return' || item.book_status == 'returned'" class="btn btn-icon btn-warning btn-table-sm" data-bs-toggle="modal" data-bs-target="#modalPemakaian" v-on:click="fetchDetails($event, item.id, item.book_id)"><em class="icon ni ni-todo"></em></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <table class="table">
+                        <thead style="height: 40px; vertical-align: middle;">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Aset</th>
+                                <th scope="col">Book/Stok</th>
+                                <th scope="col">Book Date</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Status</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="vertical-align: middle;" v-for="(item, index) in items">
+                                <th scope="row">{{ index + 1 }}</th>
+                                <td>{{ item.nama }}</td>
+                                <td><span class="fw-bold text-dark">{{ item.book_qty }}</span>/{{ item.jumlah }} {{ item.satuan }}</td>
+                                <td>{{ item.booked_atx }}</td>
+                                <td>{{ item.book_user }}</td>
+                                <td>
+                                    <span 
+                                        class="text-bold" 
+                                        v-bind:class="{'text-warning': item.book_status == 'book', 'text-dark': item.book_status == 'allocated', 'text-danger': item.book_status == 'rejected'}">{{ item.book_status}}</span>
+                                </td>
+                                <td style="width: 45px; display: inline-block;">
+                                    <button v-if="item.book_status == 'allocated' || item.book_status == 'return' || item.book_status == 'returned'" class="btn btn-icon btn-warning btn-table-sm" data-bs-toggle="modal" data-bs-target="#modalPemakaian" v-on:click="fetchDetails($event, item.id, item.book_id)"><em class="icon ni ni-todo"></em></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             
-            <div class="col-sm-12">
-                <span class="pagination justify-content-center justify-content-md-start" v-if="items !== null">
-                    <paginate 
-                        first-last-button
-                        :page-count="getPageCount" 
-                        :page-range="3" 
-                        :margin-pages="1" 
-                        :click-handler="clickCallback" 
-                        :disabled-class="'disabled'"
-                        :active-class="'active'"
-                        :prev-link-class="'page-link'"
-                        :prev-text="'<'" 
-                        :next-link-class="'page-link'"
-                        :next-text="'＞'"
-                        :container-class="'pagination'" 
-                        :page-class="'page-item'"
-                        :page-link-class="'page-link'">
-                    </paginate>
-                </span>
-            </div>
+                <div class="col-sm-12">
+                    <span class="pagination justify-content-center justify-content-md-start" v-if="items !== null">
+                        <paginate 
+                            first-last-button
+                            :page-count="getPageCount" 
+                            :page-range="3" 
+                            :margin-pages="1" 
+                            :click-handler="clickCallback" 
+                            :disabled-class="'disabled'"
+                            :active-class="'active'"
+                            :prev-link-class="'page-link'"
+                            :prev-text="'<'" 
+                            :next-link-class="'page-link'"
+                            :next-text="'＞'"
+                            :container-class="'pagination'" 
+                            :page-class="'page-item'"
+                            :page-link-class="'page-link'">
+                        </paginate>
+                    </span>
+                </div>
             </div>
         </div>
-        
-        
     </div><!-- .nk-block -->
+
     <div class="modal fade" tabindex="-1" id="modalPemakaian">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -179,28 +178,52 @@
                         </div>
                         <div class="row gy-3 mt-3">
                             <div>
+                                <div class="mb-2"><p><b><span class="text-dark">Komparasi kondisi terakhir</span></b></p></div>
                                 <table class="table table-sm">
                                     <thead>
                                         <tr>
-                                            <!-- <th scope="col">#</th> -->
-                                            <th scope="col">Datetime</th>
-                                            <th scope="col">Pemakaian</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">ID</th>
                                             <th scope="col">Kondisi</th>
+                                            <th scope="col">Status</th>
                                             <th scope="col">Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, index) in pemakaian_his">
-                                            <!-- <th scope="row">{{ index + 1 }}</th> -->
-                                            <td style="width: 90px;">{{ item.created_atx }}</td>
-                                            <td>{{ item.ended }}/{{ item.exist }}</td>
-                                            <td>{{ item.status}}</td>
-                                            <td>{{ item.kondisi}}</td>
+                                            <td style="width: 100px;">
+                                                <span v-if="item.aset_id === details.id">
+                                                    <em class="icon ni ni-check-thick text-success"></em>
+                                                </span>
+                                                <span v-else>
+                                                    <em class="icon ni ni-cross text-danger"></em>
+                                                </span>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <span v-if="item.kondisi_id === details.kondisi_id">
+                                                    <em class="icon ni ni-check-thick text-success"></em>
+                                                </span>
+                                                <span v-else>
+                                                    <em class="icon ni ni-cross text-danger"></em>
+                                                </span>
+                                            </td>
+                                            <td style="width: 100px;">
+                                                <span v-if="item.status === 'exist'">
+                                                    <em class="icon ni ni-check-thick text-warning"></em>
+                                                </span>
+                                                <span v-else>
+                                                    <em class="icon ni ni-cross text-danger"></em>
+                                                </span>
+                                            </td>
                                             <td>{{ item.keterangan}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+
+                        <div class="row gy-3 mt-0">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-md btn-primary" v-on:click="returnAset($event)">Return</button>
                             </div>
                         </div>
                     </div>

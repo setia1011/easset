@@ -124,84 +124,8 @@ var application = new Vue({
                 console.log(err);
             });
         },
-        allocated: function() {
-            this.loading = true;
-            axios.post('../app/allocation', JSON.stringify({
-                aid: this.aid,
-                bid: this.bid,
-                oqty: this.qty,
-                nqty: this.$refs.qx.value
-            })).then(res => {
-                this.ainfo = res.data;
-                setTimeout(() => {
-                    this.loading = true;
-                    setTimeout(() => {
-                        this.loading = false;
-                        this.linfo = true;
-                        setTimeout(() => {
-                            this.linfo = false;
-                        }, 1500);
-                    }, 1000);
-                }, 1000);
-            }).catch(err => {
-                console.log(err);
-                this.loading = false;
-            });
+        returnAset: function() {
 
-            this.fetchBooks();
-        },
-        reject: function() {
-            this.loading = true;
-            axios.post('../app/reject', JSON.stringify({
-                aid: this.aid,
-                bid: this.bid,
-                oqty: this.qty,
-                nqty: this.$refs.qx.value
-            })).then(res => {
-                this.ainfo = res.data;
-                setTimeout(() => {
-                    this.loading = true;
-                    setTimeout(() => {
-                        this.loading = false;
-                        this.linfo = true;
-                        setTimeout(() => {
-                            this.linfo = false;
-                        }, 1500);
-                    }, 1000);
-                }, 1000);
-            }).catch(err => {
-                console.log(err);
-                this.loading = false;
-            });
-
-            this.fetchBooks();
-        },
-        pemakaian: function() {
-            this.loading = true;
-            axios.post('../app/xhr-pemakaian', JSON.stringify({
-                aid: this.aid,
-                bid: this.bid,
-                kondisi: this.kondisi,
-                status: this.status,
-                keterangan: this.keterangan
-            })).then(res => {
-                this.ainfo = res.data;
-                setTimeout(() => {
-                    this.loading = true;
-                    setTimeout(() => {
-                        this.loading = false;
-                        this.linfo = true;
-                        setTimeout(() => {
-                            this.linfo = false;
-                        }, 1500);
-                    }, 1000);
-                }, 1000);
-            }).catch(err => {
-                console.log(err);
-                this.loading = false;
-            });
-
-            this.fetchBooks();
         }
     }
 });
