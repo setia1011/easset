@@ -158,15 +158,17 @@ var application = new Vue({
                         this.linfo = true;
                         setTimeout(() => {
                             this.linfo = false;
+                            this.$refs.baka1.click();
+                            this.fetchBooks();
                         }, 1500);
                     }, 1000);
                 }, 1000);
             }).catch(err => {
                 console.log(err);
                 this.loading = false;
+                this.$refs.baka1.click();
+                this.fetchBooks();
             });
-
-            this.fetchBooks();
         },
         reject: function() {
             this.loading = true;
@@ -184,15 +186,17 @@ var application = new Vue({
                         this.linfo = true;
                         setTimeout(() => {
                             this.linfo = false;
+                            this.$refs.baka1.click();
+                            this.fetchBooks();
                         }, 1500);
                     }, 1000);
                 }, 1000);
             }).catch(err => {
                 console.log(err);
                 this.loading = false;
+                this.$refs.baka1.click();
+                this.fetchBooks();
             });
-
-            this.fetchBooks();
         },
         pemakaian: function() {
             this.loading = true;

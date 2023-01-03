@@ -1,0 +1,7 @@
+kondisi:
+1. habis dipakai
+   ditambahkan informasi di tabel aset_pemakaian: ended = 5, exist: 3
+2. sisa dikembalikan
+   kalau id aset ada dan kondisi sama, maka update tabel aset masternya.
+   kalau id aset ada dan kondisi beda, maka insert row baru di tabel aset
+   kalau id aset tidak ada, maka insert row baru di tabel aset

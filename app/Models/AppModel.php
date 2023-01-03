@@ -108,6 +108,139 @@ class AppModel extends Model {
                 $sql1 .= " AND nama LIKE '%$search%'";
                 $sql2 .= " AND nama LIKE '%$search%'";
             }
+
+            if (isset($d['tstart'])) {
+                $tstart = $d['tstart'];
+                if ($tstart) {
+                    $sql1 .= " AND booked_at >= '$tstart'";
+                    $sql2 .= " AND booked_at >= '$tstart'";
+                }
+            }
+
+            if (isset($d['tend'])) {
+                $tend = $d['tend'];
+                if ($tend) {
+                    $sql1 .= " AND booked_at <= '$tend'";
+                    $sql2 .= " AND booked_at <= '$tend'";
+                }
+            }
+
+            $result = $db->query($sql1)->getNumRows();
+            $total_rows = $result;
+            $total_pages = ceil($total_rows / $perPage);
+
+            $sql2 .= " ORDER BY booked_at DESC LIMIT $offset, $perPage";
+
+            $q1 = $this->db->query($sql2)->getResultArray();
+            $qx = $this->db->query($sql2)->getNumRows();
+
+            $data['totalData'] = $db->query($sql0)->getNumRows();
+            $data['totalRows'] = $qx;
+            $data['items'] = $q1;
+            $data['totalPage'] = $total_pages;
+            $data['sql'] = $sql2;
+        } 
+
+        if ($userlev == 'user') {
+            $status = $d['status'];
+            $search = $d['search'];
+            $currentPage = $d['currentPage'];
+            $perPage = $d['perPage'];
+            $offset = ($currentPage - 1) * $perPage;
+
+            if ($status == 'all') {
+                $sql0 = "SELECT id FROM v_book WHERE user = '$user'";
+                $sql1 = "SELECT id FROM v_book WHERE user = '$user'";
+                $sql2 = "SELECT * FROM v_book WHERE user = '$user'";
+            } else {
+                $sql0 = "SELECT id FROM v_book WHERE user = '$user' AND `book_status` = '$status'";
+                $sql1 = "SELECT id FROM v_book WHERE user = '$user' AND `book_status` = '$status'";
+                $sql2 = "SELECT * FROM v_book WHERE user = '$user' AND `book_status` = '$status'";
+            }
+            
+            if (!empty($search)) {
+                $sql1 .= " AND nama LIKE '%$search%'";
+                $sql2 .= " AND nama LIKE '%$search%'";
+            }
+
+            if (isset($d['tstart'])) {
+                $tstart = $d['tstart'];
+                if ($tstart) {
+                    $sql1 .= " AND booked_at >= '$tstart'";
+                    $sql2 .= " AND booked_at >= '$tstart'";
+                }
+            }
+
+            if (isset($d['tend'])) {
+                $tend = $d['tend'];
+                if ($tend) {
+                    $sql1 .= " AND booked_at <= '$tend'";
+                    $sql2 .= " AND booked_at <= '$tend'";
+                }
+            }
+
+            $result = $db->query($sql1)->getNumRows();
+            $total_rows = $result;
+            $total_pages = ceil($total_rows / $perPage);
+
+            $sql2 .= " ORDER BY booked_at DESC LIMIT $offset, $perPage";
+
+            $q1 = $this->db->query($sql2)->getResultArray();
+            $qx = $this->db->query($sql2)->getNumRows();
+
+            $data['totalData'] = $db->query($sql0)->getNumRows();
+            $data['totalRows'] = $qx;
+            $data['items'] = $q1;
+            $data['totalPage'] = $total_pages;
+            $data['sql'] = $sql2;
+            // $data = $db->query("SELECT * FROM v_book WHERE user = '$user' AND book_status = 'book'")->getResultArray();
+        }
+        return $data;
+    }
+
+    public function booksToCsv($d) {
+        $session = \Config\Services::session();
+        $db = \Config\Database::connect();
+        $user = $session->id;
+        $userlev = $d['userlev'];
+        if ($userlev == 'admin') {
+            $status = $d['status'];
+            $search = $d['search'];
+            $currentPage = $d['currentPage'];
+            $perPage = $d['perPage'];
+            $offset = ($currentPage - 1) * $perPage;
+
+            if ($status == 'all') {
+                $sql0 = "SELECT id FROM v_book WHERE 1 = 1";
+                $sql1 = "SELECT id FROM v_book WHERE 1 = 1";
+                $sql2 = "SELECT * FROM v_book WHERE 1 = 1";
+            } else {
+                $sql0 = "SELECT id FROM v_book WHERE book_status = '$status'";
+                $sql1 = "SELECT id FROM v_book WHERE book_status = '$status'";
+                $sql2 = "SELECT * FROM v_book WHERE book_status = '$status'";
+            }
+            
+            if (!empty($search)) {
+                $sql1 .= " AND nama LIKE '%$search%'";
+                $sql2 .= " AND nama LIKE '%$search%'";
+            }
+
+            if (isset($d['tstart'])) {
+                $tstart = $d['tstart'];
+                if ($tstart) {
+                    $sql1 .= " AND booked_at >= '$tstart'";
+                    $sql2 .= " AND booked_at >= '$tstart'";
+                }
+            }
+
+            if (isset($d['tend'])) {
+                $tend = $d['tend'];
+                if ($tend) {
+                    $sql1 .= " AND booked_at <= '$tend'";
+                    $sql2 .= " AND booked_at <= '$tend'";
+                }
+            }
+
             $result = $db->query($sql1)->getNumRows();
             $total_rows = $result;
             $total_pages = ceil($total_rows / $perPage);
@@ -144,11 +277,28 @@ class AppModel extends Model {
                 $sql1 .= " AND nama LIKE '%$search%'";
                 $sql2 .= " AND nama LIKE '%$search%'";
             }
+
+            if (isset($d['tstart'])) {
+                $tstart = $d['tstart'];
+                if ($tstart) {
+                    $sql1 .= " AND booked_at >= '$tstart'";
+                    $sql2 .= " AND booked_at >= '$tstart'";
+                }
+            }
+
+            if (isset($d['tend'])) {
+                $tend = $d['tend'];
+                if ($tend) {
+                    $sql1 .= " AND booked_at <= '$tend'";
+                    $sql2 .= " AND booked_at <= '$tend'";
+                }
+            }
+            
             $result = $db->query($sql1)->getNumRows();
             $total_rows = $result;
             $total_pages = ceil($total_rows / $perPage);
 
-            $sql2 .= " ORDER BY booked_at DESC LIMIT $offset, $perPage";
+            // $sql2 .= " ORDER BY booked_at DESC LIMIT $offset, $perPage";
 
             $q1 = $this->db->query($sql2)->getResultArray();
             $qx = $this->db->query($sql2)->getNumRows();
@@ -363,7 +513,7 @@ class AppModel extends Model {
 
     public function statsBookStats($d) {
         $db = \Config\Database::connect();
-        $result = $db->query("SELECT COUNT(id) jumlah, DATE_FORMAT(created_at, '%b') periode FROM aset_book GROUP BY periode")->getResultArray();
+        $result = $db->query("SELECT COUNT(id) jumlah, CONCAT(DATE_FORMAT(created_at, '%b'), '-', DATE_FORMAT(created_at, '%Y')) periode, YEAR(created_at) tahun FROM aset_book GROUP BY periode, tahun ORDER BY tahun ASC")->getResultArray();
         return $result;
     }
 

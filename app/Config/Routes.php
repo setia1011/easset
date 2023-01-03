@@ -55,6 +55,7 @@ $routes->post('/app/count-aset', 'App::countAset');
 $routes->post('/app/rekam-aset', 'App::rekamAset');
 $routes->post('/app/update-aset', 'App::updateAset');
 $routes->post('/app/fetch-books', 'App::fetchBooks');
+$routes->post('/app/export-to-csv', 'App::exportToCsv');
 $routes->post('/app/allocation', 'App::allocation');
 $routes->post('/app/reject', 'App::reject');
 $routes->post('/app/xhr-pemakaian', 'App::xhrPemakaian');

@@ -486,6 +486,38 @@ class App extends BaseController {
         return json_encode($asetBook);
     }
 
+    public function exportToCsv() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new AppModel();
+        $asetBook = $model->booksToCsv($d);
+
+        $data = [];
+        foreach ($asetBook['items'] as $k => $d) {
+            $data[$k] = [
+                'nama' => $d['nama'],
+                'book_qty' => $d['book_qty'],
+                'jumlah' => $d['jumlah'],
+                'satuan' => $d['satuan'],
+                'booked_atx' => $d['booked_at'],
+                'book_user' => $d['book_user'],
+                'book_status' => $d['book_status']
+            ];
+        }
+
+        echo json_encode($data);
+
+        $file = fopen(FCPATH.'/uploads/laporan/aset.csv', 'w');
+        $header = array("Aset","Book", "Stok", "Satuan", "Book Date", "User", "Status"); 
+        fputcsv($file, $header);
+        foreach ($data as $key => $value) { 
+            fputcsv($file, $value); 
+        }
+        fclose($file);
+        $filex = FCPATH.'/uploads/laporan/aset.csv';
+        header('Content-Type: application/json');
+        echo json_encode(["filename" => basename($filex)]);
+    }
+
     public function browseAset() {
         $data['pagefile'] = 'browse';
         $data['pagename'] = 'Browse';

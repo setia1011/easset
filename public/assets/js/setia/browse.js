@@ -87,9 +87,13 @@ var application = new Vue({
                         this.qty = 0;
                     }
                     this.loading = false;
+                    this.$refs.baka.click();
+                    this.fetchAset();
                 }).catch(err => {
                     console.log(err);
                     this.loading = false;
+                    this.$refs.baka.click();
+                    this.fetchAset();
                 });
             }
         },
