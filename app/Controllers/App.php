@@ -11,6 +11,7 @@ use Respect\Validation\Validator as v;
 
 class App extends BaseController {
     public function index() {
+        // $session = \Config\Services::session();
         $data['pagefile'] = 'home';
         $data['pagename'] = 'Home';
         return view('pages/home', $data);
@@ -538,5 +539,61 @@ class App extends BaseController {
         $data['pagefile'] = 'laporan';
         $data['pagename'] = 'Laporan';
         return view('pages/laporan', $data);
+    }
+
+    public function statsAset() {
+        $d = json_decode(file_get_contents("php://input"), TRUE);
+        $model = new AppModel();
+
+        if ($d['ref'] == 'aset-status') {
+            $asetBasic = $model->statsAsetBasic($d);
+            $colors = ["#52BE80", "#E67E22"];
+            $data = [];
+            foreach ($asetBasic as $k => $d) {
+                $data['jumlah'][$k] = ['value' => $d['jumlah'], 'itemStyle' => ['color' => $colors[$k]]];
+                $data['status'][$k] = $d['status'];
+            }
+            return json_encode($data);
+        }
+
+        if ($d['ref'] == 'aset-kondisi') {
+            $aset = $model->statsAsetKondisi($d);
+            $colors = ["#52BE80", "#E67E22", "#BB8FCE", "#5DADE2", "#566573", "#48C9B0"];
+            $data = [];
+            
+            // bar
+            // foreach ($aset as $k => $d) {
+            //     $data['jumlah'][$k] = ['value' => $d['jumlah'], 'itemStyle' => ['color' => $colors[$k]]];
+            //     $data['kondisi'][$k] = $d['kondisi'];
+            // }
+
+            // pie
+            foreach ($aset as $k => $d) {
+                $data[$k] = ['value' => $d['jumlah'], 'name' => $d['kondisi']];
+            }
+            return json_encode($data);
+        }
+
+        if ($d['ref'] == 'book-stats') {
+            $asetBasic = $model->statsBookStats($d);
+            $colors = ["#52BE80", "#E67E22", "#BB8FCE", "#5DADE2", "#566573", "#48C9B0"];
+            $data = [];
+            foreach ($asetBasic as $k => $d) {
+                $data['jumlah'][$k] = ['value' => $d['jumlah'], 'itemStyle' => ['color' => $colors[$k]]];
+                $data['periode'][$k] = $d['periode'];
+            }
+            return json_encode($data);
+        }
+
+        if ($d['ref'] == 'books-status') {
+            $asetBasic = $model->statsBooksStatus($d);
+            $colors = ["#52BE80", "#E67E22", "#BB8FCE", "#5DADE2", "#566573", "#48C9B0"];
+            $data = [];
+            foreach ($asetBasic as $k => $d) {
+                $data['jumlah'][$k] = ['value' => $d['jumlah'], 'itemStyle' => ['color' => $colors[$k]]];
+                $data['status'][$k] = $d['status'];
+            }
+            return json_encode($data);
+        }
     }
 }

@@ -329,7 +329,7 @@ class AppModel extends Model {
         $oqty = $d['oqty'];
         $status = $d['status'];
         if ($status == 'book') {
-            if ($db->query("UPDATE aset_book SET `status` = 'rejected' WHERE id = '$aid'")) {
+            if ($db->query("UPDATE aset_book SET `status` = 'rejected' WHERE id = '$bid'")) {
                 return true;
             }
         }
@@ -347,5 +347,29 @@ class AppModel extends Model {
         if ($status == 'returned' || $status == 'rejected') {
             return false;
         }
+    }
+
+    public function statsAsetBasic($d) {
+        $db = \Config\Database::connect();
+        $result = $db->query("SELECT COUNT(id) jumlah, status FROM aset GROUP BY status")->getResultArray();
+        return $result;
+    }
+
+    public function statsAsetKondisi($d) {
+        $db = \Config\Database::connect();
+        $result = $db->query("SELECT COUNT(b.id) jumlah, a.kondisi FROM aset_kondisi a LEFT JOIN aset b ON a.id = b.kondisi GROUP BY a.kondisi")->getResultArray();
+        return $result;
+    }
+
+    public function statsBookStats($d) {
+        $db = \Config\Database::connect();
+        $result = $db->query("SELECT COUNT(id) jumlah, DATE_FORMAT(created_at, '%b') periode FROM aset_book GROUP BY periode")->getResultArray();
+        return $result;
+    }
+
+    public function statsBooksStatus($d) {
+        $db = \Config\Database::connect();
+        $result = $db->query("SELECT COUNT(id) jumlah, status FROM aset_book GROUP BY status")->getResultArray();
+        return $result;
     }
 }

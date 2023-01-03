@@ -59,6 +59,9 @@ $routes->post('/app/allocation', 'App::allocation');
 $routes->post('/app/reject', 'App::reject');
 $routes->post('/app/xhr-pemakaian', 'App::xhrPemakaian');
 
+// charts
+$routes->post('/app/stats-aset', 'App::statsAset');
+
 // Auth
 $routes->get('/auth/login', 'Auth::index');
 $routes->post('/auth/authenticate', 'Auth::authenticate');

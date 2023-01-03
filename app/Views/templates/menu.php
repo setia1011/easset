@@ -85,11 +85,11 @@
                                     <span class="nk-menu-text">Pengembalian</span>
                                 </a>
                             </li><!-- .nk-menu-item -->
-                            <li class="nk-menu-item">
+                            <!-- <li class="nk-menu-item">
                                 <a href="<?= base_url('/app/pengeluaran'); ?>" class="nk-menu-link">
                                     <span class="nk-menu-text">Pengeluaran</span>
                                 </a>
-                            </li><!-- .nk-menu-item -->
+                            </li> -->
                             <?php } ?>
                             
                         </ul><!-- .nk-menu-sub -->
